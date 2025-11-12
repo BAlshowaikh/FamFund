@@ -12,7 +12,8 @@ const Contribution = require("../models/Contribution") // Required for the delet
 // When clicked on "Goals" in the side bar
 exports.listAll_goals_get = async (req, res) => {
     try{
-        const goals = await Goal.find().sort({ "title": 1 })
+        // Only show the goals associated to the user's family
+        const goals = await Goal.find({ familyId:{ $eq: user.familyId } }).sort({ "title": 1 })
         res.status(200).render("goals/index.ejs", {goals})
     } catch(error) {
         console.error("Error fetching goals:", error);
