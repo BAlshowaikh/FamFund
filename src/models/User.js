@@ -2,11 +2,16 @@ const mongoose = require("mongoose")
 const userSchema = new mongoose.Schema(
   {
     username: { type: String, required: true },
-    email: { type: String, required: true },
-    passwordHashed: { type: String, required: true, unique: true },
-    role: { enum: ["Parent", "Child"], required: true },
-    status: { enum: ["Pending", "Approved", "Rejected"], required: true },
-    profileImageUrl: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    role: { type: String, enum: ["Parent", "Child"], required: true },
+    status: {
+      type: String,
+      enum: ["Pending", "Approved", "Rejected"],
+      required: true,
+      default: "Pending",
+    },
+    profileImageUrl: { type: String, required: false },
     bio: {
       type: String,
       required: false,
@@ -15,7 +20,7 @@ const userSchema = new mongoose.Schema(
     familyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Family",
-      required: true,
+      required: false,
     },
   },
   { timestamps: true }
