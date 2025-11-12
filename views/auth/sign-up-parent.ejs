@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <%- include("../partials/_navbar.ejs") %>
+
+    <form action="/auth/sign-up/parent" method="POST">
+      <label for="familyName">Create a family:</label>
+      <input type="text" name="familyName" id="familyName" />
+      <br />
+      <button type="submit">Save and continue</button>
+    </form>
+  </body>
+</html>
