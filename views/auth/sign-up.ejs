@@ -10,7 +10,12 @@
     <h1>Create a new account!</h1>
     <form action="/auth/sign-up" method="POST">
       <label for="username">Username:</label>
-      <input type="text" name="username" id="username" />
+      <input
+        type="text"
+        name="username"
+        id="username"
+        placeholder="Input your name"
+      />
       <br />
       <label for="email">Email:</label>
       <input type="text" name="email" id="email" />
@@ -27,6 +32,17 @@
         <option value="Child">Child</option>
       </select>
       <br />
+      <label for="bio">Bio:</label>
+      <div class="bioLength">0 /200</div>
+      <br />
+      <textarea
+        name="bio"
+        id="bio"
+        rows="4"
+        placeholder="Tell us something about yourself..."
+      ></textarea>
+
+      <br />
       <label for="profileImageUrl">Upload Profile Image:</label>
       <input
         type="text"
@@ -37,16 +53,36 @@
       <br />
       <button type="submit">Continue</button>
     </form>
+
+    <script>
+      const bio = document.querySelector("#bio")
+      const bioLength = document.querySelector(".bioLength")
+
+      bio.addEventListener("input", () => {
+        bioLength.innerText = `${bio.value.length} / 200`
+      })
+    </script>
     <%} else if (page === 2 && role === "Parent") { %>
 
     <h2>Create a Family</h2>
     <form action="/auth/sign-up/parent" method="POST">
       <label for="name">Family Name:</label>
-      <input type="text" name="name" id="name" /><br />
+      <input type="text" name="parentFamilyName" id="parentFamilyName" /><br />
       <label for="code">Family code:</label>
       <input type="text" name="code" id="code" /><br />
       <button type="submit">Create a Family</button>
     </form>
+    <% } else if (page === 2 && role === "Child") { %>
+
+    <h2>Join a Family</h2>
+
+    <form action="/auth/sign-up/child" method="POST">
+      <label for="code">Family Code:</label>
+      <input type="text" name="code" id="code" /><br />
+
+      <button type="submit">Join Family</button>
+    </form>
+
     <% } %>
   </body>
 </html>
