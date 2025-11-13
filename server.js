@@ -2,6 +2,7 @@
 const session = require("express-session")
 const dotenv = require("dotenv")
 dotenv.config()
+
 const express = require("express")
 const app = express()
 const mongoose = require("./src/config/db")
@@ -25,8 +26,10 @@ app.use(
     saveUninitialized: true,
   })
 )
+
 //Load AuthRoute
 const authRouter = require("./src/routes/auth")
 app.use("/auth", authRouter)
 //Listen to port
 app.listen(port)
+

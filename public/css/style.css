@@ -1,0 +1,37 @@
+/* ─────── Sidebar Styling ─────── */
+aside {
+  background-color: #F2FAFF !important;
+}
+
+.nav-link {
+  border-radius: 10px;
+  padding: 10px 12px;
+  transition: all 0.2s ease-in-out;
+}
+
+.nav-link i {
+  font-size: 1rem;
+}
+
+/* Active state */
+.active-nav {
+  background-color: #1F4A70 !important;
+  color: #ffffff !important;
+  font-weight: 500;
+}
+
+/* Hover state */
+.nav-item-hover:hover {
+  background-color: rgba(31, 74, 112, 0.15);
+  color: #1F4A70 !important;
+}
+
+/* Brand hover */
+a.text-decoration-none:hover span {
+  color: #1F4A70 !important;
+}
+
+/* Header text */
+header h1 {
+  color: #1F4A70 !important;
+}

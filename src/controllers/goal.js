@@ -3,6 +3,8 @@
 
 const Goal = require("../models/Goal")
 
+const Contribution = require("../models/Contribution") // Required for the delete
+
 // -------------------------------------------CRUD--------------------------------
 
 // ----------------------------------- Listing APIs -----------------------------------
@@ -10,7 +12,8 @@ const Goal = require("../models/Goal")
 // When clicked on "Goals" in the side bar
 exports.listAll_goals_get = async (req, res) => {
     try{
-        const goals = await Goal.find().sort({ "title": 1 })
+        // Only show the goals associated to the user's family
+        const goals = await Goal.find({ familyId:{ $eq: user.familyId } }).sort({ "title": 1 })
         res.status(200).render("goals/index.ejs", {goals})
     } catch(error) {
         console.error("Error fetching goals:", error);
@@ -98,25 +101,34 @@ exports.edit_goal_get = async (req, res) => {
 
 // When the save button is clicked inside the "goals/add.ejs" file
 exports.edit_goal_put = async (req, res) => {
-    try{
-        // Find the specified goal
-        const goal = await Goal.findById(req.params.goalId)
+  try {
+    const goal = await Goal.findById(req.params.goalId);
 
-        // Adding the required reference ids
-        req.body.createdByUserId = req.session.user._id
-        req.body.familyId = req.session.user.familyId
-
-        goal.set(req.body)
-
-        // Redirect to the edited goal's details page
-        res.redirect(`/goals/${addedGoal._id}`)
-
-    } catch(error) {
-        console.error("Error editing the goal", error)
-        res.status(500).render("error.ejs", {
-            message: "Error while editing the goal."
-        })
+    if (!goal) {
+      return res.status(404).render("error.ejs", {
+        message: "Goal not found."
+      });
     }
+
+    goal.set({
+      title: req.body.title,
+      description: req.body.description,
+      targetAmount: req.body.targetAmount,
+      dueDate: req.body.dueDate,
+      coverImgURL: req.body.coverImgURL,
+      status: req.body.status 
+    });
+
+    await goal.save();
+
+    res.redirect(`/goals/${goal._id}`);
+
+  } catch (error) {
+    console.error("Error editing the goal:", error);
+    res.status(500).render("error.ejs", {
+      message: "Error while editing the goal."
+    });
+  }
 }
 
 
@@ -126,7 +138,19 @@ exports.edit_goal_put = async (req, res) => {
 exports.delete_goal = async (req, res) => {
     try{
         // Find the specified goal
-        const goal = await Goal.findById(req.params.goalId).deleteOne()
+        const goal = await Goal.findById(req.params.goalId)
+        if (!goal){
+            return res.status(404).render("error.ejs", {
+                message: "Goal not found."
+            })
+        }
+
+        // Delete all contributions associated with the goal
+        await Contribution.deleteMany({ goalId: goal._id });
+
+        goal.deleteOne()
+        res.redirect("/goals");
+
     } catch (error){
         console.error("Error deleting the goal", error)
         res.status(500).render("error.ejs", {
