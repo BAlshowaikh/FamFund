@@ -1,4 +1,4 @@
-/* ─────── Sidebar Styling ─────── */
+/* ---------------------------- Sidebar Styling ---------------------------- */
 aside {
   background-color: #F2FAFF !important;
 }
@@ -14,16 +14,19 @@ aside {
 }
 
 /* Active state */
-.active-nav {
+.nav-link.active,
+.nav-link:focus,
+.nav-link:active {
   background-color: #1F4A70 !important;
   color: #ffffff !important;
+  border-radius: 16px;  
   font-weight: 500;
 }
 
 /* Hover state */
 .nav-item-hover:hover {
   background-color: rgba(31, 74, 112, 0.15);
-  color: #1F4A70 !important;
+  /* color: #1F4A70 !important; */
 }
 
 /* Brand hover */
