@@ -1,0 +1,82 @@
+<article class="ff-goal-card">
+  <!-- Goal image -->
+  <div class="ff-goal-image-wrapper">
+    <% if (goal.coverImgURL) { %>
+      <img
+        src="<%= goal.coverImgURL %>"
+        alt="<%= goal.title %> cover"
+        class="ff-goal-image"
+      />
+    <% } else { %>
+      <div class="ff-goal-image ff-goal-image--placeholder">
+        <i class="bi bi-image"></i>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Main content -->
+  <div class="flex-grow-1">
+    <!-- Title + actions + status -->
+    <div class="d-flex justify-content-between align-items-start mb-2">
+      <div>
+        <h3 class="ff-goal-title"><%= goal.title %></h3>
+        <% if (goal.description) { %>
+          <p class="ff-goal-subtitle text-muted mb-0">
+            <%= goal.description %>
+          </p>
+        <% } %>
+      </div>
+
+      <div class="d-flex align-items-center gap-2">
+        <!-- Edit / delete icons (hooks for later) -->
+        <button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button type="button" class="btn btn-sm ff-icon-btn" title="Delete goal">
+          <i class="bi bi-trash"></i>
+        </button>
+
+        <!-- Status pill -->
+        <% if (goal.status) { %>
+          <span
+            class="ff-goal-status <%= goal.status === 'Completed' ? 'ff-goal-status--completed' : 'ff-goal-status--active' %>"
+          >
+            <%= goal.status %>
+          </span>
+        <% } %>
+      </div>
+    </div>
+
+    <!-- Progress -->
+    <p class="ff-goal-progress-text mb-1">
+      <%= (goal.currentAmount || 0) %> of <%= goal.targetAmount %> BD
+    </p>
+
+    <div class="ff-progress-track">
+        <!-- Calculate the percentage done, Math.min ensures that if the value is greated than 100 it'll scale it to 100-->
+        <%
+            const percentage = Math.min(
+                100,
+                Math.round(((goal.currentAmount || 0) / goal.targetAmount) * 100)
+            );
+        %>
+      <div
+        class="ff-progress-fill"
+        style="width: <%= percentage + '%' %>"
+      ></div>
+    </div>
+
+    <!-- Actions -->
+    <div class="d-flex gap-3 mt-3">
+      <button type="button" class="btn ff-ghost-btn">
+        View Details
+      </button>
+
+      <% if (goal.status !== 'Completed') { %>
+        <button type="button" class="btn ff-primary-outline-btn">
+          Contribute
+        </button>
+      <% } %>
+    </div>
+  </div>
+</article>

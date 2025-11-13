@@ -18,40 +18,55 @@
 
   <!-- Main Nav -->
   <ul class="nav nav-pills flex-column gap-2">
-
     <li class="nav-item">
-      <a href="#" class="nav-link d-flex align-items-center text-dark nav-item-hover">
-        <i class="bi bi-speedometer2 me-2"></i>
+      <a
+        href="/"
+        class="nav-link d-flex align-items-center text-dark <%= activePage === 'dashboard' ? 'active' : '' %>"
+      >
+        <i class="bi bi-grid-1x2 me-2"></i>
         <span>Dashboard</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a href="/goals" class="nav-link d-flex align-items-center text-dark nav-item-hover">
+      <a
+        href="/goals"
+        class="nav-link d-flex align-items-center text-dark <%= activePage === 'goals' ? 'active' : '' %>"
+      >
         <i class="bi bi-bullseye me-2"></i>
         <span>Goals</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a href="/contributions" class="nav-link d-flex align-items-center text-dark nav-item-hover">
+      <a
+        href="/contributions"
+        class="nav-link d-flex align-items-center text-dark <%= activePage === 'contributions' ? 'active' : '' %>"
+      >
         <i class="bi bi-cash-stack me-2"></i>
         <span>Contributions</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a href="#" class="nav-link d-flex align-items-center text-dark nav-item-hover">
+      <a
+        href="/rewards"
+        class="nav-link d-flex align-items-center text-dark <%= activePage === 'rewards' ? 'active' : '' %>"
+      >
         <i class="bi bi-gift me-2"></i>
         <span>Rewards</span>
       </a>
     </li>
 
     <li class="nav-item">
-      <a href="#" class="nav-link d-flex align-items-center text-dark nav-item-hover">
-        <i class="bi bi-lightbulb me-2"></i>
+      <a
+        href="/tips"
+        class="nav-link d-flex align-items-center text-dark <%= activePage === 'tips' ? 'active' : '' %>"
+      >
+        <i class="bi bi-info-circle me-2"></i>
         <span>Tips</span>
       </a>
     </li>
   </ul>
+
 </aside>

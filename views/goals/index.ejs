@@ -1,1 +1,39 @@
-<%- include("layouts/main") -%>
+<section class="ff-section">
+  <!-- Top row: title + actions -->
+  <div class="d-flex justify-content-between align-items-center mb-3">
+    <h2 class="ff-section-title">Goals</h2>
+
+    <div class="d-flex align-items-center gap-3">
+      <!-- Search bar -->
+      <div class="ff-search-wrapper">
+        <i class="bi bi-search ff-search-icon"></i>
+        <input
+          type="text"
+          class="form-control ff-search-input"
+          placeholder="Type Goal Name..."
+        />
+      </div>
+
+      <!-- Add + Filter buttons -->
+      <button type="button" class="btn ff-icon-btn" title="Add Goal">
+        <i class="bi bi-plus-lg"></i>
+      </button>
+      <button type="button" class="btn ff-icon-btn" title="Filter">
+        <i class="bi bi-funnel"></i>
+      </button>
+    </div>
+  </div>
+
+  <!-- Goals list -->
+  <div class="ff-goals-list">
+    <% if (goals && goals.length) { %>
+      <% goals.forEach(goal => { %>
+        <%- include('../partials/goal/_goalCard', { goal }) %>
+      <% }) %>
+    <% } else { %>
+      <p class="text-muted mt-3">
+        You don’t have any goals yet. Start by adding your first family goal!
+      </p>
+    <% } %>
+  </div>
+</section>

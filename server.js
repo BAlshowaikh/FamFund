@@ -12,6 +12,7 @@ const port = process.env.PORT ? process.env.PORT : 3000
 //Require Middleware
 const morgan = require("morgan")
 const methodOverride = require("method-override")
+const expressLayouts = require('express-ejs-layouts');
 
 //Use middleware
 
@@ -19,7 +20,13 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 app.use(morgan("dev"))
 
-// This means: Everything inside the /public folder is allowed to be served to the browser as static files not a route.
+// For dynamic rendreing the main layout page
+app.set('view engine', 'ejs');  // Explicitly tells to use the ejs render engine to render the view 
+app.set('views', 'views'); // Tells that my views are in a folder named 'views'
+app.set('layout', 'layouts/main'); // Tell Express which file is the default layout wrapper
+app.use(expressLayouts);
+
+// This means: Everything inside the public folder is allowed to be served to the browser as static files not a route.
 app.use('/public', express.static('public'))
 
 app.use(
@@ -35,8 +42,14 @@ const authRouter = require("./src/routes/auth")
 app.use("/auth", authRouter)
 
 app.get("/", (req, res) => {
-  res.render("index.ejs")
+  res.render("index.ejs", {title: 'Dashboard | FamFund' ,activePage: 'dashboard',})
 })
+
+// --------------------- Required Routes ----------------------
+const goalRouter = require("./src/routes/goal")
+
+// ----------------- Use the routes ----------------
+app.use("/goals", goalRouter)
 
 //Listen to port
 app.listen(port, () => {

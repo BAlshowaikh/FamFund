@@ -19,6 +19,9 @@ router.put("/:goalId", goalValidationMW.validateEditGoal, goalCtrl.edit_goal_put
 // ------------------------------------ DELETE  a goal Router ----------------------------------------------
 router.delete("/", goalCtrl.delete_goal)
 
+// ----------------------- DUMMY ---------------------------
+router.get("/seed-goals", goalCtrl.seedDummy_goals_get);
+
 // ----------------------------------- Listing routers -----------------------------------
 router.get("/", goalCtrl.listAll_goals_get) 
 router.get("/:goalId", goalCtrl.listOne_goal_get)
