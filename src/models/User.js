@@ -20,7 +20,7 @@ const userSchema = new mongoose.Schema(
     familyId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Family",
-      required: false,
+      required: true,
     },
   },
   { timestamps: true }

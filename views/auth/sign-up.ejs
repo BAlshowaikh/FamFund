@@ -6,12 +6,9 @@
     <title>Document</title>
   </head>
   <body>
-    <%- include("../partials/_navbar.ejs") %>
+    <%- include("../partials/_navbar.ejs") %> <%if (page===1){%>
     <h1>Create a new account!</h1>
     <form action="/auth/sign-up" method="POST">
-      <label for="name">Full Name:</label>
-      <input type="text" name="name" id="name" />
-      <br />
       <label for="username">Username:</label>
       <input type="text" name="username" id="username" />
       <br />
@@ -38,7 +35,18 @@
         placeholder="https://example.com/myimage.jpg"
       />
       <br />
-      <button type="submit">Save and continue</button>
+      <button type="submit">Continue</button>
     </form>
+    <%} else if (page === 2 && role === "Parent") { %>
+
+    <h2>Create a Family</h2>
+    <form action="/auth/sign-up/parent" method="POST">
+      <label for="name">Family Name:</label>
+      <input type="text" name="name" id="name" /><br />
+      <label for="code">Family code:</label>
+      <input type="text" name="code" id="code" /><br />
+      <button type="submit">Create a Family</button>
+    </form>
+    <% } %>
   </body>
 </html>

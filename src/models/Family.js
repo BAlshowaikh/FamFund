@@ -1,29 +1,30 @@
 const mongoose = require("mongoose")
 
-
-const familySchema = new mongoose.Schema({
+const familySchema = new mongoose.Schema(
+  {
     name: {
-        type: String,
-        required: true,
-        unique: true,
-        minlength: [3, "Fmaily name should have more than 2 chars."]
+      type: String,
+      required: true,
+      unique: true,
+      minlength: [3, "Fmaily name should have more than 2 chars."],
     },
 
     code: {
-        type: String,
-        required: true,
-        unique: true,
+      type: String,
+      required: true,
+      unique: true,
     },
 
     parentId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User",
-        required: true
-    }
-}, 
-{
-    timestamps: true
-})
+      type: mongoose.Schema.Types.ObjectId,
+      ref: "User",
+      required: false,
+    },
+  },
+  {
+    timestamps: true,
+  }
+)
 
 const Family = mongoose.model("Family", familySchema)
 module.exports = Family
