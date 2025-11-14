@@ -32,7 +32,7 @@ exports.listOne_goal_get = async (req, res) => {
     try{
     // Find the specified goal using the passed goal id 
     const goal = await Goal.findById(req.params.goalId)
-    res.status(200).render("goal/details.ejs", {goal, activePage:"goals"})
+    res.status(200).render("goals/details.ejs", {goal, activePage:"goals"})
     } catch(error) {
         console.error("Error fetching goal:", error)
         res.status(500).render("error.ejs", {
@@ -48,7 +48,8 @@ exports.listOne_goal_get = async (req, res) => {
 // When the "add" sign is clicked in the goal/index.ejs page (For parents only)
 exports.add_goal_get = (req, res) => {
     try{
-        res.status(200).render("goals/add.ejs")
+        res.status(200).render("goals/create.ejs", {activePage: "goals"})
+
     } catch(error) {
         console.error("Error rendering the page", error)
         res.status(500).render("error.ejs", {
@@ -170,7 +171,7 @@ exports.seedDummy_goals_get = async (req, res) => {
     const dummyFamilyId = new mongoose.Types.ObjectId();
     const dummyUserId = new mongoose.Types.ObjectId();
 
-    await Goal.deleteMany({}); 
+    // await Goal.deleteMany({}); 
 
     await Goal.create([
       {
@@ -201,3 +202,40 @@ exports.seedDummy_goals_get = async (req, res) => {
     res.status(500).send("Error seeding goals");
   }
 }
+
+// ------------------ Create new dummy goal ----------------------
+exports.add_dummy_goal_post = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      targetAmount,
+      currentAmount,
+      status,
+      dueDate,
+    } = req.body;
+
+    // TEMP: dummy IDs until auth + family are ready
+    const dummyFamilyId = new mongoose.Types.ObjectId();
+    const dummyUserId = new mongoose.Types.ObjectId();
+
+    await Goal.create({
+      title,
+      description,
+      targetAmount: Number(targetAmount),
+      currentAmount: currentAmount ? Number(currentAmount) : 0,
+      status: status || "Active",
+      dueDate: dueDate || null,
+      coverImgURL: "", // will wire from file later
+      familyId: dummyFamilyId,
+      createdByUserId: dummyUserId,
+    });
+
+    res.render("/", {activePage: "goals"});
+  } catch (error) {
+    console.error("Error creating goal:", error);
+    res.status(500).render("error.ejs", {
+      message: "Something went wrong while adding the goal.",
+    });
+  }
+} 

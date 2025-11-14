@@ -1,0 +1,95 @@
+<h2 class="ff-page-title">Add New Goal</h2>
+
+<div class="ff-form-layout">
+    <!-- Change the post to only "/goals" the /new is just for dummy checkl-->
+  <form action="/goals/add" method="POST" class="ff-card-form" enctype="multipart/form-data">
+    <!-- Title -->
+    <div class="mb-3">
+      <label for="title" class="form-label">Title</label>
+      <input
+        type="text"
+        id="title"
+        name="title"
+        class="form-control"
+        required
+      />
+    </div>
+
+    <!-- Description -->
+    <div class="mb-3">
+      <label for="description" class="form-label">Description</label>
+      <textarea
+        id="description"
+        name="description"
+        rows="3"
+        class="form-control"
+      ></textarea>
+    </div>
+
+    <!-- Amounts row -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="targetAmount" class="form-label">Target Amount</label>
+        <input
+          type="number"
+          id="targetAmount"
+          name="targetAmount"
+          class="form-control"
+          min="10"
+          max="10000"
+          required
+        />
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="currentAmount" class="form-label">Current Amount</label>
+        <input
+          type="number"
+          id="currentAmount"
+          name="currentAmount"
+          class="form-control"
+          min="0"
+        />
+      </div>
+    </div>
+
+    <!-- Status + Due date row -->
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label for="status" class="form-label">Status</label>
+        <select id="status" name="status" class="form-select">
+          <option value="Active" selected>Active</option>
+          <option value="Completed">Completed</option>
+          <option value="Not Active">Not Active</option>
+        </select>
+      </div>
+
+      <div class="col-md-6 mb-3">
+        <label for="dueDate" class="form-label">Due Date</label>
+        <input
+          type="date"
+          id="dueDate"
+          name="dueDate"
+          class="form-control"
+        />
+      </div>
+    </div>
+
+    <!-- Cover -->
+    <div class="mb-4">
+      <label for="coverImg" class="form-label">Goal Cover</label>
+      <input
+        type="file"
+        id="coverImg"
+        name="coverImg"
+        class="form-control"
+      />
+      <!-- later you can wire this to upload & map to coverImgURL -->
+    </div>
+
+    <!-- Submit -->
+    <button type="submit" class="btn ff-primary-btn w-100">
+      Save & Add
+    </button>
+  </form>
+</div>

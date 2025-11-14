@@ -21,6 +21,7 @@ router.delete("/", goalCtrl.delete_goal)
 
 // ----------------------- DUMMY ---------------------------
 router.get("/seed-goals", goalCtrl.seedDummy_goals_get);
+router.post("/add", goalCtrl.add_dummy_goal_post)
 
 // ----------------------------------- Listing routers -----------------------------------
 router.get("/", goalCtrl.listAll_goals_get) 
