@@ -12,9 +12,13 @@ const Contribution = require("../models/Contribution") // Required for the delet
 // When clicked on "Goals" in the side bar
 exports.listAll_goals_get = async (req, res) => {
     try{
+        console.log("Reached controller")
         // Only show the goals associated to the user's family
-        const goals = await Goal.find({ familyId:{ $eq: user.familyId } }).sort({ "title": 1 })
-        res.status(200).render("goals/index.ejs", {goals})
+        // const goals = await Goal.find({ familyId:{ $eq: user.familyId } }).sort({ "title": 1 })
+        const goals = await Goal.find().sort({ "title": 1 })
+        res.status(200).render("goals/index.ejs", {
+            title: 'Goals | FamFund', goals ,activePage: 'goals',
+        })
     } catch(error) {
         console.error("Error fetching goals:", error);
         res.status(500).render("error.ejs", {
@@ -28,7 +32,7 @@ exports.listOne_goal_get = async (req, res) => {
     try{
     // Find the specified goal using the passed goal id 
     const goal = await Goal.findById(req.params.goalId)
-    res.status(200).render("goal/details.ejs", {goal})
+    res.status(200).render("goal/details.ejs", {goal, activePage:"goals"})
     } catch(error) {
         console.error("Error fetching goal:", error)
         res.status(500).render("error.ejs", {
@@ -133,7 +137,7 @@ exports.edit_goal_put = async (req, res) => {
 
 
 // ------------------------------------ DELETE  a goal ----------------------------------------------
-
+const mongoose = require("mongoose")
 // When the "trash" icon is clicked in the index.ejs page (Parent only)
 exports.delete_goal = async (req, res) => {
     try{
@@ -159,3 +163,41 @@ exports.delete_goal = async (req, res) => {
     }
 }
 
+// ---------------------- DUMMY ------------------------------
+// GET /seed-goals  (Just to create data, won't redirect to any page)
+exports.seedDummy_goals_get = async (req, res) => {
+  try {
+    const dummyFamilyId = new mongoose.Types.ObjectId();
+    const dummyUserId = new mongoose.Types.ObjectId();
+
+    await Goal.deleteMany({}); 
+
+    await Goal.create([
+      {
+        title: "Trip",
+        description: "Family beach trip",
+        targetAmount: 200,
+        currentAmount: 50,
+        status: "Active",
+        coverImgURL: "/public/images/trip.png",
+        familyId: dummyFamilyId,
+        createdByUserId: dummyUserId
+      },
+      {
+        title: "New Pet",
+        description: "Save for a cute cat",
+        targetAmount: 80,
+        currentAmount: 80,
+        status: "Completed",
+        coverImgURL: "/public/images/pet.png",
+        familyId: dummyFamilyId,
+        createdByUserId: dummyUserId
+      }
+    ]);
+
+    res.send("Dummy goals seeded 👍");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("Error seeding goals");
+  }
+}

@@ -1,4 +1,4 @@
-/* ---------------------------- Sidebar Styling ---------------------------- */
+/* ------------------------------ Side bar style ------------------------------------ */
 aside {
   background-color: #F2FAFF !important;
 }
@@ -38,3 +38,183 @@ a.text-decoration-none:hover span {
 header h1 {
   color: #1F4A70 !important;
 }
+
+/* ------------------------------ General reusable section  ------------------------------------  */
+
+.ff-section {
+  background-color: #F9F9F9;
+  border-radius: 1.5em;
+  padding: 2em 2.5em;
+  min-height: 20em;
+}
+
+.ff-section-title {
+  font-size: 1.5em;
+  font-weight: 700;
+  margin-bottom: 0.75em;
+}
+
+/* -------- Search bar -------- */
+
+.ff-search-wrapper {
+  position: relative;
+  width: 18em;
+}
+
+.ff-search-icon {
+  position: absolute;
+  left: 1em;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: 0.9em;
+  color: #9ca3af;
+}
+
+.ff-search-input {
+  padding-left: 2.7em;
+  padding-right: 1.5em;
+  height: 2.7em;
+  border-radius: 999px;
+  font-size: 0.9em;
+  border: 1px solid #d1d5db;
+}
+
+/* -------- Icon-only buttons (add/filter, card actions) -------- */
+
+.ff-icon-btn {
+  min-width: 2.4em;
+  height: 2.4em;
+  border-radius: 999px;
+  border: none;
+  background-color: #ffffff;
+  box-shadow: 0 0.05em 0.3em rgba(0, 0, 0, 0.08);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1em;
+}
+
+.ff-icon-btn i {
+  font-size: 1.1em;
+}
+
+.ff-icon-btn:hover {
+  background-color: #e5f1ff;
+}
+
+/* -------- Goal card -------- */
+
+.ff-goals-list {
+  margin-top: 1.5em;
+}
+
+.ff-goal-card {
+  display: flex;
+  gap: 1.5em;
+  align-items: flex-start;
+  background-color: #ffffff;
+  border-radius: 1.5em;
+  padding: 1.5em 1.75em;
+  margin-bottom: 1.2em;
+  box-shadow: 0 0.05em 0.4em rgba(0, 0, 0, 0.05);
+}
+
+.ff-goal-image-wrapper {
+  flex-shrink: 0;
+}
+
+.ff-goal-image,
+.ff-goal-image--placeholder {
+  width: 4.2em;
+  height: 4.2em;
+  border-radius: 0.8em;
+  object-fit: cover;
+}
+
+.ff-goal-image--placeholder {
+  background-color: #f3f4f6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9ca3af;
+  font-size: 1.4em;
+}
+
+.ff-goal-title {
+  font-size: 1.1em;
+  font-weight: 600;
+  margin-bottom: 0.2em;
+}
+
+.ff-goal-subtitle {
+  font-size: 0.85em;
+}
+
+/* Progress */
+
+.ff-goal-progress-text {
+  font-size: 0.9em;
+}
+
+.ff-progress-track {
+  width: 100%;
+  height: 0.6em;
+  border-radius: 999px;
+  background-color: #e5e7eb;
+  overflow: hidden;
+}
+
+.ff-progress-fill {
+  height: 100%;
+  border-radius: inherit;
+  background-color: #2364A4; /* main blue */
+}
+
+/* Status pill */
+
+.ff-goal-status {
+  padding: 0.2em 1.1em;
+  border-radius: 999px;
+  font-size: 0.75em;
+  font-weight: 600;
+  color: #ffffff;
+}
+
+.ff-goal-status--active {
+  background-color: #1F4A70;
+}
+
+.ff-goal-status--completed {
+  background-color: #2364A4;
+}
+
+/* Buttons inside card */
+
+.ff-ghost-btn,
+.ff-primary-outline-btn {
+  font-size: 0.9em;
+  padding: 0.5em 1.5em;
+  border-radius: 999px;
+  border-width: 0.1em;
+}
+
+.ff-ghost-btn {
+  border-color: #d1d5db;
+  background-color: #ffffff;
+}
+
+.ff-ghost-btn:hover {
+  background-color: #f3f4f6;
+}
+
+.ff-primary-outline-btn {
+  border-color: #2364A4;
+  color: #2364A4;
+  background-color: #ffffff;
+}
+
+.ff-primary-outline-btn:hover {
+  background-color: #2364A4;
+  color: #ffffff;
+}
+

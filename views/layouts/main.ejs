@@ -34,6 +34,11 @@
         <div class="col-12 col-md-9 col-lg-10 p-4">
           <!-- Header -->
           <%- include('../partials/_header') %>
+
+          <!-- Dynamic rendreing from teh called page -->
+          <main>
+            <%- body %>
+          </main>
          
         </div>
       </div>
@@ -43,5 +48,6 @@
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
+    <script src="../../public/js/sidebar.js"></script>
   </body>
 </html>
