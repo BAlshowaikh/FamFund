@@ -13,7 +13,7 @@ router.get("/add", goalCtrl.add_goal_get)
 router.post("/", goalValidationMW.validateAddGoal, goalCtrl.add_goal_post)
 
 // ------------------------------- Edit a goal Router ----------------------------------
-router.get("/edit/:goalId", goalCtrl.edit_goal_get)
+router.get("/:goalId/edit", goalCtrl.edit_goal_get)
 router.put("/:goalId", goalValidationMW.validateEditGoal, goalCtrl.edit_goal_put)
 
 // ------------------------------------ DELETE  a goal Router ----------------------------------------------

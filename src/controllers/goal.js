@@ -94,7 +94,7 @@ exports.edit_goal_get = async (req, res) => {
         }
 
         // If goal is found
-        res.status(200).render("goals/edit.ejs", {goal})
+        res.status(200).render("goals/edit.ejs", {goal, activePage:"goals"})
 
     } catch(error) {
         console.error("Error rendering the page", error)
@@ -170,8 +170,9 @@ exports.seedDummy_goals_get = async (req, res) => {
   try {
     const dummyFamilyId = new mongoose.Types.ObjectId();
     const dummyUserId = new mongoose.Types.ObjectId();
+    const futureDate = new Date();
 
-    // await Goal.deleteMany({}); 
+    await Goal.deleteMany({}); 
 
     await Goal.create([
       {
@@ -182,8 +183,10 @@ exports.seedDummy_goals_get = async (req, res) => {
         status: "Active",
         coverImgURL: "/public/images/trip.png",
         familyId: dummyFamilyId,
-        createdByUserId: dummyUserId
+        createdByUserId: dummyUserId,
+        dueDate: futureDate
       },
+
       {
         title: "New Pet",
         description: "Save for a cute cat",
@@ -194,6 +197,7 @@ exports.seedDummy_goals_get = async (req, res) => {
         familyId: dummyFamilyId,
         createdByUserId: dummyUserId
       }
+      
     ]);
 
     res.send("Dummy goals seeded 👍");

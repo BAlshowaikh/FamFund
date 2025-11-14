@@ -18,6 +18,8 @@ const expressLayouts = require('express-ejs-layouts');
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
+
+
 app.use(morgan("dev"))
 
 // For dynamic rendreing the main layout page

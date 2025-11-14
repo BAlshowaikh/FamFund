@@ -29,9 +29,10 @@
 
       <div class="d-flex align-items-center gap-2">
         <!-- Edit / delete icons (hooks for later) -->
-        <button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
+        <a href="/goals/<%= goal._id %>/edit"><button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
           <i class="bi bi-pencil"></i>
-        </button>
+        </button></a>
+
         <button type="button" class="btn btn-sm ff-icon-btn" title="Delete goal">
           <i class="bi bi-trash"></i>
         </button>
