@@ -11,7 +11,7 @@ router.post("/", contCtrl.add_cont_post)
 
 
 // ----------------------------------- Listing routers -----------------------------------
-router.get("/", contCtrl.listAll_contribution_get) 
+router.get("/", contCtrl.listAll_contribution_get)
 router.get("/:contId", contCtrl.listOne_contribution_get)
 
 // Exports

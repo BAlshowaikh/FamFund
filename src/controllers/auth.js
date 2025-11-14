@@ -4,7 +4,7 @@ const bcrypt = require("bcrypt")
 const Family = require("../models/Family")
 //Get method for first signup page
 const get_signup = async (req, res) => {
-  res.render("auth/sign-up.ejs", { page: 1 })
+  res.render("auth/sign-up.ejs", { page: 1, layout: false })
 }
 //Post method for first signup page
 const post_signup = async (req, res) => {
@@ -23,6 +23,10 @@ const post_signup = async (req, res) => {
   //Hashing password
   const hashedPassword = bcrypt.hashSync(req.body.password, 10)
   req.body.password = hashedPassword
+  let profileImageUrl = ""
+  if (req.file) {
+    profileImageUrl = `/public/images/profile-images/${req.file.filename}`
+  }
   // Checking role
   if (req.body.role === "Parent") {
     //Creating a temporary session for saving Parent first page data before pushing it to mongoDB
@@ -33,7 +37,7 @@ const post_signup = async (req, res) => {
       role: "Parent",
       // Parent status is always approved
       status: "Approved",
-      profileImageUrl: req.body.profileImageUrl,
+      profileImageUrl,
       bio: req.body.bio,
     }
     //Ensuring to redirect parent user to parent sign-up page
@@ -47,7 +51,7 @@ const post_signup = async (req, res) => {
       role: "Child",
       status: "Pending",
       bio: req.body.bio,
-      profileImageUrl: req.body.profileImageUrl,
+      profileImageUrl,
     }
     //Ensuring to child user to parent sign-up page
     return res.redirect("/auth/sign-up/child")
@@ -58,7 +62,11 @@ const get_signup_parent = (req, res) => {
   if (!req.session.parentData) {
     return res.redirect("/auth/sign-up")
   }
-  res.render("auth/sign-up.ejs", { page: 2, role: req.session.parentData.role })
+  res.render("auth/sign-up.ejs", {
+    page: 2,
+    role: req.session.parentData.role,
+    layout: false,
+  })
 }
 // Post method for parent Sign-up page ( User second page )
 const post_signup_parent = async (req, res) => {
@@ -81,20 +89,20 @@ const post_signup_parent = async (req, res) => {
     ...parentSessionData,
     familyId: family._id,
     status: "Approved",
-    profileImageUrl: "",
+
   })
   await Family.findByIdAndUpdate(family._id, {
     parentId: parent._id,
   })
   delete req.session.parentData
-  res.send(`Family created! Your family code is: ${req.body.code}`)
+  res.redirect("/auth/sign-in")
 }
 
 const get_signup_child = (req, res) => {
   if (!req.session.childData) {
     return res.redirect("/auth/sign-up")
   }
-  res.render("auth/sign-up.ejs", { page: 2, role: "Child" })
+  res.render("auth/sign-up.ejs", { page: 2, role: "Child", layout: false })
 }
 //
 const post_signup_child = async (req, res) => {
@@ -118,17 +126,16 @@ const post_signup_child = async (req, res) => {
     ...childSessionData,
     familyId: family._id,
     status: "Pending",
-    profileImageUrl: "",
+    
   })
   delete req.session.childData
 
-  res.send(
-    "You requested to join a Family, wait for Your parent to approve your request "
-  )
+  return res.redirect("/auth/sign-in")
 }
+
 // Get method for sign in
 const get_signin = async (req, res) => {
-  res.render("auth/sign-in.ejs")
+  res.render("auth/sign-in.ejs", { layout: false })
 }
 //Post method for sign in
 const post_signin = async (req, res) => {
