@@ -8,8 +8,8 @@ const get_signup = async (req, res) => {
 }
 //Post method for first signup page
 const post_signup = async (req, res) => {
-  if (req.body.bio.length > 200) {
-    return res.send("Bio id too long. It cannot exceed 200 characters")
+  if (req.body.bio && req.body.bio.length > 200) {
+    return res.send("Bio is too long. It cannot exceed 200 characters")
   }
   // Ensuring email is not used
   const existingEmail = await User.findOne({ email: req.body.email })
@@ -37,12 +37,20 @@ const post_signup = async (req, res) => {
       bio: req.body.bio,
     }
     //Ensuring to redirect parent user to parent sign-up page
-    res.redirect("/auth/sign-up/parent")
+    return res.redirect("/auth/sign-up/parent")
   } else if (req.body.role === "Child") {
     //Creating a temporary session for saving Child first page data before pushing it to mongoDB
-    req.session.childData = req.body
+    req.session.childData = {
+      username: req.body.username,
+      email: req.body.email,
+      password: req.body.password,
+      role: "Child",
+      status: "Pending",
+      bio: req.body.bio,
+      profileImageUrl: req.body.profileImageUrl,
+    }
     //Ensuring to child user to parent sign-up page
-    res.redirect("/auth/sign-up/child")
+    return res.redirect("/auth/sign-up/child")
   }
 }
 // Get method for parent Sign-up page ( User second page )
@@ -88,6 +96,7 @@ const get_signup_child = (req, res) => {
   }
   res.render("auth/sign-up.ejs", { page: 2, role: "Child" })
 }
+//
 const post_signup_child = async (req, res) => {
   if (!req.session.childData) {
     return res.redirect("/auth/sign-up")
@@ -98,9 +107,6 @@ const post_signup_child = async (req, res) => {
   const family = await Family.findOne({
     code: req.body.code,
   })
-  if (!family.name) {
-    return res.send("Invalid family name")
-  }
   if (!family) {
     return res.send("Invalid Family Code.")
   }
@@ -120,6 +126,38 @@ const post_signup_child = async (req, res) => {
     "You requested to join a Family, wait for Your parent to approve your request "
   )
 }
+// Get method for sign in
+const get_signin = async (req, res) => {
+  res.render("auth/sign-in.ejs")
+}
+//Post method for sign in
+const post_signin = async (req, res) => {
+  const user = await User.findOne({ email: req.body.email })
+  if (!user) {
+    return res.send("Invalid Email!")
+  }
+  const validPassword = bcrypt.compareSync(req.body.password, user.password)
+  if (!validPassword) {
+    return res.send("Login failed, make sure you input correct password")
+  }
+  if (user.status === "Pending") {
+    return res.send(
+      "Your request for joining the family is at pending and not approved yet"
+    )
+  } else if (user.status === "Rejected") {
+    return res.send("Your request for joining the family is Rejected")
+  }
+  req.session.user = {
+    _id: user._id,
+    username: user.username,
+    role: user.role,
+  }
+  return res.redirect("/")
+}
+const get_signout = async (req, res) => {
+  req.session.destroy()
+  return res.redirect("/auth/sign-in")
+}
 module.exports = {
   get_signup,
   post_signup,
@@ -127,4 +165,7 @@ module.exports = {
   post_signup_parent,
   get_signup_child,
   post_signup_child,
+  get_signin,
+  post_signin,
+  get_signout,
 }

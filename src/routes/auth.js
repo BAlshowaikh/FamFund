@@ -9,4 +9,7 @@ router.get("/sign-up/parent", authCtrl.get_signup_parent)
 router.post("/sign-up/parent", authCtrl.post_signup_parent)
 router.get("/sign-up/child", authCtrl.get_signup_child)
 router.post("/sign-up/child", authCtrl.post_signup_child)
+router.get("/sign-in", authCtrl.get_signin)
+router.post("/sign-in", authCtrl.post_signin)
+router.get("/sign-out", authCtrl.get_signout)
 module.exports = router
