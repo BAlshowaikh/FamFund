@@ -32,7 +32,7 @@ exports.listOne_goal_get = async (req, res) => {
     try{
     // Find the specified goal using the passed goal id 
     const goal = await Goal.findById(req.params.goalId)
-    res.status(200).render("goal/details.ejs", {goal})
+    res.status(200).render("goal/details.ejs", {goal, activePage:"goals"})
     } catch(error) {
         console.error("Error fetching goal:", error)
         res.status(500).render("error.ejs", {
@@ -164,13 +164,13 @@ exports.delete_goal = async (req, res) => {
 }
 
 // ---------------------- DUMMY ------------------------------
-// GET /seed-goals  (only for dev!)
+// GET /seed-goals  (Just to create data, won't redirect to any page)
 exports.seedDummy_goals_get = async (req, res) => {
   try {
     const dummyFamilyId = new mongoose.Types.ObjectId();
     const dummyUserId = new mongoose.Types.ObjectId();
 
-    await Goal.deleteMany({}); // optional, to start clean
+    await Goal.deleteMany({}); 
 
     await Goal.create([
       {
