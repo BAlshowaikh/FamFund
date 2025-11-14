@@ -340,3 +340,75 @@ header h1 {
   color: #ffffff;
 }
 
+/* ----------------------------- MODALS STYLE ----------------------------- */
+
+/* --- DELETE Modal --- */
+.ff-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 5000;
+}
+
+.ff-modal.hidden {
+  display: none;
+}
+
+.ff-modal-content {
+  width: 32em;
+  background-color: #F2FAFF; /* your required color */
+  padding: 2em 2.5em;
+  border-radius: 1.5em;
+  text-align: center;
+  box-shadow: 0 0.5em 1.5em rgba(0,0,0,0.1);
+}
+
+.ff-modal-title {
+  font-size: 1.6em;
+  font-weight: 700;
+  color: #1F4A70;
+  margin-bottom: 1em;
+}
+
+.ff-modal-text {
+  color: #333;
+  font-size: 1.1em;
+  margin-bottom: 2em;
+}
+
+.ff-modal-actions {
+  display: flex;
+  justify-content: center;
+  gap: 1em;
+}
+
+.ff-primary-btn {
+  background-color: #2364A4;
+  color: white;
+  padding: 0.6em 2em;
+  border-radius: 1.2em;
+  border: none;
+}
+
+.ff-primary-btn:hover {
+  background-color: #1F4A70;
+}
+
+.ff-cancel-btn {
+  background-color: #e5e5e5;
+  color: #333;
+  padding: 0.6em 2em;
+  border-radius: 1.2em;
+  border: none;
+}
+
+.ff-cancel-btn:hover {
+  background-color: #d6d6d6;
+}
+

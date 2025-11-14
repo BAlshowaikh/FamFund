@@ -5,6 +5,9 @@ const Goal = require("../models/Goal")
 
 const Contribution = require("../models/Contribution") // Required for the delete
 
+// For dummy data
+const mongoose = require("mongoose")
+
 // -------------------------------------------CRUD--------------------------------
 
 // ----------------------------------- Listing APIs -----------------------------------
@@ -12,7 +15,6 @@ const Contribution = require("../models/Contribution") // Required for the delet
 // When clicked on "Goals" in the side bar
 exports.listAll_goals_get = async (req, res) => {
     try{
-        console.log("Reached controller")
         // Only show the goals associated to the user's family
         // const goals = await Goal.find({ familyId:{ $eq: user.familyId } }).sort({ "title": 1 })
         const goals = await Goal.find().sort({ "title": 1 })
@@ -138,7 +140,7 @@ exports.edit_goal_put = async (req, res) => {
 
 
 // ------------------------------------ DELETE  a goal ----------------------------------------------
-const mongoose = require("mongoose")
+
 // When the "trash" icon is clicked in the index.ejs page (Parent only)
 exports.delete_goal = async (req, res) => {
     try{
@@ -151,9 +153,9 @@ exports.delete_goal = async (req, res) => {
         }
 
         // Delete all contributions associated with the goal
-        await Contribution.deleteMany({ goalId: goal._id });
+        // await Contribution.deleteMany({ goalId: goal._id });
 
-        goal.deleteOne()
+        await goal.deleteOne()
         res.redirect("/goals");
 
     } catch (error){
@@ -197,7 +199,7 @@ exports.seedDummy_goals_get = async (req, res) => {
         familyId: dummyFamilyId,
         createdByUserId: dummyUserId
       }
-      
+
     ]);
 
     res.send("Dummy goals seeded 👍");

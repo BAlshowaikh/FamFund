@@ -19,6 +19,11 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="/public/css/style.css" />
+
+    <script defer src="/public/js/sidebar.js"></script>
+    <script defer src="/public/js/deleteModal.js"></script>
+
+
   </head>
 
   <body class="bg-white">
@@ -44,10 +49,30 @@
       </div>
     </div>
 
+    <!--------------------- MODALS -------------------->
+
+    <!---DELETE MODAL --->
+    <div id="ff-delete-modal" class="ff-modal hidden">
+      <div class="ff-modal-content">
+        <h3 class="ff-modal-title">Delete Confirmation</h3>
+
+        <p class="ff-modal-text">
+          Are you sure you want to delete the goal titled 
+          <span id="ff-delete-title" class="fw-bold"></span>?
+        </p>
+
+        <div class="ff-modal-actions">
+          <button id="ff-delete-confirm" class="btn ff-primary-btn">OK</button>
+          <button id="ff-delete-cancel" class="btn ff-cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+
     <!-- Bootstrap JS -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
-    <script src="../../public/js/sidebar.js"></script>
+
   </body>
 </html>

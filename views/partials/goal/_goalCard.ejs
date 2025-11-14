@@ -29,13 +29,21 @@
 
       <div class="d-flex align-items-center gap-2">
         <!-- Edit / delete icons (hooks for later) -->
-        <a href="/goals/<%= goal._id %>/edit"><button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
-          <i class="bi bi-pencil"></i>
-        </button></a>
+        <% if (goal.status === "Active"){ %>
+          <a href="/goals/<%= goal._id %>/edit"><button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
+            <i class="bi bi-pencil"></i>
+          </button></a>
 
-        <button type="button" class="btn btn-sm ff-icon-btn" title="Delete goal">
-          <i class="bi bi-trash"></i>
-        </button>
+        <form action="/goals/<%= goal._id %>?_method=DELETE" method="POST" class="ff-delete-form d-inline">
+          <button
+              type="submit"
+              class="btn btn-sm ff-icon-btn"
+              title="Delete goal"
+              >
+            <i class="bi bi-trash"></i>
+          </button>
+          <% } %>
+        </form>
 
         <!-- Status pill -->
         <% if (goal.status) { %>
