@@ -18,6 +18,8 @@ const expressLayouts = require('express-ejs-layouts');
 
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
+
+
 app.use(morgan("dev"))
 
 // For dynamic rendreing the main layout page
@@ -47,9 +49,11 @@ app.get("/", (req, res) => {
 
 // --------------------- Required Routes ----------------------
 const goalRouter = require("./src/routes/goal")
+const contRouter = require("./src/routes/contribution")
 
 // ----------------- Use the routes ----------------
 app.use("/goals", goalRouter)
+app.use("/contributions", contRouter)
 
 //Listen to port
 app.listen(port, () => {

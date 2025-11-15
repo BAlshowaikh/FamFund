@@ -5,6 +5,9 @@ const Goal = require("../models/Goal")
 
 const Contribution = require("../models/Contribution") // Required for the delete
 
+// For dummy data
+const mongoose = require("mongoose")
+
 // -------------------------------------------CRUD--------------------------------
 
 // ----------------------------------- Listing APIs -----------------------------------
@@ -12,7 +15,6 @@ const Contribution = require("../models/Contribution") // Required for the delet
 // When clicked on "Goals" in the side bar
 exports.listAll_goals_get = async (req, res) => {
     try{
-        console.log("Reached controller")
         // Only show the goals associated to the user's family
         // const goals = await Goal.find({ familyId:{ $eq: user.familyId } }).sort({ "title": 1 })
         const goals = await Goal.find().sort({ "title": 1 })
@@ -32,7 +34,7 @@ exports.listOne_goal_get = async (req, res) => {
     try{
     // Find the specified goal using the passed goal id 
     const goal = await Goal.findById(req.params.goalId)
-    res.status(200).render("goal/details.ejs", {goal, activePage:"goals"})
+    res.status(200).render("goals/details.ejs", {goal, activePage:"goals"})
     } catch(error) {
         console.error("Error fetching goal:", error)
         res.status(500).render("error.ejs", {
@@ -48,7 +50,8 @@ exports.listOne_goal_get = async (req, res) => {
 // When the "add" sign is clicked in the goal/index.ejs page (For parents only)
 exports.add_goal_get = (req, res) => {
     try{
-        res.status(200).render("goals/add.ejs")
+        res.status(200).render("goals/create.ejs", {activePage: "goals"})
+
     } catch(error) {
         console.error("Error rendering the page", error)
         res.status(500).render("error.ejs", {
@@ -93,7 +96,7 @@ exports.edit_goal_get = async (req, res) => {
         }
 
         // If goal is found
-        res.status(200).render("goals/edit.ejs", {goal})
+        res.status(200).render("goals/edit.ejs", {goal, activePage:"goals"})
 
     } catch(error) {
         console.error("Error rendering the page", error)
@@ -118,6 +121,7 @@ exports.edit_goal_put = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       targetAmount: req.body.targetAmount,
+      currentAmount: req.body.currentAmount,
       dueDate: req.body.dueDate,
       coverImgURL: req.body.coverImgURL,
       status: req.body.status 
@@ -137,7 +141,7 @@ exports.edit_goal_put = async (req, res) => {
 
 
 // ------------------------------------ DELETE  a goal ----------------------------------------------
-const mongoose = require("mongoose")
+
 // When the "trash" icon is clicked in the index.ejs page (Parent only)
 exports.delete_goal = async (req, res) => {
     try{
@@ -150,9 +154,9 @@ exports.delete_goal = async (req, res) => {
         }
 
         // Delete all contributions associated with the goal
-        await Contribution.deleteMany({ goalId: goal._id });
+        // await Contribution.deleteMany({ goalId: goal._id });
 
-        goal.deleteOne()
+        await goal.deleteOne()
         res.redirect("/goals");
 
     } catch (error){
@@ -169,6 +173,7 @@ exports.seedDummy_goals_get = async (req, res) => {
   try {
     const dummyFamilyId = new mongoose.Types.ObjectId();
     const dummyUserId = new mongoose.Types.ObjectId();
+    const futureDate = new Date();
 
     await Goal.deleteMany({}); 
 
@@ -181,8 +186,10 @@ exports.seedDummy_goals_get = async (req, res) => {
         status: "Active",
         coverImgURL: "/public/images/trip.png",
         familyId: dummyFamilyId,
-        createdByUserId: dummyUserId
+        createdByUserId: dummyUserId,
+        dueDate: futureDate
       },
+
       {
         title: "New Pet",
         description: "Save for a cute cat",
@@ -193,6 +200,7 @@ exports.seedDummy_goals_get = async (req, res) => {
         familyId: dummyFamilyId,
         createdByUserId: dummyUserId
       }
+
     ]);
 
     res.send("Dummy goals seeded 👍");
@@ -201,3 +209,40 @@ exports.seedDummy_goals_get = async (req, res) => {
     res.status(500).send("Error seeding goals");
   }
 }
+
+// ------------------ Create new dummy goal ----------------------
+exports.add_dummy_goal_post = async (req, res) => {
+  try {
+    const {
+      title,
+      description,
+      targetAmount,
+      currentAmount,
+      status,
+      dueDate,
+    } = req.body;
+
+    // TEMP: dummy IDs until auth + family are ready
+    const dummyFamilyId = new mongoose.Types.ObjectId();
+    const dummyUserId = new mongoose.Types.ObjectId();
+
+    await Goal.create({
+      title,
+      description,
+      targetAmount: Number(targetAmount),
+      currentAmount: currentAmount ? Number(currentAmount) : 0,
+      status: status || "Active",
+      dueDate: dueDate || null,
+      coverImgURL: "", // will wire from file later
+      familyId: dummyFamilyId,
+      createdByUserId: dummyUserId,
+    });
+
+    res.render("/", {activePage: "goals"});
+  } catch (error) {
+    console.error("Error creating goal:", error);
+    res.status(500).render("error.ejs", {
+      message: "Something went wrong while adding the goal.",
+    });
+  }
+} 

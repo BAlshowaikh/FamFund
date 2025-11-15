@@ -19,6 +19,12 @@
 
     <!-- Custom Styles -->
     <link rel="stylesheet" href="/public/css/style.css" />
+
+    <script defer src="/public/js/sidebar.js"></script>
+    <script defer src="/public/js/deleteModal.js"></script>
+    <script defer src="/public/js/contributionModal.js"></script>
+
+
   </head>
 
   <body class="bg-white">
@@ -31,7 +37,7 @@
         </div>
 
         <!-- Main Content Area -->
-        <div class="col-12 col-md-9 col-lg-10 p-4">
+        <div class="col-12 col-md-9 col-lg-10 p-4 main-content">
           <!-- Header -->
           <%- include('../partials/_header') %>
 
@@ -44,10 +50,89 @@
       </div>
     </div>
 
+    <!--------------------- MODALS -------------------->
+
+    <!---DELETE MODAL --->
+    <div id="ff-delete-modal" class="ff-modal hidden">
+      <div class="ff-modal-content">
+        <h3 class="ff-modal-title">Delete Confirmation</h3>
+
+        <p class="ff-modal-text">
+          Are you sure you want to delete the goal titled 
+          <span id="ff-delete-title" class="fw-bold"></span>?
+        </p>
+
+        <div class="ff-modal-actions">
+          <button id="ff-delete-confirm" class="btn ff-primary-btn">OK</button>
+          <button id="ff-delete-cancel" class="btn ff-cancel-btn">Cancel</button>
+        </div>
+      </div>
+    </div>
+
+    <!---Add contribution MODAL --->
+    <div id="ff-contrib-modal" class="ff-modal hidden">
+      <div class="ff-modal-content ff-contrib-modal">
+
+        <!-- Button to close the modal "x"-->
+        <button type="button" id="ff-contrib-close" class="ff-modal-close">
+          &times;
+        </button>
+
+        <h3 class="ff-modal-title mb-3">Add Contribution</h3>
+
+        <form id="ff-contrib-form" method="POST" class="text-start">
+          <!-- This will be used later in the controller-->
+          <input type="hidden" id="ff-contrib-goalId" name="goalId" />
+
+          <!-- goal name (read only) -->
+          <div class="mb-3">
+            <label class="form-label" for="ff-contrib-goalName">Goal Name</label>
+            <input
+              type="text"
+              id="ff-contrib-goalName"
+              class="form-control"
+              readonly
+            />
+          </div>
+
+          <!-- amount -->
+          <div class="mb-2">
+            <label class="form-label" for="ff-contrib-amount">Amount (BD)</label>
+            <input
+              type="number"
+              step="0.1"
+              min="0.1"
+              id="ff-contrib-amount"
+              name="amount"
+              class="form-control"
+              required
+            />
+            <div id="ff-contrib-error" class="text-danger small mt-1"></div>
+          </div>
+
+          <!-- message -->
+          <div class="mb-4">
+            <label class="form-label" for="ff-contrib-message">Message (Optional)</label>
+            <textarea
+              id="ff-contrib-message"
+              name="message"
+              rows="3"
+              class="form-control"
+            ></textarea>
+          </div>
+
+          <button type="submit" class="btn ff-primary-btn w-100">
+            Save &amp; Contribute
+          </button>
+        </form>
+      </div>
+    </div>
+
+
     <!-- Bootstrap JS -->
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
     ></script>
-    <script src="../../public/js/sidebar.js"></script>
+
   </body>
 </html>

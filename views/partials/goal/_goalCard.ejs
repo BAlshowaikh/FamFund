@@ -29,12 +29,21 @@
 
       <div class="d-flex align-items-center gap-2">
         <!-- Edit / delete icons (hooks for later) -->
-        <button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
-          <i class="bi bi-pencil"></i>
-        </button>
-        <button type="button" class="btn btn-sm ff-icon-btn" title="Delete goal">
-          <i class="bi bi-trash"></i>
-        </button>
+        <% if (goal.status === "Active"){ %>
+          <a href="/goals/<%= goal._id %>/edit"><button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
+            <i class="bi bi-pencil"></i>
+          </button></a>
+
+        <form action="/goals/<%= goal._id %>?_method=DELETE" method="POST" class="ff-delete-form d-inline">
+          <button
+              type="submit"
+              class="btn btn-sm ff-icon-btn"
+              title="Delete goal"
+              >
+            <i class="bi bi-trash"></i>
+          </button>
+          <% } %>
+        </form>
 
         <!-- Status pill -->
         <% if (goal.status) { %>
@@ -67,10 +76,10 @@
     </div>
 
     <!-- Actions -->
-    <div class="d-flex gap-3 mt-3">
+    <a href="/goals/<%= goal._id %>"><div class="d-flex gap-3 mt-3">
       <button type="button" class="btn ff-ghost-btn">
         View Details
-      </button>
+      </button></a>
 
       <% if (goal.status !== 'Completed') { %>
         <button type="button" class="btn ff-primary-outline-btn">

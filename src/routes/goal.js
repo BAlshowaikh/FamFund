@@ -13,14 +13,15 @@ router.get("/add", goalCtrl.add_goal_get)
 router.post("/", goalValidationMW.validateAddGoal, goalCtrl.add_goal_post)
 
 // ------------------------------- Edit a goal Router ----------------------------------
-router.get("/edit/:goalId", goalCtrl.edit_goal_get)
+router.get("/:goalId/edit", goalCtrl.edit_goal_get)
 router.put("/:goalId", goalValidationMW.validateEditGoal, goalCtrl.edit_goal_put)
 
 // ------------------------------------ DELETE  a goal Router ----------------------------------------------
-router.delete("/", goalCtrl.delete_goal)
+router.delete("/:goalId", goalCtrl.delete_goal)
 
 // ----------------------- DUMMY ---------------------------
 router.get("/seed-goals", goalCtrl.seedDummy_goals_get);
+router.post("/add", goalCtrl.add_dummy_goal_post)
 
 // ----------------------------------- Listing routers -----------------------------------
 router.get("/", goalCtrl.listAll_goals_get) 
