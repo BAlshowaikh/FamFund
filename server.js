@@ -49,9 +49,11 @@ app.get("/", (req, res) => {
 
 // --------------------- Required Routes ----------------------
 const goalRouter = require("./src/routes/goal")
+const contRouter = require("./src/routes/contribution")
 
 // ----------------- Use the routes ----------------
 app.use("/goals", goalRouter)
+app.use("/contributions", contRouter)
 
 //Listen to port
 app.listen(port, () => {

@@ -342,7 +342,7 @@ header h1 {
 
 /* ----------------------------- MODALS STYLE ----------------------------- */
 
-/* --- DELETE Modal --- */
+/* --- All Modals  --- */
 .ff-modal {
   position: fixed;
   top: 0;
@@ -376,6 +376,19 @@ header h1 {
   margin-bottom: 1em;
 }
 
+.ff-primary-btn {
+  background-color: #2364A4;
+  color: white;
+  padding: 0.6em 2em;
+  border-radius: 1.2em;
+  border: none;
+}
+
+.ff-primary-btn:hover {
+  background-color: #1F4A70;
+}
+
+/* --- DELETE Modal --- */
 .ff-modal-text {
   color: #333;
   font-size: 1.1em;
@@ -388,17 +401,6 @@ header h1 {
   gap: 1em;
 }
 
-.ff-primary-btn {
-  background-color: #2364A4;
-  color: white;
-  padding: 0.6em 2em;
-  border-radius: 1.2em;
-  border: none;
-}
-
-.ff-primary-btn:hover {
-  background-color: #1F4A70;
-}
 
 .ff-cancel-btn {
   background-color: #e5e5e5;
@@ -412,3 +414,22 @@ header h1 {
   background-color: #d6d6d6;
 }
 
+
+/* --- Add contrib Modal  --- */
+/* Slightly wider modal for contribution form */
+.ff-contrib-modal {
+  width: 32em;
+  max-width: 90vw;
+}
+
+/* top-right X button to clos */
+.ff-modal-close {
+  position: absolute;
+  top: 1.2em;
+  right: 1.6em;
+  border: none;
+  background: transparent;
+  font-size: 1.6em;
+  line-height: 1;
+  cursor: pointer;
+}

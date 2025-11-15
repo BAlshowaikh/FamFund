@@ -97,3 +97,56 @@ exports.add_cont_post = async (req, res) => {
     });
   }
 }
+
+// --------------------DUMMY CREATE ---------------------
+exports.dummy_add_contribution_post = async (req, res) => {
+      console.log("inside controller")
+  try {
+    const { goalId } = req.params; 
+    const {amount, message } = req.body;
+
+    const goal = await Goal.findById(goalId);
+    if (!goal) {
+      return res.status(404).render("error.ejs", {
+        message: "Goal not found.",
+      });
+    }
+
+    const numericAmount = Number(amount);
+    const remaining = goal.targetAmount - goal.currentAmount;
+
+    // backend validation to mirror the frontend rules
+    if (
+      !numericAmount ||
+      numericAmount <= 0 ||
+      numericAmount > goal.targetAmount ||
+      numericAmount > remaining
+    ) {
+      return res.status(400).render("error.ejs", {
+        message: `Invalid contribution amount.`,
+      });
+    }
+
+    // TEMP: arbitrary contributorId (until you have real users)
+    const dummyUserId = new mongoose.Types.ObjectId();
+
+    await Contribution.create({
+      amount: numericAmount,
+      message,
+      contributorId: dummyUserId,
+      goalId: goal._id,
+    });
+
+    // Update goal currentAmount
+    goal.currentAmount += numericAmount;
+    await goal.save();
+    console.log(`body: ${req.body}`)
+  return res.redirect(`/goals/${goalId}`);
+
+  } catch (error) {
+    console.error("Error adding contribution:", error);
+    res.status(500).render("error.ejs", {
+      message: "Something went wrong while adding the contribution.",
+    });
+  }
+};
