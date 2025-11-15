@@ -6,8 +6,33 @@
     <title>Document</title>
   </head>
   <body>
-    <form action="/profile/<%=user._id%>?_method=PUT" method="POST">
-      <label for="profileImage" class="form-label">Profile image:</label>
+    <form
+      action="/profile/<%=user._id%>?_method=PUT"
+      method="POST"
+      enctype="multipart/form-data"
+    >
+      <label for="profileImage" class="form-label"
+        >Profile image:
+        <br />
+        <img
+          src="<%= user.profileImageUrl %>"
+          alt="Profile image"
+          style="
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+          "
+        />
+      </label>
+      <br />
+      <input
+        type="file"
+        name="profileImage"
+        id="profileImage"
+        class="form-control"
+        accept="image/*"
+      />
       <br />
       <label for="username">Username:</label>
       <br />
@@ -15,7 +40,6 @@
         type="text"
         name="username"
         id="username"
-        
         value="<%= user.username %>"
       />
       <br />

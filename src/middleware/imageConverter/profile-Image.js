@@ -6,7 +6,12 @@ const profileImageStorage = multer.diskStorage({
   destination: (req, file, callback) => {
     const uploadFolder = path.join(
       __dirname,
-      "/../../../public/images/profile-images"
+      "..",
+      "..",
+      "..",
+      "public",
+      "images",
+      "profile-images"
     )
     callback(null, uploadFolder)
   },

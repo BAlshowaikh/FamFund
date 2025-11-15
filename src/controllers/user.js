@@ -14,11 +14,18 @@ const getViewProfile = async (req, res) => {
 }
 const putViewProfile = async (req, res) => {
   {
-    const listing = await User.findByIdAndUpdate(req.params.userId, {
-      username: req.body.username,
-      email: req.body.email,
-      bio: req.body.bio,
-    })
+    const user = await User.findById(req.params.userId)
+
+    // Update normal fields
+    user.username = req.body.username
+    user.email = req.body.email
+    user.bio = req.body.bio
+
+    // Update image ONLY if user uploaded a file
+    if (req.file) {
+  user.profileImageUrl = `/profile-images/${req.file.filename}`
+}
+    await user.save()
 
     res.redirect("/")
   }

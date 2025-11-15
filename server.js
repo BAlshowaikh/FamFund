@@ -29,6 +29,8 @@ app.use(expressLayouts)
 
 // This means: Everything inside the public folder is allowed to be served to the browser as static files not a route.
 app.use("/public", express.static("public"))
+app.use("/profile-images", express.static("public/images/profile-images"))
+//
 
 app.use(
   session({
@@ -74,9 +76,6 @@ app.get("/", (req, res) => {
     activePage: "dashboard",
   })
 })
-
-
-
 
 //Listen to port
 app.listen(port, () => {
