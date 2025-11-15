@@ -1,1 +1,47 @@
-<%- include("layouts/main") -%>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <form action="/profile/<%=user._id%>?_method=PUT" method="POST">
+      <label for="profileImage" class="form-label">Profile image:</label>
+      <br />
+      <label for="username">Username:</label>
+      <br />
+      <input
+        type="text"
+        name="username"
+        id="username"
+        
+        value="<%= user.username %>"
+      />
+      <br />
+      <label for="email">Email:</label>
+      <br />
+      <input type="text" name="email" id="email" value="<%= user.email %>" />
+      <br />
+      <label for="role">role:<%= user.role %></label>
+      <br />
+      <label for="bio">Bio:</label>
+      <br />
+      <div class="bioLength">0 /200</div>
+      <br />
+      <textarea name="bio" id="bio" rows="4"><%= user.bio %></textarea>
+      <br />
+      <label for="code">Family code: <%=family.code%></label>
+      <br />
+      <button type="submit">Save</button>
+    </form>
+    <script>
+      const bio = document.querySelector("#bio")
+      const bioLength = document.querySelector(".bioLength")
+
+      bio.addEventListener("input", () => {
+        bioLength.innerText = `${bio.value.length} / 200`
+      })
+    </script>
+  </body>
+</html>

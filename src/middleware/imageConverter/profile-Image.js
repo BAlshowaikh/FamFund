@@ -1,6 +1,8 @@
 const path = require("path")
 const multer = require("multer")
+
 const profileImageStorage = multer.diskStorage({
+  //Destination for images
   destination: (req, file, callback) => {
     const uploadFolder = path.join(
       __dirname,
@@ -8,6 +10,8 @@ const profileImageStorage = multer.diskStorage({
     )
     callback(null, uploadFolder)
   },
+
+  // File name format with extension
   filename: (req, file, callback) => {
     const timeStamp = Date.now()
     const random = Math.round(Math.random() * 1e9)
@@ -17,6 +21,7 @@ const profileImageStorage = multer.diskStorage({
     callback(null, fileFormat)
   },
 })
+//Filters out image files to accept only images
 const profileImageFilter = (req, file, callback) => {
   const isImage = file.mimetype.startsWith("image/")
   if (isImage) {
@@ -25,6 +30,7 @@ const profileImageFilter = (req, file, callback) => {
     callback(new Error("The file is not an image"), false)
   }
 }
+
 const uploadProfileImage = multer({
   storage: profileImageStorage,
   fileFilter: profileImageFilter,

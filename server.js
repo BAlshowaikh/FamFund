@@ -19,7 +19,6 @@ const checkIfSignedIn = require("./src/middleware/isSignedIn")
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 
-
 app.use(morgan("dev"))
 
 // For dynamic rendreing the main layout page
@@ -55,10 +54,11 @@ app.use((req, res, next) => {
   // Otherwise enforce login
   return checkIfSignedIn(req, res, next)
 })
-//Load AuthRoute
+//Load Our Routes
 const authRouter = require("./src/routes/auth")
+const profileRouter = require("./src/routes/user")
 app.use("/auth", authRouter)
-
+app.use("/profile", profileRouter)
 app.get("/", (req, res) => {
   res.render("index.ejs", {
     title: "Dashboard | FamFund",

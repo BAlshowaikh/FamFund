@@ -5,7 +5,6 @@ const familySchema = new mongoose.Schema(
     name: {
       type: String,
       required: true,
-      unique: true,
       minlength: [3, "Fmaily name should have more than 2 chars."],
     },
 
