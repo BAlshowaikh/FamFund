@@ -37,26 +37,35 @@ app.use(
     saveUninitialized: true,
   })
 )
+
 // Routes that doesn't require to check if Signed in
-const excludedRoutes = [
+const publicRoutes = [
   "/auth/sign-in",
   "/auth/sign-up",
   "/auth/sign-up/parent",
   "/auth/sign-up/child",
   "/auth/sign-out",
 ]
+
 // Check if the path contains one of the above listed routes
 app.use((req, res, next) => {
-  if (excludedRoutes.some((route) => req.path.startsWith(route))) {
+  if (publicRoutes.some((route) => req.path.startsWith(route))) {
     return next()
   }
 
   // Otherwise enforce login
   return checkIfSignedIn(req, res, next)
 })
-//Load Our Routes
+
+// --------------------- Required Routes ----------------------
+const goalRouter = require("./src/routes/goal")
+const contRouter = require("./src/routes/contribution")
 const authRouter = require("./src/routes/auth")
 const profileRouter = require("./src/routes/user")
+
+// ----------------- Use the routes ----------------
+app.use("/goals", goalRouter)
+app.use("/contributions", contRouter)
 app.use("/auth", authRouter)
 app.use("/profile", profileRouter)
 app.get("/", (req, res) => {
@@ -66,13 +75,8 @@ app.get("/", (req, res) => {
   })
 })
 
-// --------------------- Required Routes ----------------------
-const goalRouter = require("./src/routes/goal")
-const contRouter = require("./src/routes/contribution")
 
-// ----------------- Use the routes ----------------
-app.use("/goals", goalRouter)
-app.use("/contributions", contRouter)
+
 
 //Listen to port
 app.listen(port, () => {
