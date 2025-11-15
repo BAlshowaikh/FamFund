@@ -28,7 +28,7 @@ app.set("views", "views") // Tells that my views are in a folder named 'views'
 app.set("layout", "layouts/main") // Tell Express which file is the default layout wrapper
 app.use(expressLayouts)
 
-// This means: Everything inside the public folder is allowed to be served to the browser as static files not a route.
+// This means: Everything inside the public folder is allowed to be served to the browser as static files not a route
 app.use("/public", express.static("public"))
 
 app.use(
@@ -39,22 +39,22 @@ app.use(
   })
 )
 // Routes that doesn't require to check if Signed in
-const excludedRoutes = [
-  "/auth/sign-in",
-  "/auth/sign-up",
-  "/auth/sign-up/parent",
-  "/auth/sign-up/child",
-  "/auth/sign-out",
-]
-// Check if the path contains one of the above listed routes
-app.use((req, res, next) => {
-  if (excludedRoutes.some((route) => req.path.startsWith(route))) {
-    return next()
-  }
+// const excludedRoutes = [
+//   "/auth/sign-in",
+//   "/auth/sign-up",
+//   "/auth/sign-up/parent",
+//   "/auth/sign-up/child",
+//   "/auth/sign-out",
+// ]
+// // Check if the path contains one of the above listed routes
+// app.use((req, res, next) => {
+//   if (excludedRoutes.some((route) => req.path.startsWith(route))) {
+//     return next()
+//   }
 
-  // Otherwise enforce login
-  return checkIfSignedIn(req, res, next)
-})
+//   // Otherwise enforce login
+//   return checkIfSignedIn(req, res, next)
+// })
 //Load AuthRoute
 const authRouter = require("./src/routes/auth")
 app.use("/auth", authRouter)
@@ -73,6 +73,16 @@ const contRouter = require("./src/routes/contribution")
 // ----------------- Use the routes ----------------
 app.use("/goals", goalRouter)
 app.use("/contributions", contRouter)
+
+// ---------- Any router that doesn't fell into the specified routers ----------
+// -------------------- 404 FALLBACK --------------------
+app.use((req, res) => {
+  res.status(404).render("error.ejs", {
+    message: "The page you are looking for does not exist.",
+    activePage: null,
+    // layout: false
+  });
+});
 
 //Listen to port
 app.listen(port, () => {
