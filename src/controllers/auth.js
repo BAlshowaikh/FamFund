@@ -12,7 +12,7 @@ const post_signup = async (req, res) => {
     return res.send("Bio is too long. It cannot exceed 200 characters")
   }
   // Ensuring email is not used
-  const existingEmail = await User.findOne({ email: req.body.email })
+  const existingEmail = await User.findOne({ email: req.body.email.trim() })
   if (existingEmail) {
     return res.send("Email is already used")
   }
@@ -89,7 +89,6 @@ const post_signup_parent = async (req, res) => {
     ...parentSessionData,
     familyId: family._id,
     status: "Approved",
-
   })
   await Family.findByIdAndUpdate(family._id, {
     parentId: parent._id,
@@ -126,7 +125,6 @@ const post_signup_child = async (req, res) => {
     ...childSessionData,
     familyId: family._id,
     status: "Pending",
-    
   })
   delete req.session.childData
 

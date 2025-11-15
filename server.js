@@ -19,7 +19,6 @@ const checkIfSignedIn = require("./src/middleware/isSignedIn")
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 
-
 app.use(morgan("dev"))
 
 // For dynamic rendreing the main layout page
@@ -30,6 +29,8 @@ app.use(expressLayouts)
 
 // This means: Everything inside the public folder is allowed to be served to the browser as static files not a route.
 app.use("/public", express.static("public"))
+app.use("/profile-images", express.static("public/images/profile-images"))
+//
 
 app.use(
   session({
@@ -38,41 +39,43 @@ app.use(
     saveUninitialized: true,
   })
 )
+
 // Routes that doesn't require to check if Signed in
-const excludedRoutes = [
+const publicRoutes = [
   "/auth/sign-in",
   "/auth/sign-up",
   "/auth/sign-up/parent",
   "/auth/sign-up/child",
   "/auth/sign-out",
 ]
+
 // Check if the path contains one of the above listed routes
 app.use((req, res, next) => {
-  if (excludedRoutes.some((route) => req.path.startsWith(route))) {
+  if (publicRoutes.some((route) => req.path.startsWith(route))) {
     return next()
   }
 
   // Otherwise enforce login
   return checkIfSignedIn(req, res, next)
 })
-//Load AuthRoute
-const authRouter = require("./src/routes/auth")
-app.use("/auth", authRouter)
 
+// --------------------- Required Routes ----------------------
+const goalRouter = require("./src/routes/goal")
+const contRouter = require("./src/routes/contribution")
+const authRouter = require("./src/routes/auth")
+const profileRouter = require("./src/routes/user")
+
+// ----------------- Use the routes ----------------
+app.use("/goals", goalRouter)
+app.use("/contributions", contRouter)
+app.use("/auth", authRouter)
+app.use("/profile", profileRouter)
 app.get("/", (req, res) => {
   res.render("index.ejs", {
     title: "Dashboard | FamFund",
     activePage: "dashboard",
   })
 })
-
-// --------------------- Required Routes ----------------------
-const goalRouter = require("./src/routes/goal")
-const contRouter = require("./src/routes/contribution")
-
-// ----------------- Use the routes ----------------
-app.use("/goals", goalRouter)
-app.use("/contributions", contRouter)
 
 //Listen to port
 app.listen(port, () => {
