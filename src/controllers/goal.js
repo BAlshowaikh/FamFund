@@ -121,6 +121,7 @@ exports.edit_goal_put = async (req, res) => {
       title: req.body.title,
       description: req.body.description,
       targetAmount: req.body.targetAmount,
+      currentAmount: req.body.currentAmount,
       dueDate: req.body.dueDate,
       coverImgURL: req.body.coverImgURL,
       status: req.body.status 
