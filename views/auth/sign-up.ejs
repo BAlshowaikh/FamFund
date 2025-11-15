@@ -8,7 +8,7 @@
   <body>
     <%- include("../partials/_navbar.ejs") %> <%if (page===1){%>
     <h1>Create a new account!</h1>
-    <form action="/auth/sign-up" method="POST">
+    <form action="/auth/sign-up" method="POST" enctype="multipart/form-data">
       <label for="username">Username:</label>
       <input
         type="text"
@@ -42,14 +42,14 @@
         placeholder="Tell us something about yourself..."
       ></textarea>
 
-      <br />
-      <label for="profileImageUrl">Upload Profile Image:</label>
-      <input
-        type="text"
-        name="profileImageUrl"
-        id="profileImageUrl"
-        placeholder="https://example.com/myimage.jpg"
-      />
+      <br />   <label for="profileImage" class="form-label">Profile image</label>
+    <input
+      type="file"
+      name="profileImage"
+      id="profileImage"
+      class="form-control"
+      accept="image/*"
+    />
       <br />
       <button type="submit">Continue</button>
     </form>

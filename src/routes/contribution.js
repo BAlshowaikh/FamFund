@@ -12,7 +12,7 @@ router.post("/:goalId", contCtrl.dummy_add_contribution_post)
 
 
 // ----------------------------------- Listing routers -----------------------------------
-router.get("/", contCtrl.listAll_contribution_get) 
+router.get("/", contCtrl.listAll_contribution_get)
 router.get("/:contId", contCtrl.listOne_contribution_get)
 
 // Exports
