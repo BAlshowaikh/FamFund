@@ -3,86 +3,86 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="/public/css/auth.css" />
     <title>sign-up</title>
   </head>
   <body>
-    <%- include("../partials/_navbar.ejs") %> <%if (page===1){%>
-    <h1>Create a new account!</h1>
-    <form action="/auth/sign-up" method="POST" enctype="multipart/form-data">
-      <label for="username">Username:</label>
-      <input
-        type="text"
-        name="username"
-        id="username"
-        placeholder="Input your name"
-      />
-      <br />
-      <label for="email">Email:</label>
-      <input type="text" name="email" id="email" />
-      <br />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
-      <br />
-      <label for="confirmPassword">Confirm Password:</label>
-      <input type="password" name="confirmPassword" id="confirmPassword" />
-      <br />
-      <label for="role">role:</label>
-      <select name="role" id="role">
-        <option value="Parent">Parent</option>
-        <option value="Child">Child</option>
-      </select>
-      <br />
-      <label for="bio">Bio:</label>
-      <div class="bioLength">0 /200</div>
-      <br />
-      <textarea
-        name="bio"
-        id="bio"
-        rows="4"
-        placeholder="Tell us something about yourself..."
-      ></textarea>
+    <%- include("../partials/_navbar.ejs") %>
 
-      <br />   <label for="profileImage" class="form-label">Profile image</label>
-    <input
-      type="file"
-      name="profileImage"
-      id="profileImage"
-      class="form-control"
-      accept="image/*"
-    />
-      <br />
-      <button type="submit">Continue</button>
-    </form>
+    <div class="signup-container">
+      <% if (page === 1) { %>
 
-    <script>
-      const bio = document.querySelector("#bio")
-      const bioLength = document.querySelector(".bioLength")
+      <h2 class="signup-title">Create a new account!</h2>
 
-      bio.addEventListener("input", () => {
-        bioLength.innerText = `${bio.value.length} / 200`
-      })
-    </script>
-    <%} else if (page === 2 && role === "Parent") { %>
+      <form action="/auth/sign-up" method="POST" enctype="multipart/form-data">
+        <label>Username</label>
+        <input type="text" name="username" placeholder="Input your name" />
 
-    <h2>Create a Family</h2>
-    <form action="/auth/sign-up/parent" method="POST">
-      <label for="name">Family Name:</label>
-      <input type="text" name="parentFamilyName" id="parentFamilyName" /><br />
-      <label for="code">Family code:</label>
-      <input type="text" name="code" id="code" /><br />
-      <button type="submit">Create a Family</button>
-    </form>
-    <% } else if (page === 2 && role === "Child") { %>
+        <label>Email</label>
+        <input type="text" name="email" />
 
-    <h2>Join a Family</h2>
+        <label>Password</label>
+        <input type="password" name="password" />
 
-    <form action="/auth/sign-up/child" method="POST">
-      <label for="code">Family Code:</label>
-      <input type="text" name="code" id="code" /><br />
+        <label>Confirm Password</label>
+        <input type="password" name="confirmPassword" />
 
-      <button type="submit">Join Family</button>
-    </form>
+        <label>Role</label>
+        <select name="role">
+          <option value="Parent">Parent</option>
+          <option value="Child">Child</option>
+        </select>
 
-    <% } %>
+        <label>Bio</label>
+        <textarea
+          id="bio"
+          name="bio"
+          rows="4"
+          placeholder="Tell us something about yourself..."
+        ></textarea>
+        <div class="bio-counter"><span id="counter">0</span> / 200</div>
+
+        <label>Profile Image</label>
+        <input type="file" name="profileImage" accept="image/*" />
+
+        <button type="submit" class="signup-btn">Continue</button>
+      </form>
+
+      <script>
+        const bio = document.getElementById("bio")
+        const counter = document.getElementById("counter")
+
+        bio.addEventListener("input", () => {
+          counter.innerText = bio.value.length
+        })
+      </script>
+
+      <% } else if (page === 2 && role === "Parent") { %>
+
+      <h2 class="signup-title">Create a Family</h2>
+
+      <form action="/auth/sign-up/parent" method="POST">
+        <label>Family Name</label>
+        <input type="text" name="parentFamilyName" />
+
+        <label>Family Code</label>
+        <input type="text" name="code" />
+
+        <button type="submit" class="signup-btn">Create a Family</button>
+      </form>
+
+      <% } else if (page === 2 && role === "Child") { %>
+
+      <h2 class="signup-title">Join a Family</h2>
+
+      <form action="/auth/sign-up/child" method="POST">
+        <label>Family Code</label>
+        <input type="text" name="code" />
+
+        <button type="submit" class="signup-btn">Join Family</button>
+      </form>
+
+      <% } %>
+    </div>
   </body>
 </html>

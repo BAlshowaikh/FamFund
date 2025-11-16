@@ -3,20 +3,29 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
+    <title>sign-in</title>
+    <link rel="stylesheet" href="/public/css/auth.css" />
   </head>
-  <body>
-    <%- include("../partials/_navbar.ejs")%>
-    <h1>Sign in to your account</h1>
-    <form action="/auth/sign-in" method="POST">
-      <label for="email">Email:</label>
-      <input type="text" name="email" id="email" />
-      <br />
-      <label for="password">Password:</label>
-      <input type="password" name="password" id="password" />
-      <br />
 
-      <button type="submit">Sign in</button>
-    </form>
+  <body>
+    <!-- Logo -->
+    <div class="family-logo">
+      <img src="https://i.postimg.cc/j5jGDkmn/Group-15.png" />
+    </div>
+
+    <!-- Sign in card -->
+    <div class="sign-in-card">
+      <h2 class="sign-title">Sign in</h2>
+
+      <form action="/auth/sign-in" method="POST">
+        <label>Email</label>
+        <input type="text" name="email" />
+
+        <label>Password</label>
+        <input type="password" name="password" />
+
+        <button type="submit" class="sign-btn">Sign</button>
+      </form>
+    </div>
   </body>
 </html>
