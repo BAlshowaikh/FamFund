@@ -12,33 +12,68 @@ const mongoose = require("mongoose")
 
 // ----------------------------------- Listing APIs -----------------------------------
 
+
 // When clicked on "Goals" in the side bar
 exports.listAll_goals_get = async (req, res) => {
+    const user = req.session.user
+    const userFamilyId = user.familyId
     try{
         // Only show the goals associated to the user's family
-        // const goals = await Goal.find({ familyId:{ $eq: user.familyId } }).sort({ "title": 1 })
-        const goals = await Goal.find().sort({ "title": 1 })
+        const goals = await Goal.find({ familyId:{ $eq: userFamilyId } }).sort({ "title": 1 })
+
+        // If no goal found
+        if (!goals) {
+            return res.status(404).render("error.ejs", {
+                message: "Goal not found.",
+                activePage: "goals"
+            });
+        }
+
         res.status(200).render("goals/index.ejs", {
             title: 'Goals | FamFund', goals ,activePage: 'goals',
         })
+        
     } catch(error) {
         console.error("Error fetching goals:", error);
         res.status(500).render("error.ejs", {
-            message: "Something went wrong while fetching the goals."
+            message: "Something went wrong while fetching the goals.",
+            activePage: "goals"
         })  
     }
 }
 
 // When a "View Details" button is clicked 
 exports.listOne_goal_get = async (req, res) => {
+    const user = req.session.user
+    const userFamilyId = user.familyId
+
     try{
-    // Find the specified goal using the passed goal id 
-    const goal = await Goal.findById(req.params.goalId)
-    res.status(200).render("goals/details.ejs", {goal, activePage:"goals"})
+      // Find the specified goal using the passed goal id 
+      const goal = await Goal.findOne({
+       _id: req.params.goalId, 
+      familyId: userFamilyId })
+
+    
+      // If no goal found
+        if (!goal) {
+            return res.status(404).render("error.ejs", {
+                message: "Goal not found.",
+                activePage: "goals"
+            });
+        }
+    
+    // Show all contributions done by the userfor this goal
+    const contributions = await Contribution.find({
+      goalId: req.params.goalId,
+      contributorId: req.session.user._id
+    })
+
+    res.status(200).render("goals/details.ejs", {goal, contributions, activePage:"goals"})
     } catch(error) {
         console.error("Error fetching goal:", error)
         res.status(500).render("error.ejs", {
-            message: "Something went wrong while fetching the goal."
+            message: "Something went wrong while fetching the goal.",
+            activePage: "goals"
         })
     }
 }
@@ -55,27 +90,45 @@ exports.add_goal_get = (req, res) => {
     } catch(error) {
         console.error("Error rendering the page", error)
         res.status(500).render("error.ejs", {
-            message: "Error while rendering the required file."
+            message: "Error while rendering the required file.",
+            activePage: "goals"
         })
     }
 }
 
 // When the save button is clicked inside the "goals/add.ejs" file
 exports.add_goal_post = async (req, res) => {
+
+  const user = req.session.user
+  const userFamilyId = user.familyId
+  console.log(user)
     try{
-        // Adding the required reference ids
-        req.body.createdByUserId = req.session.user._id
-        req.body.familyId = req.session.user.familyId
 
-        const addedGoal = await Goal.create(req.body)
+      const coverImgURL = req.file ? `/public/images/goal-cover-images/${req.file.filename}` : undefined;
 
-        // Redirect to the added goal's details page
-        res.redirect(`/goals/${addedGoal._id}`)
+      // Adding the required reference ids
+      const newGoalData = {
+      title: req.body.title,
+      description: req.body.description,
+      targetAmount: req.body.targetAmount,
+      currentAmount: req.body.currentAmount || 0,
+      status: req.body.status || "Active",
+      dueDate: req.body.dueDate || null,
+      coverImgURL,
+      familyId: userFamilyId,
+      createdByUserId: user._id,
+    };
+
+      const addedGoal =  await Goal.create(newGoalData);
+
+      // Redirect to the added goal's details page
+      res.redirect(`/goals/${addedGoal._id}`)
 
     } catch(error) {
         console.error("Error  adding a new goal", error)
         res.status(500).render("error.ejs", {
-            message: "Error while adding a new goal."
+            message: "Error while adding a new goal.",
+            activePage: "goals"
         })
     }
 }
@@ -84,14 +137,20 @@ exports.add_goal_post = async (req, res) => {
 
 // When the "edit" icon is clicked in the goal/index.ejs page (For parents only)
 exports.edit_goal_get = async (req, res) => {
+    const user = req.session.user
+    const userFamilyId = user.familyId
+
     try{
         // Find the specified goal
-        const goal = await Goal.findById(req.params.goalId)
+        const goal = await Goal.findOne({
+          _id: req.params.goalId,
+          familyId: userFamilyId })
 
         // If no goal found
         if (!goal) {
             return res.status(404).render("error.ejs", {
-                message: "Goal not found."
+                message: "Goal not found.",
+                activePage: "goals"
             });
         }
 
@@ -108,35 +167,45 @@ exports.edit_goal_get = async (req, res) => {
 
 // When the save button is clicked inside the "goals/add.ejs" file
 exports.edit_goal_put = async (req, res) => {
+  const user = req.session.user
+  const userFamilyId = user.familyId
+
   try {
-    const goal = await Goal.findById(req.params.goalId);
+    // Ensure the goal belongs to the family
+    const goal = await Goal.findOne({
+      _id:req.params.goalId,
+      familyId: userFamilyId});
 
     if (!goal) {
       return res.status(404).render("error.ejs", {
         message: "Goal not found."
-      });
+      })
     }
 
-    if (req.file) {
-      req.body.coverImgURL = `/images/goal-cover-image/${req.file.filename}`;
-    }
-
-    goal.set({
+    const updates = {
       title: req.body.title,
       description: req.body.description,
       targetAmount: req.body.targetAmount,
-      currentAmount: req.body.currentAmount,
+      currentAmount: req.body.currentAmount || goal.currentAmount,
       dueDate: req.body.dueDate,
-      coverImgURL: req.body.coverImgURL,
-      status: req.body.status 
-    });
+      status: req.body.status,
+    }
 
-    await goal.save();
+    // Only override coverImgURL if a new file was uploaded
+    if (req.file) {
+      updates.coverImgURL = `/public/images/goal-cover-images/${req.file.filename}`
+    } else {
+      // keep the old one if no file is provided
+      updates.coverImgURL = goal.coverImgURL
+    }
 
-    res.redirect(`/goals/${goal._id}`);
+    goal.set(updates)
+    await goal.save()
+
+    res.redirect(`/goals/${goal._id}`)
 
   } catch (error) {
-    console.error("Error editing the goal:", error);
+    console.error("Error editing the goal:", error)
     res.status(500).render("error.ejs", {
       message: "Error while editing the goal."
     });
@@ -148,17 +217,24 @@ exports.edit_goal_put = async (req, res) => {
 
 // When the "trash" icon is clicked in the index.ejs page (Parent only)
 exports.delete_goal = async (req, res) => {
+    const user = req.session.user
+    const userFamilyId = user.familyId
+
     try{
         // Find the specified goal
-        const goal = await Goal.findById(req.params.goalId)
+        const goal = await Goal.findOne({
+          _id:req.params.goalId,
+          familyId: userFamilyId});
+
         if (!goal){
             return res.status(404).render("error.ejs", {
-                message: "Goal not found."
+                message: "Goal not found.",
+                activePage: "goals"
             })
         }
 
         // Delete all contributions associated with the goal
-        // await Contribution.deleteMany({ goalId: goal._id });
+        await Contribution.deleteMany({ goalId: goal._id });
 
         await goal.deleteOne()
         res.redirect("/goals");
@@ -173,84 +249,84 @@ exports.delete_goal = async (req, res) => {
 
 // ---------------------- DUMMY ------------------------------
 // GET /seed-goals  (Just to create data, won't redirect to any page)
-exports.seedDummy_goals_get = async (req, res) => {
-  try {
-    const dummyFamilyId = new mongoose.Types.ObjectId();
-    const dummyUserId = new mongoose.Types.ObjectId();
-    const futureDate = new Date();
+// exports.seedDummy_goals_get = async (req, res) => {
+//   try {
+//     const dummyFamilyId = new mongoose.Types.ObjectId();
+//     const dummyUserId = new mongoose.Types.ObjectId();
+//     const futureDate = new Date();
 
-    await Goal.deleteMany({}); 
+//     await Goal.deleteMany({}); 
 
-    await Goal.create([
-      {
-        title: "Trip",
-        description: "Family beach trip",
-        targetAmount: 200,
-        currentAmount: 50,
-        status: "Active",
-        coverImgURL: "/public/images/trip.png",
-        familyId: dummyFamilyId,
-        createdByUserId: dummyUserId,
-        dueDate: futureDate
-      },
+//     await Goal.create([
+//       {
+//         title: "Trip",
+//         description: "Family beach trip",
+//         targetAmount: 200,
+//         currentAmount: 50,
+//         status: "Active",
+//         coverImgURL: "/public/images/trip.png",
+//         familyId: dummyFamilyId,
+//         createdByUserId: dummyUserId,
+//         dueDate: futureDate
+//       },
 
-      {
-        title: "New Pet",
-        description: "Save for a cute cat",
-        targetAmount: 80,
-        currentAmount: 80,
-        status: "Completed",
-        coverImgURL: "/public/images/pet.png",
-        familyId: dummyFamilyId,
-        createdByUserId: dummyUserId
-      }
+//       {
+//         title: "New Pet",
+//         description: "Save for a cute cat",
+//         targetAmount: 80,
+//         currentAmount: 80,
+//         status: "Completed",
+//         coverImgURL: "/public/images/pet.png",
+//         familyId: dummyFamilyId,
+//         createdByUserId: dummyUserId
+//       }
 
-    ]);
+//     ]);
 
-    res.send("Dummy goals seeded 👍");
-  } catch (err) {
-    console.error(err);
-    res.status(500).send("Error seeding goals");
-  }
-}
+//     res.send("Dummy goals seeded 👍");
+//   } catch (err) {
+//     console.error(err);
+//     res.status(500).send("Error seeding goals");
+//   }
+// }
 
 // ------------------ Create new dummy goal ----------------------
-exports.add_dummy_goal_post = async (req, res) => {
-  try {
-    const {
-      title,
-      description,
-      targetAmount,
-      currentAmount,
-      status,
-      dueDate,
-    } = req.body;
+// exports.add_dummy_goal_post = async (req, res) => {
+//   try {
+//     const {
+//       title,
+//       description,
+//       targetAmount,
+//       currentAmount,
+//       status,
+//       dueDate,
+//     } = req.body;
 
-    // TEMP: dummy IDs until auth + family are ready
-    const dummyFamilyId = new mongoose.Types.ObjectId();
-    const dummyUserId = new mongoose.Types.ObjectId();
+//     // TEMP: dummy IDs until auth + family are ready
+//     const dummyFamilyId = new mongoose.Types.ObjectId();
+//     const dummyUserId = new mongoose.Types.ObjectId();
 
-    const coverImgURL = req.file ? `/public/images/goal-cover-images/${req.file.filename}` : undefined;
+//     const coverImgURL = req.file ? `/public/images/goal-cover-images/${req.file.filename}` : undefined;
 
-    const newGoal = await Goal.create({
-      title,
-      description,
-      targetAmount: Number(targetAmount),
-      currentAmount: currentAmount ? Number(currentAmount) : 0,
-      status: status || "Active",
-      dueDate: dueDate || null,
-      coverImgURL,
-      familyId: dummyFamilyId,
-      createdByUserId: dummyUserId,
-    })
+//     const newGoal = await Goal.create({
+//       title,
+//       description,
+//       targetAmount: Number(targetAmount),
+//       currentAmount: currentAmount ? Number(currentAmount) : 0,
+//       status: status || "Active",
+//       dueDate: dueDate || null,
+//       coverImgURL,
+//       familyId: dummyFamilyId,
+//       createdByUserId: dummyUserId,
+//     })
 
-    return res.redirect(`/goals/${newGoal._id}`);
+//     return res.redirect(`/goals/${newGoal._id}`);
 
-  } catch (error) {
-    console.error("Error creating goal:", error);
-    res.status(500).render("error.ejs", {
-      message: "Something went wrong while adding the goal.",
-      activePage:"goals"
-    })
-  }
-} 
+//   } catch (error) {
+//     console.error("Error creating goal:", error);
+//     res.status(500).render("error.ejs", {
+//       message: "Something went wrong while adding the goal.",
+//       activePage:"goals"
+//     })
+//   }
+// } 

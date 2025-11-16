@@ -1,1 +1,41 @@
-<%- include("layouts/main") -%>
+<h2 class="ff-section-title">Your Contributions</h2>
+
+<div class="ff-section">
+  <div class="contribution-table-scroll"> 
+    <table class="table mb-0 ff-table">
+      <thead>
+        <tr>
+            <th>Goal Name</th>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Amount</th>
+        </tr>
+      </thead>
+
+      <tbody>
+        <% if (contributions.length > 0) { %>
+          <% contributions.forEach(contribution => { %>
+            <tr class="ff-table-row" data-id="<%= contribution._id %>">
+              <td><%= contribution.goalId.title %></td>
+              <%# Exrating contribution time and date from createAt field %>  
+              <% const d = contribution.createdAt ? new Date(contribution.createdAt) : null %>
+              <% if (d) { %>
+                <td><%= d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) %></td>
+                <td><%= d.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' }).toLowerCase() %></td>
+              <% } else { %>
+                <td>DATE Not specified</td>
+                <td>TIME Not specified</td>
+              <% } %>
+
+              <td><%= contribution.amount %> BD</td>
+            </tr>
+          <% }) %>
+        <% } else { %>
+          <tr>
+            <td colspan="3" class="text-center text-muted">No contributions recorded yet.</td>
+          </tr>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+</div>
