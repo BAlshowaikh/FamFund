@@ -38,7 +38,10 @@ app.use(
     saveUninitialized: true,
   })
 )
-
+app.use((req, res, next) => {
+  res.locals.user = req.session.user ? req.session.user : null
+  next()
+})
 // Routes that doesn't require to check if Signed in
 const publicRoutes = [
   "/auth/sign-in",

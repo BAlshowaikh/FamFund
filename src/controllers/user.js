@@ -23,10 +23,11 @@ const putViewProfile = async (req, res) => {
 
     // Update image ONLY if user uploaded a file
     if (req.file) {
-  user.profileImageUrl = `/profile-images/${req.file.filename}`
-}
+      user.profileImageUrl = `/profile-images/${req.file.filename}`
+    }
     await user.save()
-
+    req.session.user = user
+    await req.session.save()
     res.redirect("/")
   }
 }
