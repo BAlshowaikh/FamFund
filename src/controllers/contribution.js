@@ -11,7 +11,7 @@ exports.listAll_contribution_get = async (req, res) => {
 
     const contributions = await Contribution.find({ contributorId: { $eq: userId } })
       .sort({ createdAt: -1 })
-      .populate("goalId", "title targetAmount");
+      .populate("goalId", "title");
 
     return res.status(200).render("contributions/index.ejs", { contributions, activePage: "contributions" })
   } catch (error) {
