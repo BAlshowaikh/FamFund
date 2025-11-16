@@ -9,22 +9,23 @@ const goalCtrl = require("../controllers/goal")
 // Middlewares 
 const goalValidationMW = require("../middleware/goal/goalValidation")
 const coverGoalMW = require("../middleware/imageConverter/goal-cover-image");
+const isParent = require("../middleware/isAParent")
 
 
 //-------------------------------------- Add new goal Routers -------------------------------------------
-router.get("/add", goalCtrl.add_goal_get)
-router.post("/", goalValidationMW.validateAddGoal, goalCtrl.add_goal_post)
+router.get("/add", isParent, goalCtrl.add_goal_get)
+router.post("/add", coverGoalMW.single("coverImg"), goalValidationMW.validateAddGoal, isParent, goalCtrl.add_goal_post)
 
 // ------------------------------- Edit a goal Router ----------------------------------
-router.get("/:goalId/edit", goalCtrl.edit_goal_get)
-router.put("/:goalId", coverGoalMW.single("coverImg"), goalValidationMW.validateEditGoal, goalCtrl.edit_goal_put)
+router.get("/:goalId/edit", isParent, goalCtrl.edit_goal_get)
+router.put("/:goalId", coverGoalMW.single("coverImg"), goalValidationMW.validateEditGoal,  isParent, goalCtrl.edit_goal_put)
 
 // ------------------------------------ DELETE  a goal Router ----------------------------------------------
-router.delete("/:goalId", goalCtrl.delete_goal)
+router.delete("/:goalId", isParent, goalCtrl.delete_goal)
 
 // ----------------------- DUMMY ---------------------------
-router.get("/seed-goals", goalCtrl.seedDummy_goals_get);
-router.post("/add", coverGoalMW.single("coverImg"), goalValidationMW.validateAddGoal, goalCtrl.add_dummy_goal_post)
+// router.get("/seed-goals", goalCtrl.seedDummy_goals_get);
+// router.post("/add", coverGoalMW.single("coverImg"), goalValidationMW.validateAddGoal, goalCtrl.add_dummy_goal_post)
 
 // ----------------------------------- Listing routers -----------------------------------
 router.get("/", goalCtrl.listAll_goals_get) 

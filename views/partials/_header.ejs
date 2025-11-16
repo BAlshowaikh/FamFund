@@ -2,7 +2,11 @@
   <!-- Welcome text -->
   <div>
     <h1 class="h3 fw-bold mb-1" style="color: #1F4A70;">
-      Welcome, User!
+      <% if (user) { %>
+        Welcome, <%= user.username %> !
+      <% } else { %>
+        Welcome User!
+      <% } %>
     </h1>
   </div>
 
