@@ -114,29 +114,33 @@ exports.edit_goal_put = async (req, res) => {
     if (!goal) {
       return res.status(404).render("error.ejs", {
         message: "Goal not found."
-      });
+      })
     }
 
-    if (req.file) {
-      req.body.coverImgURL = `/images/goal-cover-image/${req.file.filename}`;
-    }
-
-    goal.set({
+    const updates = {
       title: req.body.title,
       description: req.body.description,
       targetAmount: req.body.targetAmount,
-      currentAmount: req.body.currentAmount,
+      currentAmount: req.body.currentAmount || goal.currentAmount,
       dueDate: req.body.dueDate,
-      coverImgURL: req.body.coverImgURL,
-      status: req.body.status 
-    });
+      status: req.body.status,
+    }
 
-    await goal.save();
+    // Only override coverImgURL if a new file was uploaded
+    if (req.file) {
+      updates.coverImgURL = `/public/images/goal-cover-images/${req.file.filename}`
+    } else {
+      // keep the old one if no file is provided
+      updates.coverImgURL = goal.coverImgURL
+    }
 
-    res.redirect(`/goals/${goal._id}`);
+    goal.set(updates)
+    await goal.save()
+
+    res.redirect(`/goals/${goal._id}`)
 
   } catch (error) {
-    console.error("Error editing the goal:", error);
+    console.error("Error editing the goal:", error)
     res.status(500).render("error.ejs", {
       message: "Error while editing the goal."
     });

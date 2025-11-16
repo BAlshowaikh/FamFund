@@ -17,7 +17,7 @@ router.post("/", goalValidationMW.validateAddGoal, goalCtrl.add_goal_post)
 
 // ------------------------------- Edit a goal Router ----------------------------------
 router.get("/:goalId/edit", goalCtrl.edit_goal_get)
-router.put("/:goalId", goalValidationMW.validateEditGoal, goalCtrl.edit_goal_put)
+router.put("/:goalId", coverGoalMW.single("coverImg"), goalValidationMW.validateEditGoal, goalCtrl.edit_goal_put)
 
 // ------------------------------------ DELETE  a goal Router ----------------------------------------------
 router.delete("/:goalId", goalCtrl.delete_goal)
