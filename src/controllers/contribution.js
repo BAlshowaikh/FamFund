@@ -64,20 +64,18 @@ exports.add_cont_get = async (req, res) => {
 
 exports.add_cont_post = async (req, res) => {
   try {
-    const contributorId = req.session.user._id;
-    const familyId = req.session.user.familyId;
-    const { goalId, amount, message } = req.body;
-
-    if (!mongoose.isValidObjectId(goalId)) {
-      return res.status(404).render("error.ejs", { message: "Invalid goal id." });
-    }
+    const contributorId = req.session.user._id
+    const familyId = req.session.user.familyId
+    const goalId = req.params.goalId
+    const {amount, message } = req.body
 
     // Validate goal belongs to the same family as the user
-    const goal = await Goal.findOne({ _id: goalId, familyId });
+    const goal = await Goal.findOne({ _id: goalId, familyId })
     if (!goal) {
       return res.status(404).render("error.ejs", {
-        message: "Goal not found or not accessible."
-      });
+        message: "Goal not found or not accessible.",
+        activePage: "goals"
+      })
     }
 
     // Create contribution (server-side sets contributorId)
@@ -86,7 +84,7 @@ exports.add_cont_post = async (req, res) => {
       contributorId,
       amount,
       message
-    });
+    })
 
     // Go back to the user's goal's page
     return res.redirect(`/goals/${goalId}`);
@@ -94,7 +92,7 @@ exports.add_cont_post = async (req, res) => {
     console.error("Error on retrieving the contributions:", error);
     return res.status(500).render("error.ejs", {
       message: "Something went wrong while adding the contribution."
-    });
+    })
   }
 }
 

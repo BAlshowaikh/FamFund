@@ -64,7 +64,7 @@
   </div>
 
   <!-- For now: dummy data table -->
-  <div class="ff-card ff-card-soft">
+  <!-- <div class="ff-card ff-card-soft">
     <table class="table mb-0">
       <thead>
         <tr>
@@ -86,5 +86,47 @@
         </tr>
       </tbody>
     </table>
-  </div>
+  </div> -->
+
+  <div class="ff-card ff-card-soft">
+  <table class="table mb-0">
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Time</th>
+        <th>Amount</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% if (contributions.length > 0) { %>
+        <% contributions.forEach(contribution => { %>
+          <tr>
+            <% const contributionDate = contribution.createdAt; %>
+
+            <% if (contributionDate) { %>
+                <td>
+                  <%= contributionDate.toLocaleDateString('en-US', { year: 'numeric', month: 'short', day: 'numeric' }) %>
+                </td>
+                
+                <td>
+                  <%= contributionDate.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' }).toLowerCase() %>
+                </td>
+            <% } else { %>
+                <td>DATE Not specified</td>
+                <td>TIME Not specified</td>
+            <% } %>
+            
+            <td>
+              <%= contribution.amount %> BD
+            </td>
+          </tr>
+          <% }); %>
+        <% } else { %>
+        <tr>
+          <td colspan="3" class="text-center text-muted">No contributions recorded yet.</td>
+        </tr>
+      <% } %>
+    </tbody>
+  </table>
+</div>
 </section>

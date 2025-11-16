@@ -20,9 +20,19 @@ exports.listAll_goals_get = async (req, res) => {
     try{
         // Only show the goals associated to the user's family
         const goals = await Goal.find({ familyId:{ $eq: userFamilyId } }).sort({ "title": 1 })
+
+        // If no goal found
+        if (!goals) {
+            return res.status(404).render("error.ejs", {
+                message: "Goal not found.",
+                activePage: "goals"
+            });
+        }
+
         res.status(200).render("goals/index.ejs", {
             title: 'Goals | FamFund', goals ,activePage: 'goals',
         })
+        
     } catch(error) {
         console.error("Error fetching goals:", error);
         res.status(500).render("error.ejs", {
@@ -38,12 +48,27 @@ exports.listOne_goal_get = async (req, res) => {
     const userFamilyId = user.familyId
 
     try{
-    // Find the specified goal using the passed goal id 
-    const goal = await Goal.findOne({
+      // Find the specified goal using the passed goal id 
+      const goal = await Goal.findOne({
        _id: req.params.goalId, 
       familyId: userFamilyId })
 
-    res.status(200).render("goals/details.ejs", {goal, activePage:"goals"})
+    
+      // If no goal found
+        if (!goal) {
+            return res.status(404).render("error.ejs", {
+                message: "Goal not found.",
+                activePage: "goals"
+            });
+        }
+    
+    // Show all contributions done by the userfor this goal
+    const contributions = await Contribution.find({
+      goalId: req.params.goalId,
+      contributorId: req.session.user._id
+    })
+
+    res.status(200).render("goals/details.ejs", {goal, contributions, activePage:"goals"})
     } catch(error) {
         console.error("Error fetching goal:", error)
         res.status(500).render("error.ejs", {
