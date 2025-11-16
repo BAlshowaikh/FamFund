@@ -14,11 +14,10 @@ const morgan = require("morgan")
 const methodOverride = require("method-override")
 const expressLayouts = require("express-ejs-layouts")
 const checkIfSignedIn = require("./src/middleware/isSignedIn")
-//Use middleware
 
+//Use middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
-
 app.use(morgan("dev"))
 
 // For dynamic rendreing the main layout page
@@ -77,10 +76,6 @@ app.get("/", (req, res) => {
   })
 })
 
-
-// ----------------- Use the routes ----------------
-app.use("/goals", goalRouter)
-app.use("/contributions", contRouter)
 
 // ---------- Any router that doesn't fell into the specified routers ----------
 // -------------------- 404 FALLBACK --------------------

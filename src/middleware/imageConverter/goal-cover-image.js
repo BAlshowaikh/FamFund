@@ -11,10 +11,12 @@ const uploadPath = path.join(
   __dirname,
   "..",
   "..",
+  "..",
   "public",
   "images",
   "goal-cover-images"
 )
+
 
 // Storage confiruration
 // Stored physically in the server => use diskStorage
