@@ -9,11 +9,11 @@ exports.listAll_contribution_get = async (req, res) => {
   try {
     const userId = req.session.user._id
 
-    const userContributions = await Contribution.find({ contributorId: { $eq: userId } })
+    const contributions = await Contribution.find({ contributorId: { $eq: userId } })
       .sort({ createdAt: -1 })
       .populate("goalId", "title targetAmount");
 
-    return res.status(200).render("contributions/index.ejs", { userContributions })
+    return res.status(200).render("contributions/index.ejs", { contributions, activePage: "contributions" })
   } catch (error) {
     console.error("Error on retrieving the contributions:", error);
     return res.status(500).render("error.ejs", {
@@ -78,13 +78,17 @@ exports.add_cont_post = async (req, res) => {
       })
     }
 
-    // Create contribution (server-side sets contributorId)
+
+    // Create contribution 
     await Contribution.create({
       goalId,
       contributorId,
       amount,
       message
     })
+
+    goal.currentAmount += Number(amount)
+    await goal.save();
 
     // Go back to the user's goal's page
     return res.redirect(`/goals/${goalId}`);
