@@ -49,7 +49,7 @@ const post_signup = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       role: "Child",
-      status: "Pending",
+      status: "Approved",
       bio: req.body.bio,
       profileImageUrl,
     }
@@ -124,7 +124,7 @@ const post_signup_child = async (req, res) => {
   const Child = await User.create({
     ...childSessionData,
     familyId: family._id,
-    status: "Pending",
+    status: "Approved",
   })
   delete req.session.childData
 

@@ -76,7 +76,6 @@ app.get("/", (req, res) => {
   })
 })
 
-
 // ---------- Any router that doesn't fell into the specified routers ----------
 // -------------------- 404 FALLBACK --------------------
 app.use((req, res) => {
@@ -84,8 +83,8 @@ app.use((req, res) => {
     message: "The page you are looking for does not exist.",
     activePage: null,
     // layout: false
-  });
-});
+  })
+})
 
 //Listen to port
 app.listen(port, () => {
