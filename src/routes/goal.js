@@ -5,7 +5,10 @@
 
 const router = require("express").Router()
 const goalCtrl = require("../controllers/goal")
+
+// Middlewares 
 const goalValidationMW = require("../middleware/goal/goalValidation")
+const coverGoalMW = require("../middleware/imageConverter/goal-cover-image");
 
 
 //-------------------------------------- Add new goal Routers -------------------------------------------
@@ -21,7 +24,7 @@ router.delete("/:goalId", goalCtrl.delete_goal)
 
 // ----------------------- DUMMY ---------------------------
 router.get("/seed-goals", goalCtrl.seedDummy_goals_get);
-router.post("/add", goalCtrl.add_dummy_goal_post)
+router.post("/add", coverGoalMW.single("coverImg"), goalValidationMW.validateAddGoal, goalCtrl.add_dummy_goal_post)
 
 // ----------------------------------- Listing routers -----------------------------------
 router.get("/", goalCtrl.listAll_goals_get) 

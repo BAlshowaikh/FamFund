@@ -1,4 +1,6 @@
 <!-- Sidebar / Left Navigation -->
+ <% const page = typeof activePage !== 'undefined' ? activePage : 'goals'; %>
+
 <aside
   class="d-flex flex-column border-end min-vh-100 p-3"
   style="background-color: #F2FAFF; width: 230px;"
@@ -21,7 +23,7 @@
     <li class="nav-item">
       <a
         href="/"
-        class="nav-link d-flex align-items-center text-dark <%= activePage === 'dashboard' ? 'active' : '' %>"
+        class="nav-link d-flex align-items-center text-dark <%= page === 'dashboard' ? 'active' : '' %>"
       >
         <i class="bi bi-grid-1x2 me-2"></i>
         <span>Dashboard</span>
@@ -31,7 +33,7 @@
     <li class="nav-item">
       <a
         href="/goals"
-        class="nav-link d-flex align-items-center text-dark <%= activePage === 'goals' ? 'active' : '' %>"
+        class="nav-link d-flex align-items-center text-dark <%= page === 'goals' ? 'active' : '' %>"
       >
         <i class="bi bi-bullseye me-2"></i>
         <span>Goals</span>
@@ -41,7 +43,7 @@
     <li class="nav-item">
       <a
         href="/contributions"
-        class="nav-link d-flex align-items-center text-dark <%= activePage === 'contributions' ? 'active' : '' %>"
+        class="nav-link d-flex align-items-center text-dark <%= page === 'contributions' ? 'active' : '' %>"
       >
         <i class="bi bi-cash-stack me-2"></i>
         <span>Contributions</span>
@@ -51,7 +53,7 @@
     <li class="nav-item">
       <a
         href="/rewards"
-        class="nav-link d-flex align-items-center text-dark <%= activePage === 'rewards' ? 'active' : '' %>"
+        class="nav-link d-flex align-items-center text-dark <%= page === 'rewards' ? 'active' : '' %>"
       >
         <i class="bi bi-gift me-2"></i>
         <span>Rewards</span>
@@ -61,7 +63,7 @@
     <li class="nav-item">
       <a
         href="/tips"
-        class="nav-link d-flex align-items-center text-dark <%= activePage === 'tips' ? 'active' : '' %>"
+        class="nav-link d-flex align-items-center text-dark <%= page === 'tips' ? 'active' : '' %>"
       >
         <i class="bi bi-info-circle me-2"></i>
         <span>Tips</span>

@@ -117,6 +117,10 @@ exports.edit_goal_put = async (req, res) => {
       });
     }
 
+    if (req.file) {
+      req.body.coverImgURL = `/images/goal-cover-image/${req.file.filename}`;
+    }
+
     goal.set({
       title: req.body.title,
       description: req.body.description,
@@ -226,23 +230,27 @@ exports.add_dummy_goal_post = async (req, res) => {
     const dummyFamilyId = new mongoose.Types.ObjectId();
     const dummyUserId = new mongoose.Types.ObjectId();
 
-    await Goal.create({
+    const coverImgURL = req.file ? `/public/images/goal-cover-images/${req.file.filename}` : undefined;
+
+    const newGoal = await Goal.create({
       title,
       description,
       targetAmount: Number(targetAmount),
       currentAmount: currentAmount ? Number(currentAmount) : 0,
       status: status || "Active",
       dueDate: dueDate || null,
-      coverImgURL: "", // will wire from file later
+      coverImgURL,
       familyId: dummyFamilyId,
       createdByUserId: dummyUserId,
-    });
+    })
 
-    res.render("/", {activePage: "goals"});
+    return res.redirect(`/goals/${newGoal._id}`);
+
   } catch (error) {
     console.error("Error creating goal:", error);
     res.status(500).render("error.ejs", {
       message: "Something went wrong while adding the goal.",
-    });
+      activePage:"goals"
+    })
   }
 } 

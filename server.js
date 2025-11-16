@@ -14,11 +14,10 @@ const morgan = require("morgan")
 const methodOverride = require("method-override")
 const expressLayouts = require("express-ejs-layouts")
 const checkIfSignedIn = require("./src/middleware/isSignedIn")
-//Use middleware
 
+//Use middleware
 app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
-
 app.use(morgan("dev"))
 
 // For dynamic rendreing the main layout page
@@ -27,7 +26,7 @@ app.set("views", "views") // Tells that my views are in a folder named 'views'
 app.set("layout", "layouts/main") // Tell Express which file is the default layout wrapper
 app.use(expressLayouts)
 
-// This means: Everything inside the public folder is allowed to be served to the browser as static files not a route.
+// This means: Everything inside the public folder is allowed to be served to the browser as static files not a route
 app.use("/public", express.static("public"))
 app.use("/profile-images", express.static("public/images/profile-images"))
 //
@@ -76,6 +75,17 @@ app.get("/", (req, res) => {
     activePage: "dashboard",
   })
 })
+
+
+// ---------- Any router that doesn't fell into the specified routers ----------
+// -------------------- 404 FALLBACK --------------------
+app.use((req, res) => {
+  res.status(404).render("error.ejs", {
+    message: "The page you are looking for does not exist.",
+    activePage: null,
+    // layout: false
+  });
+});
 
 //Listen to port
 app.listen(port, () => {
