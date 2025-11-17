@@ -14,6 +14,7 @@ const morgan = require("morgan")
 const methodOverride = require("method-override")
 const expressLayouts = require("express-ejs-layouts")
 const checkIfSignedIn = require("./src/middleware/isSignedIn")
+const passUserToView = require("./src/middleware/passUserToView")
 
 //Use middleware
 app.use(express.urlencoded({ extended: true }))
@@ -29,7 +30,7 @@ app.use(expressLayouts)
 // This means: Everything inside the public folder is allowed to be served to the browser as static files not a route
 app.use("/public", express.static("public"))
 app.use("/profile-images", express.static("public/images/profile-images"))
-//
+
 
 app.use(
   session({
@@ -38,10 +39,10 @@ app.use(
     saveUninitialized: true,
   })
 )
-app.use((req, res, next) => {
-  res.locals.user = req.session.user ? req.session.user : null
-  next()
-})
+
+// After creating the session call the pass user to view MW
+app.use(passUserToView)
+
 // Routes that doesn't require to check if Signed in
 const publicRoutes = [
   "/auth/sign-in",

@@ -123,16 +123,6 @@ header h1 {
   background-color: #e5f1ff;
 }
 
-/* hide scrollbar visually but keep scrolling */
-/* .ff-scroll-area {
-  max-height: calc(100vh - 5.5em);
-  overflow-y: auto;
-}
-
-.ff-scroll-area::-webkit-scrollbar {
-  display: none;
-} */
-
 /* -------- Goal card -------- */
 
 .ff-goals-list {
@@ -181,11 +171,6 @@ header h1 {
   font-size: 0.85em;
 }
 
-/* Progress */
-
-/* .ff-goal-progress-text {
-  font-size: 2em;
-} */
 
 .ff-progress-track {
   width: 100%;
@@ -220,7 +205,6 @@ header h1 {
 }
 
 /* Buttons inside card */
-
 .ff-ghost-btn,
 .ff-primary-outline-btn {
   font-size: 0.9em;
@@ -295,6 +279,7 @@ header h1 {
   background-color: #9ca3af;
   cursor: not-allowed;
 }
+
 
 /* ---------------------- Goal new/edit pages ------------------------ */
 
@@ -432,4 +417,105 @@ header h1 {
   font-size: 1.6em;
   line-height: 1;
   cursor: pointer;
+}
+
+/* -----------------Contibutions Table (both for the goal details page and contributions index page-------------*/
+
+
+/* Container Styles */
+.contribution-table-scroll {
+    max-height: 30em; 
+    overflow-y: auto; 
+}
+
+/* For goal details page -because the sizes are differenet*/
+.contribution-table-goal-scroll {
+    max-height: 10em; 
+    overflow-y: auto; 
+}
+
+
+/* Hide Scrollbar */
+.contribution-table-scroll::-webkit-scrollbar {
+    width: 0 !important; 
+    display: none;
+}
+
+/* Hide Scrollbar */
+.contribution-table-goal-scroll::-webkit-scrollbar {
+    width: 0 !important; 
+    display: none;
+}
+
+/* Table rows */
+.ff-table-row {
+  transition: all 0.18s ease-in-out;
+  cursor: pointer;
+  border-radius: 10px; 
+}
+
+/* Hover state */
+.ff-table-row:hover {
+  background-color: #F2FAFF;              
+  transform: scale(1.01);                
+  border: 1px solid #1F4A70 !important;   
+}
+
+.ff-card.ff-card-soft {
+  background-color: #F2FAFF;  
+}
+
+/* Base table tweaks */
+.ff-table {
+  border-collapse: separate;
+  border-spacing: 0 0.4em;      
+  font-size: 0.95em;
+}
+
+/* Header */
+.ff-table thead th {
+  border: none !important;
+  background-color: #F2FAFF;
+  color: #1F4A70;
+  font-weight: 700;
+  padding: 0.9em 1.2em;
+}
+
+/* Body cells */
+.ff-table tbody td {
+  border: none !important;
+  background-color: #ffffff;
+  padding: 0.85em 1.2em;
+  vertical-align: middle;
+}
+
+/* Amount column right-aligned */
+.ff-table tbody td:last-child {
+  text-align: right;
+  font-weight: 600;
+  color: #2364A4;
+}
+
+/* Make each row look like a pill card */
+.ff-table-row {
+  transition: all 0.18s ease-in-out;
+  cursor: pointer;
+}
+
+.ff-table-row td:first-child {
+  border-top-left-radius: 999px;
+  border-bottom-left-radius: 999px;
+}
+
+.ff-table-row td:last-child {
+  border-top-right-radius: 999px;
+  border-bottom-right-radius: 999px;
+}
+
+/* Hover state */
+.ff-table-row:hover td {
+  background-color: #E7F3FF;             
+  box-shadow: 0 0.05em 0.4em rgba(0, 0, 0, 0.06);
+  border-top: 1px solid #1F4A70;
+  border-bottom: 1px solid #1F4A70;
 }

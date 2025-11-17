@@ -6,9 +6,9 @@ const router = require("express").Router()
 const contCtrl = require("../controllers/contribution")
 
 //-------------------------------------- Add new cont APIs -------------------------------------------
-// router.get("/add", contCtrl.add_cont_get)
-// router.post("/", contCtrl.add_cont_post)
-router.post("/:goalId", contCtrl.dummy_add_contribution_post)
+router.get("/add", contCtrl.add_cont_get)
+router.post("/:goalId", contCtrl.add_cont_post)
+// router.post("/:goalId", contCtrl.dummy_add_contribution_post)
 
 
 // ----------------------------------- Listing routers -----------------------------------

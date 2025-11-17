@@ -9,11 +9,11 @@ exports.listAll_contribution_get = async (req, res) => {
   try {
     const userId = req.session.user._id
 
-    const userContributions = await Contribution.find({ contributorId: { $eq: userId } })
+    const contributions = await Contribution.find({ contributorId: { $eq: userId } })
       .sort({ createdAt: -1 })
-      .populate("goalId", "title targetAmount");
+      .populate("goalId", "title");
 
-    return res.status(200).render("contributions/index.ejs", { userContributions })
+    return res.status(200).render("contributions/index.ejs", { contributions, activePage: "contributions" })
   } catch (error) {
     console.error("Error on retrieving the contributions:", error);
     return res.status(500).render("error.ejs", {
@@ -64,29 +64,31 @@ exports.add_cont_get = async (req, res) => {
 
 exports.add_cont_post = async (req, res) => {
   try {
-    const contributorId = req.session.user._id;
-    const familyId = req.session.user.familyId;
-    const { goalId, amount, message } = req.body;
-
-    if (!mongoose.isValidObjectId(goalId)) {
-      return res.status(404).render("error.ejs", { message: "Invalid goal id." });
-    }
+    const contributorId = req.session.user._id
+    const familyId = req.session.user.familyId
+    const goalId = req.params.goalId
+    const {amount, message } = req.body
 
     // Validate goal belongs to the same family as the user
-    const goal = await Goal.findOne({ _id: goalId, familyId });
+    const goal = await Goal.findOne({ _id: goalId, familyId })
     if (!goal) {
       return res.status(404).render("error.ejs", {
-        message: "Goal not found or not accessible."
-      });
+        message: "Goal not found or not accessible.",
+        activePage: "goals"
+      })
     }
 
-    // Create contribution (server-side sets contributorId)
+
+    // Create contribution 
     await Contribution.create({
       goalId,
       contributorId,
       amount,
       message
-    });
+    })
+
+    goal.currentAmount += Number(amount)
+    await goal.save();
 
     // Go back to the user's goal's page
     return res.redirect(`/goals/${goalId}`);
@@ -94,7 +96,7 @@ exports.add_cont_post = async (req, res) => {
     console.error("Error on retrieving the contributions:", error);
     return res.status(500).render("error.ejs", {
       message: "Something went wrong while adding the contribution."
-    });
+    })
   }
 }
 
