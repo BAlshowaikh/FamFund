@@ -3,69 +3,94 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-  </head>
-  <body>
-    <form
-      action="/profile/<%=user._id%>?_method=PUT"
-      method="POST"
-      enctype="multipart/form-data"
-    >
-      <label for="profileImage" class="form-label"
-        >Profile image:
-        <br />
-        <img
-          src="<%= user.profileImageUrl %>"
-          alt="Profile image"
-          style="
-            width: 120px;
-            height: 120px;
-            border-radius: 50%;
-            object-fit: cover;
-          "
-        />
-      </label>
-      <br />
-      <input
-        type="file"
-        name="profileImage"
-        id="profileImage"
-        class="form-control"
-        accept="image/*"
-      />
-      <br />
-      <label for="username">Username:</label>
-      <br />
-      <input
-        type="text"
-        name="username"
-        id="username"
-        value="<%= user.username %>"
-      />
-      <br />
-      <label for="email">Email:</label>
-      <br />
-      <input type="text" name="email" id="email" value="<%= user.email %>" />
-      <br />
-      <label for="role">role:<%= user.role %></label>
-      <br />
-      <label for="bio">Bio:</label>
-      <br />
-      <div class="bioLength">0 /200</div>
-      <br />
-      <textarea name="bio" id="bio" rows="4"><%= user.bio %></textarea>
-      <br />
-      <label for="code">Family code: <%=family.code%></label>
-      <br />
-      <button type="submit">Save</button>
-    </form>
-    <script>
-      const bio = document.querySelector("#bio")
-      const bioLength = document.querySelector(".bioLength")
+    <title>Profile</title>
 
-      bio.addEventListener("input", () => {
-        bioLength.innerText = `${bio.value.length} / 200`
-      })
-    </script>
+    <link rel="stylesheet" href="/public/css/profile.css" />
+  </head>
+
+  <body>
+    <div class="profile-page">
+      <form
+        class="profile-card"
+        action="/profile/<%= user._id %>?_method=PUT"
+        method="POST"
+        enctype="multipart/form-data"
+      >
+        <!-- Profile image -->
+        <div class="profile-image-wrapper">
+          <img src="<%= user.profileImageUrl %>" class="profile-image" />
+          <label class="change-btn">
+            Change
+            <input type="file" name="profileImage" hidden />
+          </label>
+        </div>
+
+        <!-- Date Created -->
+        <label class="label">Date Created</label>
+        <input
+          type="text"
+          class="input"
+          value="<%= user.createdAt.toLocaleDateString() %>"
+          disabled
+        />
+
+        <!-- Name -->
+        <label class="label">Name</label>
+        <input
+          type="text"
+          class="input"
+          name="username"
+          value="<%= user.username %>"
+        />
+
+        <!-- Email -->
+        <label class="label">Email</label>
+        <input
+          type="email"
+          class="input"
+          name="email"
+          value="<%= user.email %>"
+        />
+
+        <label class="label">Bio</label>
+        <textarea
+          id="profileBio"
+          name="bio"
+          class="input"
+          maxlength="200"
+          rows="3"
+        >
+<%= user.bio %></textarea
+        >
+
+        <div class="profile-bio-counter">
+          <span id="profileBioCount"><%= user.bio.length %></span> / 200
+        </div>
+
+        <!-- Role (not editable) -->
+        <label class="label">Role</label>
+        <input type="text" class="input" value="<%= user.role %>" disabled />
+
+        <!-- Family Code (not editable) -->
+        <label class="label">Family Code</label>
+        <input
+          type="text"
+          class="input"
+          value="<%= family ? family.code : '' %>"
+          disabled
+        />
+
+        <!-- Save Button -->
+        <button class="save-btn" type="submit">Save</button>
+      </form>
+    </div>
   </body>
 </html>
+<script>
+  const profileBio = document.getElementById("profileBio")
+  const profileBioCount = document.getElementById("profileBioCount")
+
+  profileBio.addEventListener("input", () => {
+    profileBioCount.textContent = profileBio.value.length
+  })
+</script>

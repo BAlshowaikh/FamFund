@@ -3,86 +3,109 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sign up</title>
+
+    <!-- IMPORTANT — You said this is what works -->
     <link rel="stylesheet" href="/public/css/auth.css" />
-    <title>sign-up</title>
   </head>
+
   <body>
-    <%- include("../partials/_navbar.ejs") %>
+    <div class="signup-wrapper">
+      <div class="signup-box">
+        <% if (page === 1) { %>
 
-    <div class="signup-container">
-      <% if (page === 1) { %>
+        <h1 class="signup-title">Sign up</h1>
 
-      <h2 class="signup-title">Create a new account!</h2>
+        <form
+          action="/auth/sign-up"
+          method="POST"
+          enctype="multipart/form-data"
+        >
+          <!-- Username -->
+          <label>Username</label>
+          <input type="text" name="username" placeholder="Enter your name" />
 
-      <form action="/auth/sign-up" method="POST" enctype="multipart/form-data">
-        <label>Username</label>
-        <input type="text" name="username" placeholder="Input your name" />
+          <!-- Email -->
+          <label>Email</label>
+          <input type="text" name="email" />
 
-        <label>Email</label>
-        <input type="text" name="email" />
+          <!-- Password -->
+          <label>Password</label>
+          <input type="password" name="password" />
 
-        <label>Password</label>
-        <input type="password" name="password" />
+          <!-- Confirm Password -->
+          <label>Confirm Password</label>
+          <input type="password" name="confirmPassword" />
 
-        <label>Confirm Password</label>
-        <input type="password" name="confirmPassword" />
+          <!-- Role -->
+          <label>Role</label>
+          <select name="role">
+            <option value="Parent">Parent</option>
+            <option value="Child">Child</option>
+          </select>
 
-        <label>Role</label>
-        <select name="role">
-          <option value="Parent">Parent</option>
-          <option value="Child">Child</option>
-        </select>
+          <!-- Bio -->
+          <label>Bio</label>
+          <div class="bio-counter"><span id="counter">0</span> / 200</div>
 
-        <label>Bio</label>
-        <textarea
-          id="bio"
-          name="bio"
-          rows="4"
-          placeholder="Tell us something about yourself..."
-        ></textarea>
-        <div class="bio-counter"><span id="counter">0</span> / 200</div>
+          <textarea
+            id="bio"
+            name="bio"
+            rows="4"
+            placeholder="Tell us something about yourself..."
+          ></textarea>
 
-        <label>Profile Image</label>
-        <input type="file" name="profileImage" accept="image/*" />
+          <!-- Profile Image -->
+          <label>Profile Image</label>
+          <input type="file" name="profileImage" accept="image/*" />
 
-        <button type="submit" class="signup-btn">Continue</button>
-      </form>
+          <button type="submit" class="signup-btn">Continue</button>
+        </form>
 
-      <script>
-        const bio = document.getElementById("bio")
-        const counter = document.getElementById("counter")
+        <script>
+          const bio = document.getElementById("bio")
+          const counter = document.getElementById("counter")
 
-        bio.addEventListener("input", () => {
-          counter.innerText = bio.value.length
-        })
-      </script>
+          bio.addEventListener("input", () => {
+            counter.innerText = bio.value.length
+          })
+        </script>
 
-      <% } else if (page === 2 && role === "Parent") { %>
+        <% } else if (page === 2 && role === "Parent") { %>
 
-      <h2 class="signup-title">Create a Family</h2>
+        <h1 class="signup-title">Create Family</h1>
 
-      <form action="/auth/sign-up/parent" method="POST">
-        <label>Family Name</label>
-        <input type="text" name="parentFamilyName" />
+        <form action="/auth/sign-up/parent" method="POST">
+          <label>Family Name</label>
+          <input type="text" name="parentFamilyName" />
 
-        <label>Family Code</label>
-        <input type="text" name="code" />
+          <label>Family Code</label>
+          <input type="text" name="code" />
 
-        <button type="submit" class="signup-btn">Create a Family</button>
-      </form>
+          <button type="submit" class="signup-btn">Create Family</button>
+        </form>
 
-      <% } else if (page === 2 && role === "Child") { %>
+        <% } else if (page === 2 && role === "Child") { %>
 
-      <h2 class="signup-title">Join a Family</h2>
+        <h1 class="signup-title">Join Family</h1>
 
-      <form action="/auth/sign-up/child" method="POST">
-        <label>Family Code</label>
-        <input type="text" name="code" />
+        <form action="/auth/sign-up/child" method="POST">
+          <label>Family Code</label>
+          <input type="text" name="code" />
 
-        <button type="submit" class="signup-btn">Join Family</button>
-      </form>
+          <button type="submit" class="signup-btn">Join Family</button>
+        </form>
 
-      <% } %>
+        <% } %>
+      </div>
     </div>
   </body>
 </html>
+<script>
+  const bioInput = document.getElementById("bio")
+  const bioCount = document.getElementById("bioCount")
+
+  bioInput.addEventListener("input", () => {
+    bioCount.textContent = bioInput.value.length
+  })
+</script>

@@ -3,29 +3,32 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>sign-in</title>
+    <title>Sign in</title>
+
     <link rel="stylesheet" href="/public/css/auth.css" />
   </head>
 
   <body>
-    <!-- Logo -->
-    <div class="family-logo">
-      <img src="https://i.postimg.cc/j5jGDkmn/Group-15.png" />
-    </div>
+    <div class="signin-container">
+      <img
+        src="https://i.postimg.cc/j5jGDkmn/Group-15.png"
+        class="signin-logo"
+        alt="FamFund Logo"
+      />
 
-    <!-- Sign in card -->
-    <div class="sign-in-card">
-      <h2 class="sign-title">Sign in</h2>
+      <div class="signin-box">
+        <h1 class="signin-title">Sign in</h1>
 
-      <form action="/auth/sign-in" method="POST">
-        <label>Email</label>
-        <input type="text" name="email" />
+        <form action="/auth/sign-in" method="POST">
+          <label>Email</label>
+          <input type="text" name="email" />
 
-        <label>Password</label>
-        <input type="password" name="password" />
+          <label>Password</label>
+          <input type="password" name="password" />
 
-        <button type="submit" class="sign-btn">Sign</button>
-      </form>
+          <button type="submit" class="signin-button">Sign</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>
