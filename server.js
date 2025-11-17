@@ -15,6 +15,8 @@ const methodOverride = require("method-override")
 const expressLayouts = require("express-ejs-layouts")
 const checkIfSignedIn = require("./src/middleware/isSignedIn")
 const passUserToView = require("./src/middleware/passUserToView")
+const flash = require("express-flash");
+
 
 //Use middleware
 app.use(express.urlencoded({ extended: true }))
@@ -42,6 +44,11 @@ app.use(
 
 // After creating the session call the pass user to view MW
 app.use(passUserToView)
+
+// After the user session use the flash package
+// Notes on express.flash: This middleware must run after your session middleware, 
+// as it relies entirely on the req.session object to store its data.
+app.use(flash())
 
 // Routes that doesn't require to check if Signed in
 const publicRoutes = [

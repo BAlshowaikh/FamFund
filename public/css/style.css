@@ -519,3 +519,50 @@ header h1 {
   border-top: 1px solid #1F4A70;
   border-bottom: 1px solid #1F4A70;
 }
+
+/* ----------------------------- Successfull Modal ----------------------------------- */
+.ff-success-modal {
+  position: fixed;
+  top: 1.5rem;
+  right: 1.5rem;
+  z-index: 2000;
+  animation: slideDown 0.35s ease-out;
+}
+
+.ff-success-box {
+  background: #F2FAFF;
+  border-left: 6px solid #1F4A70;
+  padding: 1rem 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 3px 12px rgba(0,0,0,0.1);
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.ff-success-icon {
+  font-size: 1.7rem;
+  color: #1F4A70;
+}
+
+.ff-success-title {
+  margin: 0;
+  font-weight: 600;
+  color: #1F4A70;
+}
+
+.ff-success-text {
+  margin: 0;
+  color: #234567;
+}
+
+.ff-success-modal.hide {
+  opacity: 0;
+  transform: translateY(-10px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+}
+
+@keyframes slideDown {
+  from { opacity: 0; transform: translateY(-10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
