@@ -15,6 +15,8 @@ const methodOverride = require("method-override")
 const expressLayouts = require("express-ejs-layouts")
 const checkIfSignedIn = require("./src/middleware/isSignedIn")
 const passUserToView = require("./src/middleware/passUserToView")
+const flash = require("express-flash");
+
 
 //Use middleware
 app.use(express.urlencoded({ extended: true }))
@@ -43,6 +45,11 @@ app.use(
 // After creating the session call the pass user to view MW
 app.use(passUserToView)
 
+// After the user session use the flash package
+// Notes on express.flash: This middleware must run after your session middleware, 
+// as it relies entirely on the req.session object to store its data.
+app.use(flash())
+
 // Routes that doesn't require to check if Signed in
 const publicRoutes = [
   "/auth/sign-in",
@@ -67,18 +74,21 @@ const goalRouter = require("./src/routes/goal")
 const contRouter = require("./src/routes/contribution")
 const authRouter = require("./src/routes/auth")
 const profileRouter = require("./src/routes/user")
+const dashboardRouter = require("./src/routes/dashboard")
 
 // ----------------- Use the routes ----------------
 app.use("/goals", goalRouter)
 app.use("/contributions", contRouter)
 app.use("/auth", authRouter)
 app.use("/profile", profileRouter)
-app.get("/", (req, res) => {
-  res.render("index.ejs", {
-    title: "Dashboard | FamFund",
-    activePage: "dashboard",
-  })
-})
+app.use("/dashboard", dashboardRouter)
+app.get("/", dashboardRouter)
+// app.get("/", (req, res) => {
+//   res.render("index.ejs", {
+//     title: "Dashboard | FamFund",
+//     activePage: "dashboard",
+//   })
+// })
 
 // ---------- Any router that doesn't fell into the specified routers ----------
 // -------------------- 404 FALLBACK --------------------

@@ -121,7 +121,9 @@ exports.add_goal_post = async (req, res) => {
 
       const addedGoal =  await Goal.create(newGoalData);
 
-      // Redirect to the added goal's details page
+      // Redirect to the added goal's details page after shoing the flash message
+      // This will create a res.locals.messages.success object and set the second arg as a value of this key
+      req.flash("success", "Goal added successfully!");
       res.redirect(`/goals/${addedGoal._id}`)
 
     } catch(error) {
@@ -202,6 +204,7 @@ exports.edit_goal_put = async (req, res) => {
     goal.set(updates)
     await goal.save()
 
+    req.flash("success", "Goal edited successfully!");
     res.redirect(`/goals/${goal._id}`)
 
   } catch (error) {
@@ -237,6 +240,8 @@ exports.delete_goal = async (req, res) => {
         await Contribution.deleteMany({ goalId: goal._id });
 
         await goal.deleteOne()
+
+        req.flash("success", "Goal deleted successfully!");
         res.redirect("/goals");
 
     } catch (error){
@@ -246,87 +251,3 @@ exports.delete_goal = async (req, res) => {
         })
     }
 }
-
-// ---------------------- DUMMY ------------------------------
-// GET /seed-goals  (Just to create data, won't redirect to any page)
-// exports.seedDummy_goals_get = async (req, res) => {
-//   try {
-//     const dummyFamilyId = new mongoose.Types.ObjectId();
-//     const dummyUserId = new mongoose.Types.ObjectId();
-//     const futureDate = new Date();
-
-//     await Goal.deleteMany({}); 
-
-//     await Goal.create([
-//       {
-//         title: "Trip",
-//         description: "Family beach trip",
-//         targetAmount: 200,
-//         currentAmount: 50,
-//         status: "Active",
-//         coverImgURL: "/public/images/trip.png",
-//         familyId: dummyFamilyId,
-//         createdByUserId: dummyUserId,
-//         dueDate: futureDate
-//       },
-
-//       {
-//         title: "New Pet",
-//         description: "Save for a cute cat",
-//         targetAmount: 80,
-//         currentAmount: 80,
-//         status: "Completed",
-//         coverImgURL: "/public/images/pet.png",
-//         familyId: dummyFamilyId,
-//         createdByUserId: dummyUserId
-//       }
-
-//     ]);
-
-//     res.send("Dummy goals seeded 👍");
-//   } catch (err) {
-//     console.error(err);
-//     res.status(500).send("Error seeding goals");
-//   }
-// }
-
-// ------------------ Create new dummy goal ----------------------
-// exports.add_dummy_goal_post = async (req, res) => {
-//   try {
-//     const {
-//       title,
-//       description,
-//       targetAmount,
-//       currentAmount,
-//       status,
-//       dueDate,
-//     } = req.body;
-
-//     // TEMP: dummy IDs until auth + family are ready
-//     const dummyFamilyId = new mongoose.Types.ObjectId();
-//     const dummyUserId = new mongoose.Types.ObjectId();
-
-//     const coverImgURL = req.file ? `/public/images/goal-cover-images/${req.file.filename}` : undefined;
-
-//     const newGoal = await Goal.create({
-//       title,
-//       description,
-//       targetAmount: Number(targetAmount),
-//       currentAmount: currentAmount ? Number(currentAmount) : 0,
-//       status: status || "Active",
-//       dueDate: dueDate || null,
-//       coverImgURL,
-//       familyId: dummyFamilyId,
-//       createdByUserId: dummyUserId,
-//     })
-
-//     return res.redirect(`/goals/${newGoal._id}`);
-
-//   } catch (error) {
-//     console.error("Error creating goal:", error);
-//     res.status(500).render("error.ejs", {
-//       message: "Something went wrong while adding the goal.",
-//       activePage:"goals"
-//     })
-//   }
-// } 
