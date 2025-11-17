@@ -1,0 +1,48 @@
+<%
+  const current = activeGoals.currentAmount || 0;
+  const target = activeGoals.targetAmount || 1;
+  const percent = Math.min(100, Math.round((current / target) * 100));
+  const isActive = activeGoals.status === "Active";
+  const isCompleted = activeGoals.status === "Completed";
+%>
+
+<article class="ff-goal-card">
+  <!-- Cover image / placeholder -->
+  <div class="ff-goal-image-wrapper">
+    <% if (activeGoals.coverImgURL) { %>
+      <img
+        src="<%= activeGoals.coverImgURL %>"
+        alt="<%= activeGoals.title %> cover"
+        class="ff-goal-image"
+      />
+    <% } else { %>
+      <div class="ff-goal-image--placeholder">
+        <i class="bi bi-image"></i>
+      </div>
+    <% } %>
+  </div>
+
+  <!-- Main info -->
+  <div class="flex-grow-1">
+    <div class="d-flex justify-content-between align-items-start mb-2">
+      <div>
+        <div class="ff-goal-title"><%= activeGoals.title %></div>
+        <div class="ff-goal-subtitle text-muted">
+          <%= current %> of <%= target %> BD
+        </div>
+      </div>
+
+      <% if (activeGoals.status) { %>
+        <span class="ff-goal-status
+          <%= isActive ? 'ff-goal-status--active' : '' %>
+          <%= isCompleted ? 'ff-goal-status--completed' : '' %>">
+          <%= activeGoals.status %>
+        </span>
+      <% } %>
+    </div>
+
+    <div class="ff-progress-track">
+      <div class="ff-progress-fill" style="width:<%= percent %>%"></div>
+    </div>
+  </div>
+</article>

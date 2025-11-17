@@ -566,3 +566,66 @@ header h1 {
   from { opacity: 0; transform: translateY(-10px); }
   to   { opacity: 1; transform: translateY(0); }
 }
+
+/* -------------------------- Dashboard Page ------------------------------------- */
+.ff-family-pill {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.4em;
+  min-width: 5.5em;
+}
+
+.ff-family-avatar {
+  width: 3.2em;
+  height: 3.2em;
+  border-radius: 999px;
+  background-color: #2364A4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  font-size: 1.6em;
+}
+
+.ff-family-name {
+  font-size: 0.85em;
+  font-weight: 500;
+  color: #1F2933;
+}
+
+/* ---------------- Dashboard: Analysis cards ---------------- */
+
+.ff-analytics-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 1em;
+}
+
+.ff-analytics-card {
+  background-color: #F2FAFF;
+  border-radius: 1.2em;
+  padding: 1.1em 1.4em;
+}
+
+.ff-analytics-label {
+  font-size: 0.8em;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: #6b7280;
+  margin-bottom: 0.25em;
+}
+
+.ff-analytics-value {
+  font-size: 1.7em;
+  font-weight: 700;
+  color: #2364A4;
+  margin-bottom: 0.1em;
+}
+
+.ff-analytics-sub {
+  font-size: 0.75em;
+  color: #9ca3af;
+}
+

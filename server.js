@@ -74,18 +74,21 @@ const goalRouter = require("./src/routes/goal")
 const contRouter = require("./src/routes/contribution")
 const authRouter = require("./src/routes/auth")
 const profileRouter = require("./src/routes/user")
+const dashboardRouter = require("./src/routes/dashboard")
 
 // ----------------- Use the routes ----------------
 app.use("/goals", goalRouter)
 app.use("/contributions", contRouter)
 app.use("/auth", authRouter)
 app.use("/profile", profileRouter)
-app.get("/", (req, res) => {
-  res.render("index.ejs", {
-    title: "Dashboard | FamFund",
-    activePage: "dashboard",
-  })
-})
+app.use("/dashboard", dashboardRouter)
+app.get("/", dashboardRouter)
+// app.get("/", (req, res) => {
+//   res.render("index.ejs", {
+//     title: "Dashboard | FamFund",
+//     activePage: "dashboard",
+//   })
+// })
 
 // ---------- Any router that doesn't fell into the specified routers ----------
 // -------------------- 404 FALLBACK --------------------
