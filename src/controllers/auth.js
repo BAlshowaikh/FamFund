@@ -156,6 +156,8 @@ const post_signin = async (req, res) => {
     _id: user._id,
     username: user.username,
     role: user.role,
+    profileImageUrl: user.profileImageUrl,
+    familyId: user.familyId,
   }
   return res.redirect("/")
 }

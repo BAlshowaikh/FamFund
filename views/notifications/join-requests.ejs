@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Join Requests</title>
+  <link rel="stylesheet" href="/public/css/notifications.css" />
+</head>
+
+<body>
+
+  <!-- PAGE TITLE -->
+  <h1 class="page-title">Family Join Requests</h1>
+
+  <!-- If NO requests -->
+  <% if (childJoinRequests.length === 0) { %>
+  <div class="empty-box">
+    <p>No pending join requests.</p>
+  </div>
+  <% } %>
+
+  <!-- Loop through requests -->
+  <% childJoinRequests.forEach(request => { %>
+  <div class="request-card">
+
+    <!-- Profile Image -->
+    <div class="avatar-wrapper">
+      <img src="<%= request.profileImageUrl %>" class="avatar" />
+    </div>
+
+    <!-- Info section -->
+    <div class="info-section">
+      <label>Name</label>
+      <input type="text" value="<%= request.username %>" readonly />
+
+      <label>Email</label>
+      <input type="text" value="<%= request.email %>" readonly />
+
+      <label>Date Created</label>
+      <input type="text" value="<%= request.createdAt.toDateString() %>" readonly />
+
+      <label>Status</label>
+      <select id="status-<%= request._id %>" disabled>
+        <option value="Pending" <%= request.status === "Pending" ? "selected" : "" %>>Pending</option>
+        <option value="Approved" <%= request.status === "Approved" ? "selected" : "" %>>Approved</option>
+        <option value="Rejected" <%= request.status === "Rejected" ? "selected" : "" %>>Rejected</option>
+      </select>
+    </div>
+
+    <!-- Buttons -->
+    <div class="actions">
+      <button class="edit-btn" onclick="enableEdit('<%= user._id %>')">Edit</button>
+
+      <form action="/notifications/<%= user._id %>?_method=PUT" method="POST">
+        <input type="hidden" id="hidden-status-<%= request._id %>" name="status" />
+        <button class="save-btn" disabled id="save-btn-<%= request._id %>">Apply & Save</button>
+      </form>
+    </div>
+
+  </div>
+  <% }) %>
+
+  <script>
+    function enableEdit(id) {
+      const select = document.getElementById(`status-${id}`);
+      const saveBtn = document.getElementById(`save-btn-${id}`);
+      const hiddenField = document.getElementById(`hidden-status-${id}`);
+
+      select.disabled = false;
+      saveBtn.disabled = false;
+
+      // Update hidden field before submitting
+      select.addEventListener("change", () => {
+        hiddenField.value = select.value;
+      });
+    }
+  </script>
+
+</body>
+</html>
+

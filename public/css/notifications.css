@@ -1,0 +1,96 @@
+body {
+  background: #eaf3ff;
+  font-family: "Inter", sans-serif;
+  margin: 0;
+  padding: 30px 0;
+}
+
+.page-title {
+  text-align: center;
+  font-size: 28px;
+  margin-bottom: 20px;
+  color: #0f3c75;
+}
+
+.empty-box {
+  width: 350px;
+  margin: 40px auto;
+  background: white;
+  padding: 20px;
+  border-radius: 14px;
+  text-align: center;
+  color: #555;
+  font-size: 16px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.request-card {
+  width: 500px;
+  margin: 25px auto;
+  background: white;
+  border-radius: 16px;
+  padding: 25px;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+}
+
+.avatar-wrapper {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 15px;
+}
+
+.avatar {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.info-section label {
+  font-weight: 600;
+  color: #0f3c75;
+  margin-top: 12px;
+  display: block;
+}
+
+.info-section input,
+.info-section select {
+  width: 100%;
+  padding: 10px;
+  margin-top: 4px;
+  border-radius: 8px;
+  border: 1px solid #cccccc;
+  font-size: 14px;
+  background: #f6f6f6;
+}
+
+.actions {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.edit-btn,
+.save-btn {
+  width: 48%;
+  padding: 12px;
+  border-radius: 8px;
+  border: none;
+  color: white;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 15px;
+}
+
+.edit-btn {
+  background: #0f3c75;
+}
+
+.save-btn {
+  background: #008037;
+}
+
+.save-btn:disabled {
+  opacity: 0.4;
+  cursor: not-allowed;
+}
