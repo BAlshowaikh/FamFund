@@ -1,9 +1,9 @@
 <!-- Sidebar / Left Navigation -->
- <% const page = typeof activePage !== 'undefined' ? activePage : 'goals' %>
+<% const page = typeof activePage !== 'undefined' ? activePage : 'goals' %>
 
 <aside
   class="d-flex flex-column border-end min-vh-100 p-3"
-  style="background-color: #F2FAFF; width: 230px;"
+  style="background-color: #f2faff; width: 230px"
 >
   <!-- Brand -->
   <div class="d-flex align-items-center mb-4">
@@ -12,9 +12,9 @@
         src="/public/images/logo.png"
         alt="FamFund"
         class="me-2"
-        style="height: 3rem;"
+        style="height: 3rem"
       />
-      <span class="fw-bold fs-4" style="color: #2364A4;">FamFund</span>
+      <span class="fw-bold fs-4" style="color: #2364a4">FamFund</span>
     </a>
   </div>
 
@@ -69,6 +69,33 @@
         <span>Tips</span>
       </a>
     </li>
-  </ul>
 
+    <a
+      href="/auth/sign-out"
+      class="signout-btn d-flex align-items-center justify-content-center"
+    >
+      <i class="bi bi-box-arrow-right"></i>
+    </a>
+
+    <style>
+      .signout-btn {
+        position: absolute;
+        bottom: 20px;
+        left: 20px;
+        width: 55px;
+        height: 55px;
+        background-color: #2364a4;
+        color: #ffffff;
+        border-radius: 50%;
+        font-size: 24px;
+        transition: 0.2s;
+        text-decoration: none;
+      }
+
+      .signout-btn:hover {
+        background-color: #1d5285;
+        transform: scale(1.05);
+      }
+    </style>
+  </ul>
 </aside>

@@ -46,7 +46,7 @@ app.use(
 app.use(passUserToView)
 
 // After the user session use the flash package
-// Notes on express.flash: This middleware must run after your session middleware, 
+// Notes on express.flash: This middleware must run after your session middleware,
 // as it relies entirely on the req.session object to store its data.
 app.use(flash())
 
@@ -74,6 +74,7 @@ const goalRouter = require("./src/routes/goal")
 const contRouter = require("./src/routes/contribution")
 const authRouter = require("./src/routes/auth")
 const profileRouter = require("./src/routes/user")
+const familyRouter = require("./src/routes/family")
 const dashboardRouter = require("./src/routes/dashboard")
 
 // ----------------- Use the routes ----------------
@@ -81,6 +82,9 @@ app.use("/goals", goalRouter)
 app.use("/contributions", contRouter)
 app.use("/auth", authRouter)
 app.use("/profile", profileRouter)
+
+app.use("/notification", familyRouter)
+
 app.use("/dashboard", dashboardRouter)
 app.get("/", dashboardRouter)
 // app.get("/", (req, res) => {
