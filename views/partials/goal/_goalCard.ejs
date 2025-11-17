@@ -29,7 +29,7 @@
 
       <div class="d-flex align-items-center gap-2">
         <!-- Edit / delete icons (hooks for later) -->
-        <% if (goal.status === "Active"){ %>
+        <% if (goal.status === "Active" && user.role == "Parent"){ %>
           <a href="/goals/<%= goal._id %>/edit"><button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
             <i class="bi bi-pencil"></i>
           </button></a>
@@ -82,9 +82,18 @@
       </button></a>
 
       <% if (goal.status !== 'Completed') { %>
-        <button type="button" class="btn ff-primary-outline-btn">
-          Contribute
-        </button>
+      <button
+        type="button"
+        class="btn ff-primary-pill-btn ff-contrib-btn"
+
+        <%# These data will be used by the add cont modal %>
+        data-goal-id="<%= goal._id %>"
+        data-goal-title="<%= goal.title %>"
+        data-target-amount="<%= goal.targetAmount %>"
+        data-current-amount="<%= goal.currentAmount %>"
+      >
+        Contribute
+      </button>
       <% } %>
     </div>
   </div>

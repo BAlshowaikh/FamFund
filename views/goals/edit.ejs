@@ -1,8 +1,9 @@
 <h2 class="ff-page-title">Edit <%= goal.title %> Goal</h2>
+<a href="/goals"><p>Back to goals list</p></a>
 
 <div class="ff-form-layout">
     <!-- Change the post to only "/goals" the /new is just for dummy checkl-->
-  <form action="/goals/<%= goal._id %>?_method=PUT" method="POST" class="ff-card-form">
+  <form action="/goals/<%= goal._id %>?_method=PUT" method="POST" class="ff-card-form" enctype="multipart/form-data">
     <%
         // Format due date for input type="date"
         let dueDateValue = '';
@@ -98,7 +99,6 @@
         name="coverImg"
         class="form-control"
       />
-      <!-- later you can wire this to upload & map to coverImgURL -->
     </div>
 
     <!-- Submit -->

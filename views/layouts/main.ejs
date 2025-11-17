@@ -80,9 +80,9 @@
 
         <h3 class="ff-modal-title mb-3">Add Contribution</h3>
 
-        <form id="ff-contrib-form" method="POST" class="text-start">
+        <form id="ff-contrib-form" method="POST" class="text-start" action="/contributions">
           <!-- This will be used later in the controller-->
-          <input type="hidden" id="ff-contrib-goalId" name="goalId" />
+          <!-- <input type="hidden" id="ff-contrib-goalId" name="goalId" /> -->
 
           <!-- goal name (read only) -->
           <div class="mb-3">
@@ -122,17 +122,40 @@
           </div>
 
           <button type="submit" class="btn ff-primary-btn w-100">
-            Save &amp; Contribute
+            Save & Contribute
           </button>
         </form>
       </div>
     </div>
 
+    <!-- Code for successful modal show -->
+    <!-- mesages object will come from res.locals.messgaes which is automatically created by the package -->
+     <% if (messages && messages.success) { %>
+        <div id="ff-success-modal" class="ff-success-modal">
+          <div class="ff-success-box">
+            <div class="ff-success-icon">
+              <i class="bi bi-check-circle"></i>
+            </div>
+            <h4 class="ff-success-title">Success!</h4>
+            <p class="ff-success-text"><%= messages.success[0] %></p>
+          </div>
+        </div>
+        <script>
+          console.log("Reache the modal script")
+          const modal = document.getElementById("ff-success-modal");
+          setTimeout(() => {
+            modal.classList.add("hide")
+            setTimeout(() => modal.remove(), 400)
+          }, 5000)
+        </script>
+      <% } %>
+
+
 
     <!-- Bootstrap JS -->
     <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-    ></script>
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+    </script>
 
   </body>
 </html>
