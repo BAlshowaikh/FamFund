@@ -18,10 +18,22 @@
       >
         <!-- Profile image -->
         <div class="profile-image-wrapper">
-          <img src="<%= user.profileImageUrl %>" class="profile-image" />
-          <label class="change-btn">
-            Change
-            <input type="file" name="profileImage" hidden />
+          <img
+            src="<%= user.profileImageUrl %>"
+            class="profile-image"
+            id="profilePreview"
+          />
+
+          <input
+            type="file"
+            name="profileImage"
+            id="profileImageInput"
+            accept="image/*"
+            hidden
+          />
+
+          <label for="profileImageInput" class="change-btn">
+            Change Image
           </label>
         </div>
 
@@ -57,8 +69,8 @@
           id="profileBio"
           name="bio"
           class="input"
+          rows="4"
           maxlength="200"
-          rows="3"
         >
 <%= user.bio %></textarea
         >
@@ -81,16 +93,28 @@
         />
 
         <!-- Save Button -->
-        <button class="save-btn" type="submit">Save</button>
+        <button class="save-btn" type="submit">Apply And Save</button>
       </form>
     </div>
+    <script>
+      const profileBio = document.getElementById("profileBio")
+      const profileBioCount = document.getElementById("profileBioCount")
+
+      profileBio.addEventListener("input", () => {
+        profileBioCount.textContent = profileBio.value.length
+      })
+    </script>
+    <script>
+      const fileInput = document.getElementById("profileImageInput")
+      const previewImg = document.getElementById("profilePreview")
+
+      fileInput.addEventListener("change", (e) => {
+        const file = e.target.files[0]
+        if (file) {
+          // Show preview on screen (NO redirect, NO submit)
+          previewImg.src = URL.createObjectURL(file)
+        }
+      })
+    </script>
   </body>
 </html>
-<script>
-  const profileBio = document.getElementById("profileBio")
-  const profileBioCount = document.getElementById("profileBioCount")
-
-  profileBio.addEventListener("input", () => {
-    profileBioCount.textContent = profileBio.value.length
-  })
-</script>

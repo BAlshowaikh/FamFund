@@ -29,13 +29,9 @@
     <!-- Description -->
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
-      <textarea
-        id="description"
-        name="description"
-        rows="3"
-        class="form-control"
-        ><%= goal.description || '' %>
-      </textarea>
+      <div class="edit-description-counter"><span id="editCounter"><%= goal.description.length %></span> / 200</div>
+    <textarea id="editDescription" name="description" rows="3" class="form-control"><%= goal.description || '' %></textarea>
+
     </div>
 
     <!-- Amounts row -->
@@ -103,7 +99,16 @@
 
     <!-- Submit -->
     <button type="submit" class="btn ff-primary-btn w-100">
-      Save 
+      Save
     </button>
   </form>
 </div>
+<script>
+  const editDescription = document.getElementById("editDescription")
+  const counter = document.getElementById("editCounter")
+
+  editDescription.addEventListener("input", () => {
+    counter.innerText = editDescription.value.length
+  })
+</script>
+

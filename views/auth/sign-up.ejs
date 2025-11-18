@@ -62,15 +62,6 @@
           <button type="submit" class="signup-btn">Continue</button>
         </form>
 
-        <script>
-          const bio = document.getElementById("bio")
-          const counter = document.getElementById("counter")
-
-          bio.addEventListener("input", () => {
-            counter.innerText = bio.value.length
-          })
-        </script>
-
         <% } else if (page === 2 && role === "Parent") { %>
 
         <h1 class="signup-title">Create Family</h1>
@@ -102,10 +93,10 @@
   </body>
 </html>
 <script>
-  const bioInput = document.getElementById("bio")
-  const bioCount = document.getElementById("bioCount")
+  const bio = document.getElementById("bio")
+  const counter = document.getElementById("counter")
 
-  bioInput.addEventListener("input", () => {
-    bioCount.textContent = bioInput.value.length
+  bio.addEventListener("input", () => {
+    counter.innerText = bio.value.length
   })
 </script>

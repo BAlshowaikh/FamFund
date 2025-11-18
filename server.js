@@ -15,8 +15,7 @@ const methodOverride = require("method-override")
 const expressLayouts = require("express-ejs-layouts")
 const checkIfSignedIn = require("./src/middleware/isSignedIn")
 const passUserToView = require("./src/middleware/passUserToView")
-const flash = require("express-flash");
-
+const flash = require("express-flash")
 
 //Use middleware
 app.use(express.urlencoded({ extended: true }))
@@ -32,7 +31,6 @@ app.use(expressLayouts)
 // This means: Everything inside the public folder is allowed to be served to the browser as static files not a route
 app.use("/public", express.static("public"))
 app.use("/profile-images", express.static("public/images/profile-images"))
-
 
 app.use(
   session({
@@ -73,19 +71,17 @@ app.use((req, res, next) => {
 const goalRouter = require("./src/routes/goal")
 const contRouter = require("./src/routes/contribution")
 const authRouter = require("./src/routes/auth")
-const profileRouter = require("./src/routes/user")
-const familyRouter = require("./src/routes/family")
+const profileRouter = require("./src/routes/profile")
 const dashboardRouter = require("./src/routes/dashboard")
-
+const notificationRouter = require("./src/routes/notification")
 // ----------------- Use the routes ----------------
 app.use("/goals", goalRouter)
 app.use("/contributions", contRouter)
 app.use("/auth", authRouter)
 app.use("/profile", profileRouter)
-
-app.use("/notification", familyRouter)
-
+app.use("/notification", notificationRouter)
 app.use("/dashboard", dashboardRouter)
+
 app.get("/", dashboardRouter)
 // app.get("/", (req, res) => {
 //   res.render("index.ejs", {
