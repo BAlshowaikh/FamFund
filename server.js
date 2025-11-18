@@ -77,6 +77,7 @@ const profileRouter = require("./src/routes/profile")
 const dashboardRouter = require("./src/routes/dashboard")
 const notificationRouter = require("./src/routes/notification")
 const financialCoachRouter = require("./src/routes/financialCoach")
+const familyRouter = require("./src/routes/family")
 
 // ----------------- Use the routes ----------------
 app.use("/goals", goalRouter)
