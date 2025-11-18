@@ -59,7 +59,6 @@ const publicRoutes = [
   "/auth/sign-up/parent",
   "/auth/sign-up/child",
   "/auth/sign-out",
-  "/financialCoach/chat"
 ]
 
 // Check if the path contains one of the above listed routes
@@ -89,7 +88,7 @@ app.use("/profile", profileRouter)
 app.use("/notification", familyRouter)
 app.use("/dashboard", dashboardRouter)
 app.use("/financialCoach", financialCoachRouter)
-app.get("/", dashboardRouter)
+app.get("/", dashboardRouter) // this will show only if the user is logged in
 
 
 // ---------- Any router that doesn't fell into the specified routers ----------
