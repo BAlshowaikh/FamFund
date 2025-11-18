@@ -38,4 +38,53 @@
       </p>
     <% } %>
   </div>
+  
+<!-- Chatbot code -->
+ <!-- Floating Financial Coach launcher button -->
+<button
+  id="ff-coach-launcher"
+  type="button"
+  class="btn ff-coach-launcher"
+  title="Ask your money coach"
+>
+  <i class="bi bi-chat-dots"></i>
+</button>
+
+<!-- Financial Coach chat panel -->
+<div id="ff-coach-panel" class="ff-coach-panel card shadow-sm">
+  <div class="card-header d-flex justify-content-between align-items-center">
+    <div>
+      <div class="fw-bold">FamFund Coach</div>
+      <small class="text-muted">Friendly savings helper</small>
+    </div>
+    <button
+      type="button"
+      class="btn btn-sm btn-light border-0"
+      id="ff-coach-close"
+    >
+      <i class="bi bi-x-lg"></i>
+    </button>
+  </div>
+
+  <div id="ff-coach-messages" class="ff-coach-messages">
+    <!-- Messages will be rendered here -->
+  </div>
+
+  <form id="ff-coach-form" class="ff-coach-form border-top">
+    <div class="input-group">
+      <input
+        id="ff-coach-input"
+        type="text"
+        class="form-control"
+        placeholder="Ask me about your savings..."
+        autocomplete="on"
+      />
+      <button class="btn btn-primary" type="submit">
+        <i class="bi bi-send"></i>
+      </button>
+    </div>
+  </form>
+</div>
+
 </section>
+
