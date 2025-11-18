@@ -1,54 +1,52 @@
-// public/js/financialGoalChat.js
+// Select all the required elements
+const launcher = document.getElementById("ff-coach-launcher")
+const panel = document.getElementById("ff-coach-panel")
+const closeBtn = document.getElementById("ff-coach-close")
+const form = document.getElementById("ff-coach-form") // This is the input field for user, treated as a POST form
+const input = document.getElementById("ff-coach-input") // Where the user types
+const messagesPanel = document.getElementById("ff-coach-messages") // Messages will be rendered here 
 
-document.addEventListener("DOMContentLoaded", () => {
-  const launcher = document.getElementById("ff-coach-launcher")
-  const panel = document.getElementById("ff-coach-panel")
-  const closeBtn = document.getElementById("ff-coach-close")
-  const form = document.getElementById("ff-coach-form")
-  const input = document.getElementById("ff-coach-input")
-  const messagesEl = document.getElementById("ff-coach-messages")
+// If we're on a page that doesn't have the chat UI, just stop
+if (!launcher || !panel || !closeBtn || !form || !input || !messagesPanel) {
+  console.warn("Financial Coach UI not found on this page.")
+} else {
 
-  // If we're on a page that doesn't have the chat UI, just stop
-  if (!launcher || !panel || !closeBtn || !form || !input || !messagesEl) {
-    return
-  }
-
-  // Keep last 3 exchanges (kid + coach)
+  // Keep last 6 exchanges (kid + coach)
   const history = []
 
+  // Function to show the messages for the UI design
   const renderMessages = () => {
-    messagesEl.innerHTML = "";
-    // Only show the last 3 messages overall
-    const lastMessages = history.slice(-3)
+    messagesPanel.innerHTML = ""
+    // Only show the last 6 messages overall
+    const lastMessages = history.slice(-6)
 
     lastMessages.forEach((msg) => {
-      const wrapper = document.createElement("div");
-      wrapper.classList.add("ff-coach-message-row");
-      wrapper.classList.add(
-        msg.role === "kid" ? "ff-coach-message-row--kid" : "ff-coach-message-row--coach"
-      )
+      const wrapper = document.createElement("div")
+      wrapper.classList.add("ff-coach-message-row")
 
-      const bubble = document.createElement("div");
-      bubble.classList.add("ff-coach-bubble");
+      const bubble = document.createElement("div")
+      bubble.classList.add("ff-coach-bubble")
       bubble.classList.add(
-        msg.role === "kid" ? "ff-coach-bubble--kid" : "ff-coach-bubble--coach"
+        msg.role === "kid"
+          ? "ff-coach-bubble--kid"
+          : "ff-coach-bubble--coach"
       )
 
-      bubble.textContent = msg.text;
-
-      wrapper.appendChild(bubble);
-      messagesEl.appendChild(wrapper);
+      bubble.textContent = msg.text
+      wrapper.appendChild(bubble)
+      messagesPanel.appendChild(wrapper)
     })
 
-    messagesEl.scrollTop = messagesEl.scrollHeight;
+    messagesPanel.scrollTop = messagesPanel.scrollHeight
   }
 
+  // Function for adding the message to history
   const addMessage = (role, text) => {
-    history.push({ role, text });
-    renderMessages();
+    history.push({ role, text })
+    renderMessages()
   }
 
-  // Initial friendly greeting from the coach (counts as 1 message)
+  // Initial friendly greeting from the coach
   addMessage(
     "coach",
     "Hi there! I’m your FamFund Coach. Ask me about saving for your goals!"
@@ -56,52 +54,55 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Show / hide panel
   launcher.addEventListener("click", () => {
-    panel.classList.add("ff-coach-panel--open");
+    panel.classList.add("ff-coach-panel--open")
   })
 
   closeBtn.addEventListener("click", () => {
-    panel.classList.remove("ff-coach-panel--open");
+    panel.classList.remove("ff-coach-panel--open")
   })
 
-  // Handle form submit
+  // Handle form submit (kid sends a message)
   form.addEventListener("submit", async (e) => {
-    e.preventDefault();
+    e.preventDefault()
 
-    const text = input.value.trim();
-    if (!text) return;
+    const text = input.value.trim() // take the user message
+    if (!text) return
 
     // Show kid message immediately
-    addMessage("kid", text);
-    input.value = "";
+    addMessage("kid", text)
+    input.value = "" // clear the input value
 
     try {
-      // Call your existing backend route
+      // Send message to backend
       const res = await fetch("/financialCoach/chat", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ message: text }),
-      });
+      })
 
+      // Check the returned status code
       if (!res.ok) {
         addMessage(
           "coach",
           "Hmm, I’m having trouble talking right now. Can you try again in a bit?"
-        );
-        return;
+        )
+        return
       }
 
-      const data = await res.json();
-      const reply = data.reply || "I’m not sure, but I’ll try my best to help you save!";
+      // If ok fetch returned data
+      const data = await res.json()
+      const reply =
+        data.reply ||
+        "I’m not sure, but I’ll try my best to help you save!"
+
       addMessage("coach", reply)
 
     } catch (err) {
-      console.error("Error talking to financial coach:", err);
+      console.error("Error talking to financial coach:", err)
       addMessage(
         "coach",
         "Oops! Something went wrong while answering. Can you try again?"
       )
     }
   })
-})
+}
