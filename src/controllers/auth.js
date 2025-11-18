@@ -12,7 +12,7 @@ const post_signup = async (req, res) => {
     return res.send("Bio is too long. It cannot exceed 200 characters")
   }
   // Ensuring email is not used
-  const existingEmail = await User.findOne({ email: req.body.email.trim() })
+  const existingEmail = await User.findOne({ email: req.body.email })
   if (existingEmail) {
     return res.send("Email is already used")
   }
@@ -78,6 +78,13 @@ const post_signup_parent = async (req, res) => {
   } else if (req.body.parentFamilyName.length < 3) {
     return res.send("Family name must be at least 3 characters.")
   }
+  const existingCode = await Family.findOne({ code: req.body.code })
+  if (existingCode) {
+    return res.send(
+      "The code is already existed. You can't used someone's existing code"
+    )
+  }
+
   const family = await Family.create({
     name: req.body.parentFamilyName,
     code: req.body.code,
@@ -86,6 +93,7 @@ const post_signup_parent = async (req, res) => {
   const parentSessionData = req.session.parentData
   // Create User linked to this family
   const parent = await User.create({
+    //Spread Operator
     ...parentSessionData,
     familyId: family._id,
     status: "Approved",
@@ -111,13 +119,15 @@ const post_signup_child = async (req, res) => {
   if (!req.body.code) {
     return res.send("You must enter family code")
   }
-  const family = await Family.findOne({
+  //family document
+  const familyCode = await Family.findOne({
     code: req.body.code,
   })
-  if (!family) {
+  if (!familyCode) {
     return res.send("Invalid Family Code.")
   }
 
+  const family = familyCode
   const childSessionData = req.session.childData
 
   // Create User linked to this family
@@ -146,10 +156,12 @@ const post_signin = async (req, res) => {
     return res.send("Login failed, make sure you input correct password")
   }
   if (user.status === "Pending") {
+    await User.findByIdAndUpdate(user._id, { familyId: null })
     return res.send(
       "Your request for joining the family is at pending and not approved yet"
     )
   } else if (user.status === "Rejected") {
+    await User.findByIdAndUpdate(user._id, { familyId: null })
     return res.send("Your request for joining the family is Rejected")
   }
   req.session.user = {
@@ -158,7 +170,6 @@ const post_signin = async (req, res) => {
     role: user.role,
     profileImageUrl: user.profileImageUrl,
     familyId: user.familyId,
-
   }
   return res.redirect("/")
 }

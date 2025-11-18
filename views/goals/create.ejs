@@ -1,8 +1,13 @@
 <h2 class="ff-page-title">Add New Goal</h2>
 
 <div class="ff-form-layout">
-    <!-- Change the post to only "/goals" the /new is just for dummy checkl-->
-  <form action="/goals/add" method="POST" class="ff-card-form" enctype="multipart/form-data">
+  <!-- Change the post to only "/goals" the /new is just for dummy checkl-->
+  <form
+    action="/goals/add"
+    method="POST"
+    class="ff-card-form"
+    enctype="multipart/form-data"
+  >
     <!-- Title -->
     <div class="mb-3">
       <label for="title" class="form-label">Title</label>
@@ -18,10 +23,12 @@
     <!-- Description -->
     <div class="mb-3">
       <label for="description" class="form-label">Description</label>
+      <div class="bio-counter"><span id="counter">0</span> / 200</div>
       <textarea
         id="description"
         name="description"
         rows="3"
+        maxlength="200"
         class="form-control"
       ></textarea>
     </div>
@@ -66,30 +73,26 @@
 
       <div class="col-md-6 mb-3">
         <label for="dueDate" class="form-label">Due Date</label>
-        <input
-          type="date"
-          id="dueDate"
-          name="dueDate"
-          class="form-control"
-        />
+        <input type="date" id="dueDate" name="dueDate" class="form-control" />
       </div>
     </div>
 
     <!-- Cover -->
     <div class="mb-4">
       <label for="coverImg" class="form-label">Goal Cover</label>
-      <input
-        type="file"
-        id="coverImg"
-        name="coverImg"
-        class="form-control"
-      />
+      <input type="file" id="coverImg" name="coverImg" class="form-control" />
       <!-- later you can wire this to upload & map to coverImgURL -->
     </div>
 
     <!-- Submit -->
-    <button type="submit" class="btn ff-primary-btn w-100">
-      Save & Add
-    </button>
+    <button type="submit" class="btn ff-primary-btn w-100">Save & Add</button>
   </form>
 </div>
+<script>
+  const description = document.getElementById("description")
+  const counter = document.getElementById("counter")
+
+  description.addEventListener("input", () => {
+    counter.innerText = description.value.length
+  })
+</script>
