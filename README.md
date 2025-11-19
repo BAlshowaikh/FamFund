@@ -1,92 +1,157 @@
-# 💰 FamFund
+# FamFund
 
-**FamFund** is a collaborative family finance platform that helps parents and children **plan, save, and celebrate financial goals together**.  
-The system combines goal tracking, contribution simulation, and educational features to teach children financial responsibility in an interactive and engaging way.
+FamFund is a collaborative family finance web app that helps parents and children **plan, save, and celebrate financial goals together**.
 
----
-
-## 🎯 Project Overview
-
-FamFund empowers families to:
-- **Set shared saving goals** (e.g., “Family Trip”, “New TV”)
-- **Contribute** toward those goals with virtual savings
-- **Celebrate milestones** when goals reach completion
-- **Educate** children with financial tips written by parents
-- **Motivate** children through a rewards system and progress tracking
-
-This project aims to promote family collaboration and financial literacy through a user-friendly digital experience.
+It combines shared goals, progress tracking, a light rewards system, and optional AI-powered coaching to make financial literacy fun and practical at home.
 
 ---
 
-## 🧩 Core Features
+## Table of Contents
+
+- [Overview](#overview)
+- [Core Features](#core-features)
+- [Tech Stack](#tech-stack)
+- [Architecture](#architecture)
+- [Environment Variables](#environment-variables)
+- [Deployed Link](#deployed-link)
+- [Project References](#project-references)
+- [Attributions](#attributions)
+- [License](#license)
+
+---
+
+## Overview
+
+FamFund promotes **financial awareness through family collaboration**:
+
+- Parents & children agree on **shared saving goals** (e.g., *Family Trip*, *New TV*).
+- Everyone contributes virtual amounts toward those goals.
+- The system tracks **progress and activity** in one place
+
+---
+
+## Core Features
 
 ### 👨‍👩‍👧 Family Management
-- Parents can create a family group and generate a unique **Family Code**.
-- Children join using the code; parents can approve or decline requests.
-- Each family has a private dashboard with its own data space.
+
+- Parents create a **family account** and generate a unique **Family Code**.
+- Children request to join using the family code. (Not implemented fully yet)
+- Parents can **approve / decline** join requests. (Not implemented fully yet)
+- Each family sees **only its own data** (goals, members, contributions).
 
 ### 🎯 Goal & Contribution System
-- Parents create goals with titles, target amounts, and images.
-- Children can add **virtual contributions** with short messages.
-- Automatic progress bars visualize savings and completion percentage.
-- When a goal reaches 100%, the system:
-  - Marks it as completed.
-  - Triggers a **reward** for the top contributor (5% bonus).
-  - Sends a family-wide notification.
 
-### 💡 Financial Tips (Educational Feature)
-- Parents can create and post short financial lessons or motivational notes.
-- Tips are viewable by all family members.
-- Encourages children to develop budgeting and saving habits.
+- Parents can create goals with:
+  - Title
+  - Target amount
+  - Optional cover image
+- Children (and parents) can:
+  - Add **virtual contributions** with a short message.
+  - Watch progress through **automatic progress bars** and percentage indicators.
+- When a goal reaches 100%:
+  - The goal is marked as **completed**.
+  - A **5% bonus reward** is calculated for the top contributor. (Not implemented yet)
+  - A celebration/notification is triggered for the family. (Not implemented yet)
 
-### 🔔 Notifications & Activity Feed
-- Real-time updates for:
-  - New contributions (“Sara added 10 BD to Family Trip 🎉”)
-  - Goal completions (“Disney Trip reached 100%! 🎉”)
-- Family members can stay informed about progress and activities.
+### 💡 Financial Tips (Educational Module) (Not implemented yet)
 
-### 🏅 Rewards System
-- Short-term virtual rewards for children when goals are completed.
-- Calculates 5% bonus for top contributors.
-- Builds motivation and a sense of achievement.
+- Parents can create short **financial tips**:
+  - Mini-lessons (*“What is a budget?”*)
+  - Motivational notes (*“Save a part of all gifts you receive”*)
+- Tips are visible to all family members.
+- Encourages **budgeting, saving, and delayed gratification**.
 
----
 
-## 👥 Team Roles & Collaboration
+### 🏅 Reward Logic (Not implemented yet)
 
-| Member | Role | Focus Area |
-|---------|------|------------|
-| **Abdulla** | Authentication & Family Management | User accounts, session handling, family creation/join system |
-| **Batool** | Goals, Contributions & Rewards | Goal CRUD, contribution logic, progress tracking, reward calculation |
-| **Ghufran** | Notifications, Tips & Integration | Notification engine, family tips module, overall UI integration |
+- On goal completion:
+  - The child with the highest total contributions to that goal gets a **virtual 5% bonus**.
+  - This can be interpreted by parents as extra pocket money, a treat, etc.
+- Designed to **motivate consistent saving**, not just one-off contributions.
 
-🧠 Team collaboration includes weekly technical sessions and biweekly client meetings to align with functional requirements and UX goals.
+### 🤖 AI Financial Coach
 
----
+> Powered by a custom LangChain service (see `/services/langchain`).
 
-## 🧱 System Highlights
-
-- **Authentication:** Secure login with role-based access (Parent / Child)  
-- **Database:** MongoDB with Mongoose ORM  
-- **Server:** Node.js with Express  
-- **Templating:** EJS views for a lightweight front-end  
-- **Session Storage:** Mongo-based express-session persistence  
-- **File Handling:** Multer for user and goal image uploads  
+- Chat-style assistant to:
+  - Explain simple financial concepts to kids.
+  - Suggest saving plans for specific goals.
+  - Encourage healthy financial habits in a friendly tone.
 
 ---
 
-## 🔗 Project References
+## Tech Stack
 
-| Resource | Description | Link |
-|-----------|--------------|------|
-| **ERD (Entity Relationship Diagram)** | Database design showing relationships between collections | _[Add link here]_ |
-| **Wireframes** | Low/high-fidelity design of user flows | _[Add link here]_ |
-| **Trello Board** | Task tracking and project management | _[Add link here]_ |
+**Backend**
+
+- Node.js + Express
+- MongoDB + Mongoose 
+- express-session with Mongo-backed session store
+- Multer (file uploads for images)
+
+**Frontend**
+
+- EJS templates (`/views`)
+- Vanilla JS + Bootstrap 
+
+**AI Service**
+
+- LangChain-based service inside `/services/langchain` (for the financial coach)
+- OpenAI (or other LLM provider) via API key in environment variables
 
 ---
 
-## 🚀 Vision
+## Architecture
 
-FamFund promotes **financial awareness through family collaboration**.  
-By blending **gamified saving**, **educational tips**, and **goal sharing**, it fosters a culture of planning and reward, making financial learning enjoyable for children and meaningful for parents.
+High-level folder structure:
+
+```text
+FamFund/
+├─ public/               # Static assets (CSS, JS, images, icons)
+│  ├─ css/
+│  ├─ js/
+│  └─ images/
+├─ services/
+│  └─ langchain/         # Financial coach / AI-related utilities
+├─ src/  
+|  └─ controllers/   
+|   └─ routes/    
+|   └─ models/  
+|   └─ middlewars/ 
+|   └─ config/           
+├─ views/                # EJS templates (pages, partials, layouts)
+├─ server.js             # Express app entry point
+├─ package.json          # Dependencies & scripts
+├─ README.md             # You are here
+└─ STRUCTURE.md          # More detailed internal structure (dev notes)
+```
+
+## Environment Variables
+PORT=OPEN_PORT
+### MongoDB
+MONGODB_URI=mongodb://localhost:27017/famfund OR your mongo connection
+### Session
+SESSION_SECRET=your-strong-random-secret
+### (Optional) OpenAI / LLM provider
+OPENAI_API_KEY=your-openai-api-key
+
+## Deployed Link
+https://famfund-9a40.onrender.com
+
+## Project References
+| Resource                | Description                                    | Link              |
+| ----------------------- | ---------------------------------------------- | ----------------- |
+| ERD                     | Collections and relationships (MongoDB schema) | *[Add link here]* |
+| Figma                   | Screens and main user journeys                 | *https://www.figma.com/design/tmaUP2TxRMS8FUu7dWjCmr/FamFund?node-id=3-3&t=6hlVygeLGgvNt67c-0* |
+| Trello / Board          | Task tracking & sprint planning                | *[Add link here]* |
+
+
+## Attribution
+FamFund is built using several open-source libraries and resources.
+
+- *Bootstrap Icons* (icons used across the UI) | https://icons.getbootstrap.com/
+- *Bootstrap 5* | https://getbootstrap.com/
+- *EJS* – For views
+- *Multer* - for file uploads
+- *OpenAI* / *LangChain* | https://openai.com/ | https://js.langchain.com/
 
