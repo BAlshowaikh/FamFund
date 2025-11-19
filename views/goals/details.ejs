@@ -8,42 +8,29 @@
     <%= goal.currentAmount %> of <%= goal.targetAmount %> BD
   </p>
 
-  <% 
-    const percentage = Math.min(
-      100,
-      Math.round(((goal.currentAmount || 0) / goal.targetAmount) * 100)
-    );
-  %>
+  <% const percentage = Math.min( 100, Math.round(((goal.currentAmount || 0) /
+  goal.targetAmount) * 100) ); %>
 
   <div class="ff-progress-track mb-2">
-    <div
-      class="ff-progress-fill"
-      style="width: <%= percentage + '%' %>"
-    ></div>
+    <div class="ff-progress-fill" style="width: <%= percentage + '%' %>"></div>
   </div>
 
-  <p class="ff-detail-highlight mb-3">
-    <%= percentage %>% Completed!
-  </p>
+  <p class="ff-detail-highlight mb-3"><%= percentage %>% Completed!</p>
 
   <% if (goal.description) { %>
-    <p class="mb-2">
-      <%= goal.description %>
-    </p>
-  <% } %>
-
-  <% if (goal.dueDate) { %>
-    <p class="mb-0">
-      <span class="fw-bold">Due Date:&nbsp;</span>
-      <%= goal.dueDate.toDateString() %>
-    </p>
+  <p class="mb-2"><%= goal.description %></p>
+  <% } %> <% if (goal.dueDate) { %>
+  <p class="mb-0">
+    <span class="fw-bold">Due Date:&nbsp;</span>
+    <%= goal.dueDate.toDateString() %>
+  </p>
   <% } %>
 </div>
 
 <!-- Contributions section -->
 <section class="mt-4 mb-4">
   <div class="d-flex justify-content-between align-items-center mb-2">
-    <h3 class="ff-section-title mb-0" style="font-size: 1.2em;">
+    <h3 class="ff-section-title mb-0" style="font-size: 1.2em">
       Your Contributions
     </h3>
 
@@ -52,54 +39,67 @@
     <button
       type="button"
       class="btn ff-primary-pill-btn ff-contrib-btn"
-
-      <%# These data will be used by the add cont modal %>
-      data-goal-id="<%= goal._id %>"
-      data-goal-title="<%= goal.title %>"
-      data-target-amount="<%= goal.targetAmount %>"
-      data-current-amount="<%= goal.currentAmount %>"
-      <%= isActive ? '' : 'disabled' %>
+      <%#
+      These
+      data
+      will
+      be
+      used
+      by
+      the
+      add
+      cont
+      modal
+      %
     >
-      Contribute
+      data-goal-id="<%= goal._id %>" data-goal-title="<%= goal.title %>"
+      data-target-amount="<%= goal.targetAmount %>" data-current-amount="<%=
+      goal.currentAmount %>" <%= isActive ? '' : 'disabled' %> > Contribute
     </button>
   </div>
 
   <%# Contribution tabel %>
- <div class="ff-card ff-card-soft">
-  <div class="contribution-table-goal-scroll"> 
-    <table class="table mb-0 ff-table">
-      <thead>
-        <tr>
-          <th>Date</th>
-          <th>Time</th>
-          <th>Amount</th>
-        </tr>
-      </thead>
-
-      <tbody>
-        <% if (contributions.length > 0) { %>
-          <% contributions.forEach(contribution => { %>
-            <tr class="ff-table-row" data-id="<%= contribution._id %>">
-              <% const d = contribution.createdAt ? new Date(contribution.createdAt) : null %>
-
-              <% if (d) { %>
-                <td><%= d.toLocaleDateString('en-US', { year:'numeric', month:'short', day:'numeric' }) %></td>
-                <td><%= d.toLocaleTimeString('en-US', { hour:'2-digit', minute:'2-digit' }).toLowerCase() %></td>
-              <% } else { %>
-                <td>DATE Not specified</td>
-                <td>TIME Not specified</td>
-              <% } %>
-
-              <td><%= contribution.amount %> BD</td>
-            </tr>
-          <% }) %>
-        <% } else { %>
+  <div class="ff-card ff-card-soft">
+    <div class="contribution-table-goal-scroll">
+      <table class="table mb-0 ff-table">
+        <thead>
           <tr>
-            <td colspan="3" class="text-center text-muted">No contributions recorded yet.</td>
+            <th>Date</th>
+            <th>Time</th>
+            <th>Amount</th>
           </tr>
-        <% } %>
-      </tbody>
-    </table>
+        </thead>
+
+        <tbody>
+          <% if (contributions.length > 0) { %> <%
+          contributions.forEach(contribution => { %>
+          <tr class="ff-table-row" data-id="<%= contribution._id %>">
+            <% const d = contribution.createdAt ? new
+            Date(contribution.createdAt) : null %> <% if (d) { %>
+            <td>
+              <%= d.toLocaleDateString('en-US', { year:'numeric', month:'short',
+              day:'numeric' }) %>
+            </td>
+            <td>
+              <%= d.toLocaleTimeString('en-US', { hour:'2-digit',
+              minute:'2-digit' }).toLowerCase() %>
+            </td>
+            <% } else { %>
+            <td>DATE Not specified</td>
+            <td>TIME Not specified</td>
+            <% } %>
+
+            <td><%= contribution.amount %> BD</td>
+          </tr>
+          <% }) %> <% } else { %>
+          <tr>
+            <td colspan="3" class="text-center text-muted">
+              No contributions recorded yet.
+            </td>
+          </tr>
+          <% } %>
+        </tbody>
+      </table>
+    </div>
   </div>
-</div>
 </section>

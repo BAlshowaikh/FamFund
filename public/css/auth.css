@@ -2,7 +2,7 @@
 body {
   margin: 0;
   padding: 0;
-  background-color: #d8ecff; /* EXACT Figma background */
+  background-color: #d8ecff;
   font-family: "Arial", sans-serif;
 }
 
@@ -14,20 +14,18 @@ body {
   padding-top: 30px;
 }
 
-/* Logo at top */
 .signin-logo {
   width: 140px;
   margin-bottom: 15px;
 }
 
-/* White sign-in box */
 .signin-box {
   width: 480px;
   background: white;
   padding: 40px 45px;
   border-radius: 16px;
 
-  border: 3px solid #1e73be; /* EXACT Figma border color */
+  border: 3px solid #1e73be;
   box-shadow: 0px 0px 8px rgba(0, 0, 0, 0.1);
 }
 
@@ -49,7 +47,6 @@ label {
   margin-bottom: 6px;
 }
 
-/* Input fields EXACT like figma */
 input {
   width: 100%;
   height: 45px;
@@ -63,7 +60,6 @@ input {
   box-sizing: border-box;
 }
 
-/* BLUE BUTTON EXACT FIGMA STYLE */
 .signin-button {
   width: 100%;
   height: 50px;
@@ -139,21 +135,115 @@ input {
   margin-top: -10px;
   margin-bottom: 20px;
 }
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
+.file-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 15px;
+  margin-bottom: 20px;
+}
 
-/* Button matches sign-in button */
-.signup-btn {
-  width: 100%;
-  height: 50px;
-  background-color: #1e73be;
+.file-btn {
+  background: #1f4a70;
   color: white;
-  border: none;
+  padding: 10px 16px;
   border-radius: 8px;
-  font-size: 20px;
-  font-weight: bold;
   cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+
+.file-btn:hover {
+  background: #163954;
+}
+
+.file-name-input {
+  flex: 1;
+  height: 45px;
+  border: 2px solid #c5dffa;
+  border-radius: 8px;
+  background: #f3f7ff;
+  padding: 10px;
+  font-size: 15px;
+  color: #1f4a70;
+}
+.upload-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
   margin-top: 10px;
 }
 
+/* SMALL left button */
+.choose-file-btn {
+  background: white;
+  color: #1f4a70;
+  border: 2px solid #1f4a70;
+  padding: 8px 14px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+  transition: 0.2s;
+}
+
+.choose-file-btn:hover {
+  background: #f0f6ff;
+}
+
+/* LARGE right input (same size as continue button) */
+.file-display-box {
+  flex: 1;
+  height: 45px;
+  border: 2px solid #c5dffa;
+  border-radius: 8px;
+  background: #f3f7ff;
+  padding: 10px;
+  font-size: 15px;
+  color: #1f4a70;
+}
+
+.back-btn {
+  width: 30%;
+  background: white;
+  color: #1f4a70;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  border: 2px solid #2364a4;
+  border-radius: 10px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
+.back-btn:hover {
+  background: white;
+}
+
+.signup-btn {
+  width: 60%;
+  background: #1f4a70;
+  color: white;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  margin-top: 25px;
+  cursor: pointer;
+  transition: 0.2s;
+}
+
 .signup-btn:hover {
-  background-color: #185e99;
+  background: #163954;
 }
