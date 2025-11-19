@@ -57,6 +57,7 @@ const publicRoutes = [
   "/auth/sign-up/parent",
   "/auth/sign-up/child",
   "/auth/sign-out",
+  "/"
 ]
 
 // Check if the path contains one of the above listed routes
@@ -80,15 +81,22 @@ const financialCoachRouter = require("./src/routes/financialCoach")
 const familyRouter = require("./src/routes/family")
 
 // ----------------- Use the routes ----------------
+// Render the landing page 
+app.get("/", (req, res) => {
+  if (req.session.user) {
+    return res.redirect("/dashboard")
+  }
+  res.render("index.ejs", { layout: false, activePage: null });
+})
+
 app.use("/goals", goalRouter)
 app.use("/contributions", contRouter)
 app.use("/auth", authRouter)
 app.use("/profile", profileRouter)
-
 app.use("/notification", familyRouter)
 app.use("/dashboard", dashboardRouter)
 app.use("/financialCoach", financialCoachRouter)
-app.get("/", dashboardRouter) // this will show only if the user is logged in
+
 
 
 // ---------- Any router that doesn't fell into the specified routers ----------
@@ -97,7 +105,6 @@ app.use((req, res) => {
   res.status(404).render("error.ejs", {
     message: "The page you are looking for does not exist.",
     activePage: null,
-    // layout: false
   })
 })
 
