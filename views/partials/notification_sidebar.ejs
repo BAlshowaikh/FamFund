@@ -1,0 +1,26 @@
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="stylesheet" href="../../public/css/notifications.css" />
+</head>
+
+<% const page = typeof activePage !== 'undefined' ? activePage : '' %>
+<div class="layout">
+  <aside class="sidebar">
+    <!-- Logo -->
+    <div class="sidebar-logo">
+      <img src="/public/images/logo.png" alt="FamFund" />
+      <span>FamFund</span>
+    </div>
+
+    <!-- Menu -->
+    <nav class="sidebar-menu">
+      <a
+        href="/"
+        class="sidebar-item <%= page === 'dashboard' ? 'active' : '' %>"
+      >
+        <i class="bi bi-grid-1x2"></i> Dashboard
+      </a>
+    </nav>
+  </aside>
+</div>

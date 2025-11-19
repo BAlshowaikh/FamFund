@@ -22,7 +22,7 @@ app.use(express.urlencoded({ extended: true }))
 app.use(methodOverride("_method"))
 app.use(morgan("dev"))
 //This to parse the incoming byte stream from req.body into a json
-app.use(express.json());
+app.use(express.json())
 
 // For dynamic rendreing the main layout page
 app.set("view engine", "ejs") // Explicitly tells to use the ejs render engine to render the view
@@ -77,6 +77,7 @@ const profileRouter = require("./src/routes/profile")
 const dashboardRouter = require("./src/routes/dashboard")
 const notificationRouter = require("./src/routes/notification")
 const financialCoachRouter = require("./src/routes/financialCoach")
+const familyRouter = require("./src/routes/family")
 
 // ----------------- Use the routes ----------------
 app.use("/goals", goalRouter)
@@ -84,11 +85,10 @@ app.use("/contributions", contRouter)
 app.use("/auth", authRouter)
 app.use("/profile", profileRouter)
 
-app.use("/notification", familyRouter)
+app.use("/notification", notificationRouter)
 app.use("/dashboard", dashboardRouter)
 app.use("/financialCoach", financialCoachRouter)
 app.get("/", dashboardRouter) // this will show only if the user is logged in
-
 
 // ---------- Any router that doesn't fell into the specified routers ----------
 // -------------------- 404 FALLBACK --------------------
