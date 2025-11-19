@@ -54,11 +54,27 @@
             rows="4"
             placeholder="Tell us something about yourself..."
           ></textarea>
+          <div class="upload-row">
+            <label for="profileImageInput" class="choose-file-btn"
+              >Choose File</label
+            >
 
-          <!-- Profile Image -->
-          <label>Profile Image</label>
-          <input type="file" name="profileImage" accept="image/*" />
+            <input
+              type="file"
+              id="profileImageInput"
+              name="profileImage"
+              accept="image/*"
+              hidden
+            />
 
+            <input
+              type="text"
+              id="fileNameDisplay"
+              class="file-display-box"
+              value="No file chosen"
+              readonly
+            />
+          </div>
           <button type="submit" class="signup-btn">Continue</button>
         </form>
 
@@ -72,7 +88,9 @@
 
           <label>Family Code</label>
           <input type="text" name="code" />
-
+          <a href="/auth/sign-up"
+            ><button type="button" class="back-btn">Back</button></a
+          >
           <button type="submit" class="signup-btn">Create Family</button>
         </form>
 
@@ -83,6 +101,9 @@
         <form action="/auth/sign-up/child" method="POST">
           <label>Family Code</label>
           <input type="text" name="code" />
+          <a href="/auth/sign-up"
+            ><button type="button" class="back-btn">Back</button></a
+          >
 
           <button type="submit" class="signup-btn">Join Family</button>
         </form>
@@ -99,4 +120,15 @@
   bio.addEventListener("input", () => {
     counter.innerText = bio.value.length
   })
+</script>
+<script>
+  const fileInput = document.getElementById("profileImageInput");
+  const fileNameDisplay = document.getElementById("fileNameDisplay");
+
+  fileInput.addEventListener("change", () => {
+    fileNameDisplay.value =
+      fileInput.files.length > 0
+        ? fileInput.files[0].name
+        : "No file chosen";
+  });
 </script>

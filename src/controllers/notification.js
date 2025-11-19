@@ -6,7 +6,7 @@ const getNotificationIndexForParents = async (req, res) => {
   const user = req.session.user
   const family = await Family.findById(user.familyId)
   const parentId = family.parentId
-  res.render("notifications/index.ejs")
+  res.render("notifications/index.ejs", { layout: false })
 }
 
 module.exports = { getNotificationIndexForParents }
