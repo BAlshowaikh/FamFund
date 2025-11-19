@@ -406,6 +406,7 @@ header h1 {
 .ff-contrib-modal {
   width: 32em;
   max-width: 90vw;
+  position: relative; /* Make it like a refernece to its child*/
 }
 
 /* top-right X button to clos */

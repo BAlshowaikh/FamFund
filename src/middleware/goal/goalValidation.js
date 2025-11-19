@@ -32,7 +32,7 @@ module.exports.validateAddGoal = (req, res, next) => {
 
 // Validation for the process of editing a goal
 module.exports.validateEditGoal = (req, res, next) => {
-  const { title, description, targetAmount, dueDate, coverImgURL, status } = req.body;
+  const { title, description, targetAmount, dueDate, coverImgURL, status, currentAmount} = req.body;
   const errors = [];
 
   if (title && (title.trim().length < 3 || title.length > 100))
@@ -50,6 +50,10 @@ module.exports.validateEditGoal = (req, res, next) => {
 
   if (status && !["Active", "Completed", "Not Active"].includes(status))
     errors.push("Invalid status.")
+
+    if (currentAmount > targetAmount){
+  errors.push("Current Amount can't be bigger than the target amount")  
+  }
 
   if (errors.length > 0)
     return res.status(400).render("error.ejs", { message: errors.join("<br>") })

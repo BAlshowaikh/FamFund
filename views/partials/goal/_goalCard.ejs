@@ -28,8 +28,8 @@
       </div>
 
       <div class="d-flex align-items-center gap-2">
-        <!-- Edit / delete icons (hooks for later) -->
-        <% if (goal.status === "Active" && user.role == "Parent"){ %>
+        <!-- Edit / delete icons ) -->
+        <% if ((goal.status === "Active" || goal.status === "Not Active") && user.role == "Parent"){ %>
           <a href="/goals/<%= goal._id %>/edit"><button type="button" class="btn btn-sm ff-icon-btn" title="Edit goal">
             <i class="bi bi-pencil"></i>
           </button></a>
@@ -81,7 +81,7 @@
         View Details
       </button></a>
 
-      <% if (goal.status !== 'Completed') { %>
+      <% if (goal.status === 'Active') { %>
       <button
         type="button"
         class="btn ff-primary-pill-btn ff-contrib-btn"
