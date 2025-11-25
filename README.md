@@ -18,6 +18,12 @@ This project aims to promote family collaboration and financial literacy through
 
 ---
 
+## 🌐 Deployed Application
+
+You can view the live version of the app here: [FamFund](https://famfund-9a40.onrender.com)
+
+---
+
 ## 🧩 Core Features
 
 ### 👨‍👩‍👧 Family Management
@@ -52,13 +58,28 @@ This project aims to promote family collaboration and financial literacy through
 
 ---
 
+## 📄 Attributions
+
+This project uses the following open-source tools and libraries:
+
+- **Node.js** – https://nodejs.org/  
+- **Express.js** – https://expressjs.com/  
+- **MongoDB / Mongoose** – https://mongoosejs.com/  
+- **Bootstrap 5** – https://getbootstrap.com/  
+- **Bootstrap Icons** – https://icons.getbootstrap.com/  
+- **EJS** – https://ejs.co/  
+- **Multer** – https://github.com/expressjs/multer  
+- **OpenAI API** (optional) – https://openai.com/  
+- **LangChain.js** – https://js.langchain.com/ 
+
+---
+
 ## 👥 Team Roles & Collaboration
 
 | Member | Role | Focus Area |
 |---------|------|------------|
 | **Abdulla** | Authentication & Family Management | User accounts, session handling, family creation/join system |
 | **Batool** | Goals, Contributions & Rewards | Goal CRUD, contribution logic, progress tracking, reward calculation |
-| **Ghufran** | Notifications, Tips & Integration | Notification engine, family tips module, overall UI integration |
 
 🧠 Team collaboration includes weekly technical sessions and biweekly client meetings to align with functional requirements and UX goals.
 
@@ -80,13 +101,37 @@ This project aims to promote family collaboration and financial literacy through
 | Resource | Description | Link |
 |-----------|--------------|------|
 | **ERD (Entity Relationship Diagram)** | Database design showing relationships between collections | _[Add link here]_ |
-| **Wireframes** | Low/high-fidelity design of user flows | _[Add link here]_ |
-| **Trello Board** | Task tracking and project management | _[Add link here]_ |
+| **Figma** | high-fidelity design of the website | [FamFund Figma](https://www.figma.com/design/tmaUP2TxRMS8FUu7dWjCmr/FamFund?node-id=0-1&p=f&t=ui9maOi231FdrLT1-0) |
+| **Logo*  | _[Add link here]_ |
 
 ---
 
-## 🚀 Vision
+## Getting Started
 
-FamFund promotes **financial awareness through family collaboration**.  
-By blending **gamified saving**, **educational tips**, and **goal sharing**, it fosters a culture of planning and reward, making financial learning enjoyable for children and meaningful for parents.
+### Prerequisites
+- Node.js (v18+ recommended)  
+- npm (bundled with Node)  
+- MongoDB instance (local or MongoDB Atlas)  
+- (Optional) OpenAI API key if you wish to enable the AI coach module  
+
+### Clone & Install
+```bash
+git clone https://github.com/BAlshowaikh/FamFund.git  
+cd FamFund  
+npm install
+```
+---
+
+## 🚀 Next Steps (Planned Future Enhancements)
+
+- **Per-child analytics** (charts, contribution history, streaks)  
+- **Advanced reward system** (badges, levels, customizable rewards)  
+- **Savings challenges** (weekly missions, monthly challenges)  
+- **Push notifications** for reminders and goal progress
+- **Tip System** Send daily financial tips automatically
+- **Localization** (Arabic/English toggle) 
+- **Enhanced AI coach** with financial games, guidance, and simulations  
+
+
+
 
