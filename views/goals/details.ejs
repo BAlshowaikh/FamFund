@@ -12,7 +12,8 @@
   goal.targetAmount) * 100) ); %>
 
   <div class="ff-progress-track mb-2">
-    <div class="ff-progress-fill" style="width: <%= percentage + '%' %>"></div>
+    <div class="ff-progress-fill" style="width:
+    <%=percentage + '%' %>"></div>
   </div>
 
   <p class="ff-detail-highlight mb-3"><%= percentage %>% Completed!</p>
@@ -39,26 +40,14 @@
     <button
       type="button"
       class="btn ff-primary-pill-btn ff-contrib-btn"
-      <%#
-      These
-      data
-      will
-      be
-      used
-      by
-      the
-      add
-      cont
-      modal
-      %
-    >
+
       data-goal-id="<%= goal._id %>" data-goal-title="<%= goal.title %>"
       data-target-amount="<%= goal.targetAmount %>" data-current-amount="<%=
-      goal.currentAmount %>" <%= isActive ? '' : 'disabled' %> > Contribute
+      goal.currentAmount %>" <%= isActive ? '' : 'disabled'%> > Contribute
     </button>
   </div>
 
-  <%# Contribution tabel %>
+
   <div class="ff-card ff-card-soft">
     <div class="contribution-table-goal-scroll">
       <table class="table mb-0 ff-table">
