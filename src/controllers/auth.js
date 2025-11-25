@@ -49,7 +49,7 @@ const post_signup = async (req, res) => {
       email: req.body.email,
       password: req.body.password,
       role: "Child",
-      status: "Approved",
+      status: "Pending",
       bio: req.body.bio,
       profileImageUrl,
     }
@@ -134,7 +134,7 @@ const post_signup_child = async (req, res) => {
   const Child = await User.create({
     ...childSessionData,
     familyId: family._id,
-    status: "Approved",
+    status: "Pending",
   })
   delete req.session.childData
 
@@ -171,7 +171,7 @@ const post_signin = async (req, res) => {
     profileImageUrl: user.profileImageUrl,
     familyId: user.familyId,
   }
-  return res.redirect("/")
+  return res.redirect("/dashboard")
 }
 const get_signout = async (req, res) => {
   req.session.destroy()
