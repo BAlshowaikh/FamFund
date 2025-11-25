@@ -3,62 +3,76 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Join Requests</title>
+
   <link rel="stylesheet" href="/public/css/notifications.css" />
+  <link rel="stylesheet" href="/public/css/notification-sidebar.css" />
 </head>
 
 <body>
 
-  <!-- PAGE TITLE -->
-  <h1 class="page-title">Family Join Requests</h1>
-
-  <!-- If NO requests -->
-  <% if (childJoinRequests.length === 0) { %>
-  <div class="empty-box">
-    <p>No pending join requests.</p>
+  <!-- LEFT SIDEBAR -->
+  <div class="notification-sidebar">
+    <%- include("../partials/notification_sidebar.ejs") %>
   </div>
-  <% } %>
 
-  <!-- Loop through requests -->
-  <% childJoinRequests.forEach(request => { %>
-  <div class="request-card">
+  <!-- RIGHT PAGE CONTENT -->
+  <div class="page-content">
 
-    <!-- Profile Image -->
-    <div class="avatar-wrapper">
-      <img src="<%= request.profileImageUrl %>" class="avatar" />
-    </div>
+    <!-- PAGE TITLE -->
+    <h1 class="page-title">Family Join Requests</h1>
 
-    <!-- Info section -->
-    <div class="info-section">
-      <label>Name</label>
-      <input type="text" value="<%= request.username %>" readonly />
+    <!-- If NO requests -->
+    <% if (childJoinRequests.length === 0) { %>
+      <div class="empty-box">
+        <p>No pending join requests.</p>
+      </div>
+    <% } %>
 
-      <label>Email</label>
-      <input type="text" value="<%= request.email %>" readonly />
+    <!-- LOOP THROUGH REQUESTS -->
+    <% childJoinRequests.forEach(request => { %>
 
-      <label>Date Created</label>
-      <input type="text" value="<%= request.createdAt.toDateString() %>" readonly />
+      <div class="request-card">
 
-      <label>Status</label>
-      <select id="status-<%= request._id %>" disabled>
-        <option value="Pending" <%= request.status === "Pending" ? "selected" : "" %>>Pending</option>
-        <option value="Approved" <%= request.status === "Approved" ? "selected" : "" %>>Approved</option>
-        <option value="Rejected" <%= request.status === "Rejected" ? "selected" : "" %>>Rejected</option>
-      </select>
-    </div>
+        <!-- Profile Image -->
+        <div class="avatar-wrapper">
+          <img src="<%= request.profileImageUrl %>" class="avatar" />
+        </div>
 
-    <!-- Buttons -->
-    <div class="actions">
-      <button class="edit-btn" onclick="enableEdit('<%= user._id %>')">Edit</button>
+        <!-- Info section -->
+        <div class="info-section">
+          <label>Name</label>
+          <input type="text" value="<%= request.username %>" readonly />
 
-      <form action="/notifications/<%= user._id %>?_method=PUT" method="POST">
-        <input type="hidden" id="hidden-status-<%= request._id %>" name="status" />
-        <button class="save-btn" disabled id="save-btn-<%= request._id %>">Apply & Save</button>
-      </form>
-    </div>
+          <label>Email</label>
+          <input type="text" value="<%= request.email %>" readonly />
 
-  </div>
-  <% }) %>
+          <label>Date Created</label>
+          <input type="text" value="<%= request.createdAt.toDateString() %>" readonly />
+
+          <label>Status</label>
+          <select id="status-<%= request._id %>" disabled>
+            <option value="Pending" <%= request.status === "Pending" ? "selected" : "" %>>Pending</option>
+            <option value="Approved" <%= request.status === "Approved" ? "selected" : "" %>>Approved</option>
+            <option value="Rejected" <%= request.status === "Rejected" ? "selected" : "" %>>Rejected</option>
+          </select>
+        </div>
+
+        <!-- Buttons -->
+        <div class="actions">
+          <button class="edit-btn" onclick="enableEdit('<%= request._id %>')">Edit</button>
+
+          <form action="/notifications/join-requests/<%= request._id %>?_method=PUT" method="POST">
+
+            <input type="hidden" id="hidden-status-<%= request._id %>" name="status" />
+            <button class="save-btn" disabled id="save-btn-<%= request._id %>">Apply & Save</button>
+          </form>
+        </div>
+
+      </div>
+
+    <% }) %>
+
+  </div> <!-- END PAGE CONTENT -->
 
   <script>
     function enableEdit(id) {
@@ -69,7 +83,6 @@
       select.disabled = false;
       saveBtn.disabled = false;
 
-      // Update hidden field before submitting
       select.addEventListener("change", () => {
         hiddenField.value = select.value;
       });
@@ -78,4 +91,3 @@
 
 </body>
 </html>
-

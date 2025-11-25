@@ -1,0 +1,123 @@
+/* ============================
+  GLOBAL LAYOUT FOR NOTIFICATION PAGES
+============================ */
+body {
+  display: flex;
+  margin: 0;
+  padding: 0;
+  background: #eef7ff;
+  font-family: "Inter", sans-serif;
+}
+
+/* Sidebar area */
+.notification-sidebar {
+  width: 230px;
+  flex-shrink: 0;
+  background-color: #f2faff;
+  border-right: 1px solid #d5e6ff;
+  padding: 25px 20px;
+  min-height: 100vh;
+
+  display: flex;
+  flex-direction: column;
+}
+
+/* ============================
+   LOGO
+============================ */
+.sidebar-logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 40px;
+}
+
+.sidebar-logo img {
+  height: 3rem;
+}
+
+.sidebar-logo span {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #2364a4;
+}
+
+/* ============================
+   MENU
+============================ */
+.sidebar-menu {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.sidebar-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  text-decoration: none;
+
+  padding: 12px 14px;
+  color: #333;
+  background-color: transparent;
+
+  border-radius: 10px;
+  font-size: 15px;
+  font-weight: 500;
+  transition: 0.2s ease;
+}
+
+.sidebar-item:hover {
+  background-color: #dcebff;
+  cursor: pointer;
+}
+
+.sidebar-item i {
+  font-size: 18px;
+  opacity: 0.8;
+}
+
+/* ACTIVE STATE */
+.sidebar-item.active {
+  background-color: #e0efff;
+  color: #0f3c75;
+  font-weight: 600;
+  border-left: 3px solid #2364a4;
+  padding-left: 11px; /* compensate border */
+}
+
+.sidebar-item.active i {
+  color: #2364a4;
+  opacity: 1;
+}
+
+/* ============================
+   PAGE CONTENT
+============================ */
+.page-content {
+  flex: 1;
+  padding: 40px;
+}
+
+/* Title */
+.page-title {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #144a83;
+  margin-bottom: 25px;
+}
+
+/* Empty request box */
+.empty-box {
+  width: fit-content;
+  margin: 0 auto;
+  padding: 25px 40px;
+  background: white;
+  border-radius: 18px;
+
+  font-size: 1.2rem;
+  text-align: center;
+  color: #355070;
+
+  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
+}

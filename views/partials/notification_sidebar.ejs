@@ -1,26 +1,42 @@
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <link rel="stylesheet" href="../../public/css/notifications.css" />
-</head>
+<% const uid = user ? user._id : '' %>
 
-<% const page = typeof activePage !== 'undefined' ? activePage : '' %>
-<div class="layout">
-  <aside class="sidebar">
-    <!-- Logo -->
-    <div class="sidebar-logo">
-      <img src="/public/images/logo.png" alt="FamFund" />
-      <span>FamFund</span>
-    </div>
+<aside class="notification-sidebar">
+  <div class="sidebar-logo">
+    <img src="/public/images/logo.png" alt="FamFund" />
+    <span>FamFund</span>
+  </div>
 
-    <!-- Menu -->
-    <nav class="sidebar-menu">
-      <a
-        href="/"
-        class="sidebar-item <%= page === 'dashboard' ? 'active' : '' %>"
-      >
-        <i class="bi bi-grid-1x2"></i> Dashboard
-      </a>
-    </nav>
-  </aside>
-</div>
+  <nav class="sidebar-menu">
+    <a
+      href="/notifications/join-requests"
+      class="sidebar-item <%= activePage === 'join-request' ? 'active' : '' %>"
+    >
+      Join Requests
+    </a>
+<div class="back-arrow">
+
+    <a
+      href="/dashboard" class = "back-arrow"
+    >
+      <img src="https://i.postimg.cc/76ybpsR4/back-arrow.png" alt="back-arrow">
+    </a>
+
+    <style>
+.back-arrow img {
+    position: absolute;
+    bottom: 20px;
+    left: 20px;
+    width: 55px;
+    height: 55px;
+    background-color: #2364a4;
+    color: #ffffff;
+    border-radius: 50%;
+    transition: 0.2s;
+    text-decoration: none;
+  }
+
+
+
+
+</style>
+</aside>
