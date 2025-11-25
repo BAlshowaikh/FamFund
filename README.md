@@ -1,137 +1,191 @@
 # 💰 FamFund
 
-**FamFund** is a collaborative family finance platform that helps parents and children **plan, save, and celebrate financial goals together**.  
-The system combines goal tracking, contribution simulation, and educational features to teach children financial responsibility in an interactive and engaging way.
+**FamFund** is a collaborative family finance platform that helps parents and children **plan, save, track, and celebrate financial goals together**.  
+It combines goal tracking, virtual contributions, educational tips, notifications, and rewards to teach children financial responsibility in an engaging way.
+
+---
+
+# 📑 Table of Contents
+
+- [🌐 Deployed Application](#-deployed-application)
+- [🎯 Project Overview](#-project-overview)
+- [🧩 Core Features](#-core-features)
+  - [Family Management](#family-management)
+  - [Goal & Contribution System](#goal--contribution-system)
+  - [Notifications](#notifications)
+  - [AI Financial Coach](#ai-financial-coach)
+- [👥 Team Roles](#-team-roles)
+- [🧱 System Highlights](#-system-highlights)
+- [🗂️ Project Architecture](#️-project-architecture)
+- [🛠️ Tech Stack](#️-tech-stack)
+- [⚙️ Environment Variables](#️-environment-variables)
+- [🧪 Getting Started](#-getting-started)
+- [🔗 Project References](#-project-references)
+- [📄 Attributions](#-attributions)
+- [🚀 Next Steps](#-next-steps)
+
+---
+
+## 🌐 Deployed Application
+
+🔗 **Live App:** https://famfund-9a40.onrender.com
 
 ---
 
 ## 🎯 Project Overview
 
 FamFund empowers families to:
+
 - **Set shared saving goals** (e.g., “Family Trip”, “New TV”)
-- **Contribute** toward those goals with virtual savings
+- **Contribute** virtual savings toward these goals
+- **Track progress** with visual progress bars
 - **Celebrate milestones** when goals reach completion
-- **Educate** children with financial tips written by parents
-- **Motivate** children through a rewards system and progress tracking
-
-This project aims to promote family collaboration and financial literacy through a user-friendly digital experience.
-
----
-
-## 🌐 Deployed Application
-
-You can view the live version of the app here: [FamFund](https://famfund-9a40.onrender.com)
+- **Educate children** with parent-created financial tips
+- **Motivate consistency** through rewards
 
 ---
 
 ## 🧩 Core Features
 
 ### 👨‍👩‍👧 Family Management
-- Parents can create a family group and generate a unique **Family Code**.
-- Children join using the code; parents can approve or decline requests.
-- Each family has a private dashboard with its own data space.
+- Parent creates a family group and receives a **Family Code**
+- Children join using the code *(approval flow partially implemented)*
+- All family data is isolated per household
 
 ### 🎯 Goal & Contribution System
-- Parents create goals with titles, target amounts, and images.
-- Children can add **virtual contributions** with short messages.
-- Automatic progress bars visualize savings and completion percentage.
-- When a goal reaches 100%, the system:
-  - Marks it as completed.
-  - Triggers a **reward** for the top contributor (5% bonus).
-  - Sends a family-wide notification.
+- Goals include title, description, target amount, and optional image
+- Users add **virtual contributions** with messages
+- Progress updates in real time
+- When a goal reaches 100%:
+  - Goal marked **completed**
+  - **5% bonus reward** for top contributor *(planned)*
+  - Celebration + notification *(planned)*
 
-### 💡 Financial Tips (Educational Feature)
-- Parents can create and post short financial lessons or motivational notes.
-- Tips are viewable by all family members.
-- Encourages children to develop budgeting and saving habits.
+### 🔔 Notifications
+- Shows join requests.
 
-### 🔔 Notifications & Activity Feed
-- Real-time updates for:
-  - New contributions (“Sara added 10 BD to Family Trip 🎉”)
-  - Goal completions (“Disney Trip reached 100%! 🎉”)
-- Family members can stay informed about progress and activities.
-
-### 🏅 Rewards System
-- Short-term virtual rewards for children when goals are completed.
-- Calculates 5% bonus for top contributors.
-- Builds motivation and a sense of achievement.
+### 🤖 AI Financial Coach
+- LangChain + OpenAI integration  
+- Explains financial concepts  
+- Helps kids learn saving strategies  
 
 ---
 
-## 📄 Attributions
+## 👥 Team Roles
 
-This project uses the following open-source tools and libraries:
-
-- **Node.js** – https://nodejs.org/  
-- **Express.js** – https://expressjs.com/  
-- **MongoDB / Mongoose** – https://mongoosejs.com/  
-- **Bootstrap 5** – https://getbootstrap.com/  
-- **Bootstrap Icons** – https://icons.getbootstrap.com/  
-- **EJS** – https://ejs.co/  
-- **Multer** – https://github.com/expressjs/multer  
-- **OpenAI API** (optional) – https://openai.com/  
-- **LangChain.js** – https://js.langchain.com/ 
-
----
-
-## 👥 Team Roles & Collaboration
-
-| Member | Role | Focus Area |
-|---------|------|------------|
-| **Abdulla** | Authentication & Family Management | User accounts, session handling, family creation/join system |
-| **Batool** | Goals, Contributions & Rewards | Goal CRUD, contribution logic, progress tracking, reward calculation |
-
-🧠 Team collaboration includes weekly technical sessions and biweekly client meetings to align with functional requirements and UX goals.
+| Member  | Role | Responsibilities |
+|---------|------|------------------|
+| Abdulla | Authentication & Family Management | Sessions, login, family creation/join |
+| Batool  | Goals, Contributions & Rewards | Goal CRUD, contributions, bonus logic |
 
 ---
 
 ## 🧱 System Highlights
 
-- **Authentication:** Secure login with role-based access (Parent / Child)  
-- **Database:** MongoDB with Mongoose ORM  
-- **Server:** Node.js with Express  
-- **Templating:** EJS views for a lightweight front-end  
-- **Session Storage:** Mongo-based express-session persistence  
-- **File Handling:** Multer for user and goal image uploads  
+- Node.js + Express backend  
+- MongoDB + Mongoose  
+- EJS templating  
+- express-session + MongoStore  
+- Multer for file uploads  
+- LangChain + OpenAI   
+
+---
+
+## 🗂️ Project Architecture
+
+FamFund/
+├─ public/  
+│  ├─ css/  
+│  ├─ js/  
+│  └─ images/  
+├─ services/langchain/  
+├─ src/  
+│  ├─ controllers/  
+│  ├─ routes/  
+│  ├─ models/  
+│  ├─ middleware/  
+│  └─ config/  
+├─ views/  
+├─ server.js  
+├─ package.json  
+└─ README.md  
+
+---
+## Tech Stack
+
+**Backend**
+
+- Node.js + Express
+- MongoDB + Mongoose 
+- express-session with Mongo-backed session store
+- Multer (file uploads for images)
+
+**Frontend**
+
+- EJS templates (`/views`)
+- Vanilla JS + Bootstrap 
+
+**AI Service**
+
+- LangChain-based service inside `/services/langchain` (for the financial coach)
+- OpenAI (or other LLM provider) via API key in environment variables
+
+---
+
+## ⚙️ Environment Variables
+
+PORT=3000  (or any other number) 
+MONGODB_URI=mongodb://localhost:27017/famfund  
+SESSION_SECRET=your-strong-secret  
+OPENAI_API_KEY=your-openai-api-key  
+
+---
+
+## 🧪 Getting Started
+
+```bash
+git clone https://github.com/BAlshowaikh/FamFund.git
+cd FamFund
+npm install
+npm start
+```
+
+Visit http://localhost:3000
 
 ---
 
 ## 🔗 Project References
 
 | Resource | Description | Link |
-|-----------|--------------|------|
-| **ERD (Entity Relationship Diagram)** | Database design showing relationships between collections | _[ERD (Not all entities exist in the current website version](/public/images/erd.png)_ |
-| **Figma** | high-fidelity design of the website | [FamFund Figma](https://www.figma.com/design/tmaUP2TxRMS8FUu7dWjCmr/FamFund?node-id=0-1&p=f&t=ui9maOi231FdrLT1-0) |
-| **Logo*  | FamFund Logo |_[FamFund Logo](/public/images/logo.png)_ |
+|----------|-------------|------|
+| ERD | Database design | [ERD](/public/images/erd.png) |
+| Figma | UI design | [Design](https://www.figma.com/design/tmaUP2TxRMS8FUu7dWjCmr/FamFund) |
+| Logo | App logo | [Logo](/public/images/logo.png) |
 
 ---
 
-## Getting Started
+## 📄 Attributions
 
-### Prerequisites
-- Node.js (v18+ recommended)  
-- npm (bundled with Node)  
-- MongoDB instance (local or MongoDB Atlas)  
-- (Optional) OpenAI API key if you wish to enable the AI coach module  
+- Node.js — https://nodejs.org  
+- Express.js — https://expressjs.com  
+- MongoDB/Mongoose — https://mongoosejs.com  
+- Bootstrap 5 — https://getbootstrap.com  
+- Bootstrap Icons — https://icons.getbootstrap.com  
+- EJS — https://ejs.co  
+- Multer — https://github.com/expressjs/multer  
+- LangChain.js — https://js.langchain.com  
+- OpenAI — https://openai.com  
 
-### Clone & Install
-```bash
-git clone https://github.com/BAlshowaikh/FamFund.git  
-cd FamFund  
-npm install
-```
 ---
 
-## 🚀 Next Steps (Planned Future Enhancements)
+## 🚀 Next Steps
 
-- **Per-child analytics** (charts, contribution history, streaks)  
-- **Advanced reward system** (badges, levels, customizable rewards)  
-- **Savings challenges** (weekly missions, monthly challenges)  
-- **Push notifications** for reminders and goal progress
-- **Tip System** Send daily financial tips automatically
-- **Localization** (Arabic/English toggle) 
-- **Enhanced AI coach** with financial games, guidance, and simulations  
-
-
-
-
+- Per-child analytics  
+- Advanced rewards (badges, levels)  
+- Savings challenges  
+- Push notifications  
+- Daily automated financial tips  
+- Arabic/English localization + RTL  
+- AI games & financial simulations  
+- Public demo mode  
+- Mobile app (React Native/Flutter)  

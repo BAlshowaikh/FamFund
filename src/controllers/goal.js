@@ -101,7 +101,6 @@ exports.add_goal_post = async (req, res) => {
 
   const user = req.session.user
   const userFamilyId = user.familyId
-  console.log(user)
     try{
 
       const coverImgURL = req.file ? `/public/images/goal-cover-images/${req.file.filename}` : undefined;
