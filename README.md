@@ -100,7 +100,7 @@ This project uses the following open-source tools and libraries:
 
 | Resource | Description | Link |
 |-----------|--------------|------|
-| **ERD (Entity Relationship Diagram)** | Database design showing relationships between collections | _[Add link here]_ |
+| **ERD (Entity Relationship Diagram)** | Database design showing relationships between collections | _[ERD (Not all entities exist in the current website version](/public/images/erd.png)_ |
 | **Figma** | high-fidelity design of the website | [FamFund Figma](https://www.figma.com/design/tmaUP2TxRMS8FUu7dWjCmr/FamFund?node-id=0-1&p=f&t=ui9maOi231FdrLT1-0) |
 | **Logo*  | FamFund Logo |_[FamFund Logo](/public/images/logo.png)_ |
 
