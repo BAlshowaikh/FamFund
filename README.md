@@ -147,7 +147,7 @@ OPENAI_API_KEY=your-openai-api-key
 git clone https://github.com/BAlshowaikh/FamFund.git
 cd FamFund
 npm install
-npm start
+npm start OR nodemon
 ```
 
 Visit http://localhost:3000
