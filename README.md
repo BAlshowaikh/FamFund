@@ -191,10 +191,12 @@ Visit http://localhost:3000
 ---
 
 ## 📷 Screenshots
+
 - Homepage:
 <br/>
 <br/>
-![Home page](https://i.postimg.cc/MpN3qFqq/Homepage.png)
+
+![Homepage](https://i.postimg.cc/MpN3qFqq/Homepage.png)
 
 - Signup page:
   <br/>
@@ -245,3 +247,5 @@ Visit http://localhost:3000
   <br/>
   <br/>
 ![Profile](https://i.postimg.cc/TYgmsNhx/profile.png)
+
+---
