@@ -102,7 +102,6 @@ exports.add_cont_post = async (req, res) => {
 
 // --------------------DUMMY CREATE ---------------------
 exports.dummy_add_contribution_post = async (req, res) => {
-      console.log("inside controller")
   try {
     const { goalId } = req.params; 
     const {amount, message } = req.body;
@@ -142,7 +141,6 @@ exports.dummy_add_contribution_post = async (req, res) => {
     // Update goal currentAmount
     goal.currentAmount += numericAmount;
     await goal.save();
-    console.log(`body: ${req.body}`)
   return res.redirect(`/goals/${goalId}`);
 
   } catch (error) {
