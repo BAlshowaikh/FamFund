@@ -186,6 +186,3 @@ Visit http://localhost:3000
 - Push notifications  
 - Daily automated financial tips  
 - Arabic/English localization + RTL  
-- AI games & financial simulations  
-- Public demo mode  
-- Mobile app (React Native/Flutter)  
